@@ -1,1 +1,1 @@
-mongo2hive/mongo2hive.hql merge=ours
+*.hql merge=ours

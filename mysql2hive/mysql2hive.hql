@@ -1,7 +1,6 @@
 --运营分析一期中用到的表
 --插入:mysql2hive.circle_circle到pro.ods_circle
 
-
 insert overwrite table pro.ods_circle PARTITION(dt='${hivevar:preday}')
 select 
 trim(regexp_replace(id,'\\n|\\r','')) as id,
