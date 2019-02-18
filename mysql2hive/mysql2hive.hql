@@ -1,6 +1,3 @@
---生产环境
-add jar hdfs://nameservice1:8020//jar/qubole-hive-JDBC-0.0.7.jar; 
-
 --运营分析一期中用到的表
 --插入:mysql2hive.circle_circle到pro.ods_circle
 insert overwrite table pro.ods_circle PARTITION(dt='${hivevar:preday}')

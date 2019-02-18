@@ -1,11 +1,3 @@
-
-
-
---生产环境
-add jar hdfs://nameservice1:8020//jar/mongo-java-driver-3.4.1.jar; 
-add jar hdfs://nameservice1:8020//jar/mongo-hadoop-core-2.0.2.jar;
-add jar hdfs://nameservice1:8020//jar/mongo-hadoop-hive-2.0.2.jar;
-
 --运营分析一期中用到的表
 
 --插入:mongo2hive.health_b_hospital到pro.ods_b_hospital
