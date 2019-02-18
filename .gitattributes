@@ -1,1 +1,2 @@
 .gitattributes
+config.xml merge=ours
