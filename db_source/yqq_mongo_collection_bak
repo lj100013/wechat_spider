@@ -1,0 +1,13 @@
+#auth2
+auth2:
+#医生圈的注册，认证，登录数据
+health:user
+health:t_user_login_info
+health:t_survey
+health:t_survey_answer
+#推广调差卷
+online-marketing:
+#活动
+activity:
+#医知独秀
+h5marketing:t_promotion_answer_process
