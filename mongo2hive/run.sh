@@ -10,28 +10,27 @@ echo '###########################'
 
 jobname=mongo2hive
 
-USER=root           #设定用户名
-PASSWORD="123456"  #设定数据库的用户密码  
-DB=report        #选定需要的数据库  
-TLB=job_flag_pro
-HOST=ds-01
+configdir=/data/job_pro/utils/
+USER=( $( __readINI $configdir/config.ini report user ) )
+PASSWORD=( $( __readINI $configdir/config.ini report passwd ) )
+HOST=( $( __readINI $configdir/config.ini report host ) )
  
-COMMAND="select flag from $TLB where job_time='$preday' and job_name='$jobname'"
-declare status=`mysql -h${HOST} -u${USER} -p'Dachen$222' -D ${DB} -e "${COMMAND}" --skip-column-name`
+COMMAND="select flag from job_flag_pro where job_time='$preday' and job_name='$jobname'"
+declare status=`mysql -h${HOST} -u${USER} -p${PASSWORD} -D report -e "${COMMAND}" --skip-column-name`
 echo "######################"
 echo '$jobname running status:'$status
 echo "######################"
 if [ "$status" =  "" ] ; then 
-   INSERT="insert into $TLB(job_name,job_time,flag) values('$jobname','$preday',1)"
-   mysql -h${HOST} -u${USER} -p'Dachen$222' -D ${DB} -e "${INSERT}"
+   INSERT="insert into job_flag_pro(job_name,job_time,flag) values('$jobname','$preday',1)"
+   mysql -h${HOST} -u${USER} -p${PASSWORD} -D report -e "${INSERT}"
    hive -hivevar preday=$preday -f /data/job_pro/dataX/mongo2hive/mongo2hive.hql
    if [ $? -ne 0 ]
       then 
       echo "delete this job!!!"
-      mysql -h${HOST} -u${USER} -p'Dachen$222' -D ${DB} -e "delete from $TLB where job_name='$jobname' and job_time='$preday' "
+      mysql -h${HOST} -u${USER} -p${PASSWORD} -D report -e "delete from job_flag_pro where job_name='$jobname' and job_time='$preday' "
       exit 1
    else
-      mysql -h${HOST} -u${USER} -p'Dachen$222' -D ${DB} -e "update $TLB set flag=2 where job_name='$jobname' and job_time='$preday' "
+      mysql -h${HOST} -u${USER} -p${PASSWORD} -D report -e "update job_flag_pro set flag=2 where job_name='$jobname' and job_time='$preday' "
       exit
    fi
 elif [ "$status" =  "1" ]; then
@@ -43,5 +42,10 @@ elif [ "$status" =  "2" ]; then
 fi
 
 
+function __readINI() {
+ INIFILE=$1; SECTION=$2; ITEM=$3
+ _readIni=`awk -F '=' '/\['$SECTION'\]/{a=1}a==1&&$1~/'$ITEM'/{print $2;exit}' $INIFILE`
+ echo ${_readIni}
+}
 
 #hive -hiveconf hive.exec.mode.local.auto=true -hivevar preday=$preday -f /data/job_pro/dataX/mongo2hive/mongo2hive.hql
