@@ -8,6 +8,12 @@ echo '###########################'
 echo 'preday:'$preday
 echo '###########################'
 
+function __readINI() {
+ INIFILE=$1; SECTION=$2; ITEM=$3
+ _readIni=`awk -F '=' '/\['$SECTION'\]/{a=1}a==1&&$1~/'$ITEM'/{print $2;exit}' $INIFILE`
+ echo ${_readIni}
+}
+
 jobname=mongo2hive
 
 configdir=/data/job_pro/utils/
@@ -42,10 +48,6 @@ elif [ "$status" =  "2" ]; then
 fi
 
 
-function __readINI() {
- INIFILE=$1; SECTION=$2; ITEM=$3
- _readIni=`awk -F '=' '/\['$SECTION'\]/{a=1}a==1&&$1~/'$ITEM'/{print $2;exit}' $INIFILE`
- echo ${_readIni}
-}
+
 
 #hive -hiveconf hive.exec.mode.local.auto=true -hivevar preday=$preday -f /data/job_pro/dataX/mongo2hive/mongo2hive.hql

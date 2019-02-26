@@ -8,6 +8,12 @@ echo '###########################'
 echo 'preday:'$preday
 echo '###########################'
 
+function __readINI() {
+ INIFILE=$1; SECTION=$2; ITEM=$3
+ _readIni=`awk -F '=' '/\['$SECTION'\]/{a=1}a==1&&$1~/'$ITEM'/{print $2;exit}' $INIFILE`
+ echo ${_readIni}
+}
+
 jobname=mysql2hive
 
 configdir=/data/job_pro/utils/
@@ -40,9 +46,3 @@ elif [ "$status" =  "1" ]; then
 elif [ "$status" =  "2" ]; then 
    echo "Warning !! $jobname is done!!!" 
 fi
-
-function __readINI() {
- INIFILE=$1; SECTION=$2; ITEM=$3
- _readIni=`awk -F '=' '/\['$SECTION'\]/{a=1}a==1&&$1~/'$ITEM'/{print $2;exit}' $INIFILE`
- echo ${_readIni}
-}
