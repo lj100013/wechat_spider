@@ -7,4 +7,4 @@ else
    pre2day=$2
 fi
 
-bash /data/job_pro/job_flag.sh mongo2hive /data/job_pro/dataX/mongo2hive $preday $pre2day
+bash /data/job_pro/utils/job_flag.sh mongo2hive /data/job_pro/dataX/mongo2hive $preday $pre2day
