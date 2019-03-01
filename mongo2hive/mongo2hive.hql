@@ -1478,3 +1478,18 @@ trim(regexp_replace(browerMessage,'\\n|\\r','')) as browerMessage,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(phoneNumber,'\\n|\\r','')) as phoneNumber
 from mongo2hive.circleetl_circle_operation_info;
+
+
+
+--插入：mongo2hive.circledaq_circle_heat_value_type_day到pro.ods_circle_heat_value_type_day
+insert overwrite table pro.ods_circle_heat_value_type_day PARTITION(dt='${hivevar:preday}')   
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(circleId,'\\n|\\r','')) as circleId,
+trim(regexp_replace(`year`,'\\n|\\r','')) as `year`,
+trim(regexp_replace(`month`,'\\n|\\r','')) as `month`,
+trim(regexp_replace(typeValue,'\\n|\\r','')) as typeValue,
+trim(regexp_replace(grossScore,'\\n|\\r','')) as grossScore,
+trim(regexp_replace(`date`,'\\n|\\r','')) as `date`,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
+from mongo2hive.circledaq_circle_heat_value_type_day;
