@@ -585,6 +585,20 @@ from mysql2hive.wordpress_wp_posts;
 
 
 
+--插入:mysql2hive.circle_circle_living_remind到pro.ods_circle_living_remind
+insert overwrite table pro.ods_circle_living_remind PARTITION(dt='${hivevar:preday}') 
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(livingId,'\\n|\\r','')) as livingId,
+trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+trim(regexp_replace(telephone,'\\n|\\r','')) as telephone,
+trim(regexp_replace(remindStatus,'\\n|\\r','')) as remindStatus,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
+from mysql2hive.circle_circle_living_remind;
+
+
+
+
 --插入:mysql2hive.circle_circle_activity到pro.ods_circle_activity
 insert overwrite table pro.ods_circle_activity PARTITION(dt='${hivevar:preday}') 
 select 
