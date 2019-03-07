@@ -1481,6 +1481,87 @@ from mongo2hive.circleetl_circle_operation_info;
 
 
 
+--插入：mongo2hive.health_t_meeting_share_record到pro.ods_t_meeting_share_record
+insert overwrite table pro.ods_t_meeting_share_record PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(meetingId,'\\n|\\r','')) as meetingId,
+trim(regexp_replace(shareType,'\\n|\\r','')) as shareType,
+trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+trim(regexp_replace(wxId,'\\n|\\r','')) as wxId,
+trim(regexp_replace(wxName,'\\n|\\r','')) as wxName,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
+from mongo2hive.health_t_meeting_share_record;
+
+
+
+--插入：mongo2hive.health_t_meeting_pushflow到pro.ods_t_meeting_pushflow
+insert overwrite table pro.ods_t_meeting_pushflow PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(meetingId,'\\n|\\r','')) as meetingId,
+trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+trim(regexp_replace(rtmpPublishUrl,'\\n|\\r','')) as rtmpPublishUrl,
+trim(regexp_replace(rtmpPlayUrl,'\\n|\\r','')) as rtmpPlayUrl,
+trim(regexp_replace(hlsPlayUrl,'\\n|\\r','')) as hlsPlayUrl,
+trim(regexp_replace(rtmpPlayUrl720,'\\n|\\r','')) as rtmpPlayUrl720,
+trim(regexp_replace(hlsPlayUrl720,'\\n|\\r','')) as hlsPlayUrl720,
+trim(regexp_replace(rtmpPlayUrl480,'\\n|\\r','')) as rtmpPlayUrl480,
+trim(regexp_replace(hlsPlayUrl480,'\\n|\\r','')) as hlsPlayUrl480,
+trim(regexp_replace(snapshotImg,'\\n|\\r','')) as snapshotImg,
+trim(regexp_replace(testRtmpPublishUrl,'\\n|\\r','')) as testRtmpPublishUrl,
+trim(regexp_replace(testRtmpPlayUrl,'\\n|\\r','')) as testRtmpPlayUrl,
+trim(regexp_replace(testHlsPlayUrl,'\\n|\\r','')) as testHlsPlayUrl,
+trim(regexp_replace(transCode,'\\n|\\r','')) as transCode,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
+trim(regexp_replace(expireTime,'\\n|\\r','')) as expireTime
+from mongo2hive.health_t_meeting_pushflow;
+
+
+
+
+--插入：mongo2hive.health_t_meeting_pushflow_record到pro.ods_t_meeting_pushflow_record
+insert overwrite table pro.ods_t_meeting_pushflow_record PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(meetingId,'\\n|\\r','')) as meetingId,
+trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+trim(regexp_replace(pushflow,'\\n|\\r','')) as pushflow,
+trim(regexp_replace(deviceType,'\\n|\\r','')) as deviceType,
+trim(regexp_replace(appName,'\\n|\\r','')) as appName,
+trim(regexp_replace(appVersion,'\\n|\\r','')) as appVersion,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
+from mongo2hive.health_t_meeting_pushflow_record;
+
+
+
+
+--插入：mongo2hive.module_t_faq_user_view_record到pro.ods_t_faq_user_view_record
+insert overwrite table pro.ods_t_faq_user_view_record PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(dataType,'\\n|\\r','')) as dataType,
+trim(regexp_replace(dataId,'\\n|\\r','')) as dataId,
+trim(regexp_replace(viewType,'\\n|\\r','')) as viewType,
+trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
+from mongo2hive.module_t_faq_user_view_record;
+
+
+
+--插入：mongo2hive.health_t_meeting_wxuser到pro.ods_t_meeting_wxuser
+insert overwrite table pro.ods_t_meeting_wxuser PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(wxId,'\\n|\\r','')) as wxId,
+trim(regexp_replace(wxName,'\\n|\\r','')) as wxName,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime
+from mongo2hive.health_t_meeting_wxuser;
+
+
+
 --插入：mongo2hive.circledaq_circle_heat_value_type_day到pro.ods_circle_heat_value_type_day
 insert overwrite table pro.ods_circle_heat_value_type_day PARTITION(dt='${hivevar:preday}')   
 select 
