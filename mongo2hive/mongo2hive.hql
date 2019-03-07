@@ -1493,3 +1493,148 @@ trim(regexp_replace(grossScore,'\\n|\\r','')) as grossScore,
 trim(regexp_replace(`date`,'\\n|\\r','')) as `date`,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
 from mongo2hive.circledaq_circle_heat_value_type_day;
+
+
+
+--插入:mongo2hive.modulet_credit_company_integral到pro.ods_t_credit_company_integral
+insert overwrite table pro.ods_t_credit_company_integral PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(companyId,'\\n|\\r','')) as companyId,
+trim(regexp_replace(balance,'\\n|\\r','')) as balance,
+trim(regexp_replace(status,'\\n|\\r','')) as status,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime
+from mongo2hive.modulet_credit_company_integral;
+
+
+--插入:mongo2hive.dominos_dominos_record到pro.ods_dominos_record
+insert overwrite table pro.ods_dominos_record PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(dominosId,'\\n|\\r','')) as dominosId,
+trim(regexp_replace(activityId,'\\n|\\r','')) as activityId,
+trim(regexp_replace(joinUserId,'\\n|\\r','')) as joinUserId,
+trim(regexp_replace(joinNo,'\\n|\\r','')) as joinNo,
+trim(regexp_replace(joinTime,'\\n|\\r','')) as joinTime,
+trim(regexp_replace(deliveryUserId,'\\n|\\r','')) as deliveryUserId,
+trim(regexp_replace(awardType,'\\n|\\r','')) as awardType,
+trim(regexp_replace(awardNumber,'\\n|\\r','')) as awardNumber,
+trim(regexp_replace(cashingTime,'\\n|\\r','')) as cashingTime
+from mongo2hive.dominos_dominos_record;
+
+
+
+--插入:mongo2hive.dominos_dominos_info到pro.ods_dominos_info
+insert overwrite table pro.ods_dominos_info PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(activityId,'\\n|\\r','')) as activityId,
+trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+trim(regexp_replace(deliveryContent,'\\n|\\r','')) as deliveryContent,
+trim(regexp_replace(goalJoinNumber,'\\n|\\r','')) as goalJoinNumber,
+trim(regexp_replace(joinNubmer,'\\n|\\r','')) as joinNubmer,
+trim(regexp_replace(endTime,'\\n|\\r','')) as endTime,
+trim(regexp_replace(status,'\\n|\\r','')) as status,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
+from mongo2hive.dominos_dominos_info;
+
+
+
+
+--插入:mongo2hive.exhibitionmarketing_t_promotion到pro.ods_t_promotion_exhibition
+insert overwrite table pro.ods_t_promotion_exhibition PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(title,'\\n|\\r','')) as title,
+trim(regexp_replace(status,'\\n|\\r','')) as status,
+trim(regexp_replace(rewardsType,'\\n|\\r','')) as rewardsType,
+trim(regexp_replace(promotionItemList,'\\n|\\r','')) as promotionItemList,
+trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+trim(regexp_replace(promotionEnterpriseLogo,'\\n|\\r','')) as promotionEnterpriseLogo,
+trim(regexp_replace(activityRule,'\\n|\\r','')) as activityRule,
+trim(regexp_replace(longitude,'\\n|\\r','')) as longitude,
+trim(regexp_replace(latitude,'\\n|\\r','')) as latitude,
+trim(regexp_replace(locationSwitch,'\\n|\\r','')) as locationSwitch,
+trim(regexp_replace(concatAddress,'\\n|\\r','')) as concatAddress,
+trim(regexp_replace(effectiveRange,'\\n|\\r','')) as effectiveRange,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
+from mongo2hive.exhibitionmarketing_t_promotion;
+
+
+
+
+--插入:mongo2hive.exhibitionmarketing_t_redPaper_record到pro.ods_t_redPaper_record_exhibition
+insert overwrite table pro.ods_t_redPaper_record_exhibition PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(promotionId,'\\n|\\r','')) as promotionId,
+trim(regexp_replace(redPaperId,'\\n|\\r','')) as redPaperId,
+trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+trim(regexp_replace(userName,'\\n|\\r','')) as userName,
+trim(regexp_replace(dept,'\\n|\\r','')) as dept,
+trim(regexp_replace(telephone,'\\n|\\r','')) as telephone,
+trim(regexp_replace(amount,'\\n|\\r','')) as amount,
+trim(regexp_replace(haveDone,'\\n|\\r','')) as haveDone,
+trim(regexp_replace(exportType,'\\n|\\r','')) as exportType,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
+from mongo2hive.exhibitionmarketing_t_redPaper_record;
+
+
+
+--插入:mongo2hive.congress_t_congress_info到pro.ods_t_congress_info
+insert overwrite table pro.ods_t_congress_info PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(title,'\\n|\\r','')) as title,
+trim(regexp_replace(url,'\\n|\\r','')) as url,
+trim(regexp_replace(type,'\\n|\\r','')) as type,
+trim(regexp_replace(labelList,'\\n|\\r','')) as labelList,
+trim(regexp_replace(startTime,'\\n|\\r','')) as startTime,
+trim(regexp_replace(endTime,'\\n|\\r','')) as endTime,
+trim(regexp_replace(location,'\\n|\\r','')) as location,
+trim(regexp_replace(associationType,'\\n|\\r','')) as associationType,
+trim(regexp_replace(associationId,'\\n|\\r','')) as associationId,
+trim(regexp_replace(associationName,'\\n|\\r','')) as associationName,
+trim(regexp_replace(associationLink,'\\n|\\r','')) as associationLink,
+trim(regexp_replace(adBannerList,'\\n|\\r','')) as adBannerList,
+trim(regexp_replace(flickerAdvertisement,'\\n|\\r','')) as flickerAdvertisement,
+trim(regexp_replace(introduction,'\\n|\\r','')) as introduction,
+trim(regexp_replace(columnList,'\\n|\\r','')) as columnList,
+trim(regexp_replace(link,'\\n|\\r','')) as link,
+trim(regexp_replace(format,'\\n|\\r','')) as format,
+trim(regexp_replace(formatUrl,'\\n|\\r','')) as formatUrl,
+trim(regexp_replace(branchCongressList,'\\n|\\r','')) as branchCongressList,
+trim(regexp_replace(recordedBroadcastList,'\\n|\\r','')) as recordedBroadcastList,
+trim(regexp_replace(agendaList,'\\n|\\r','')) as agendaList,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
+trim(regexp_replace(createUserId,'\\n|\\r','')) as createUserId,
+trim(regexp_replace(state,'\\n|\\r','')) as state,
+trim(regexp_replace(equivalenceType,'\\n|\\r','')) as equivalenceType,
+trim(regexp_replace(qrcode,'\\n|\\r','')) as qrcode
+from mongo2hive.congress_t_congress_info;
+
+
+
+--插入:mongo2hive.congress_t_credit_record到pro.ods_t_credit_record_congress
+insert overwrite table pro.ods_t_credit_record_congress PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(type,'\\n|\\r','')) as type,
+trim(regexp_replace(companyId,'\\n|\\r','')) as companyId,
+trim(regexp_replace(companyName,'\\n|\\r','')) as companyName,
+trim(regexp_replace(congressId,'\\n|\\r','')) as congressId,
+trim(regexp_replace(congressName,'\\n|\\r','')) as congressName,
+trim(regexp_replace(adId,'\\n|\\r','')) as adId,
+trim(regexp_replace(adType,'\\n|\\r','')) as adType,
+trim(regexp_replace(adName,'\\n|\\r','')) as adName,
+trim(regexp_replace(amount,'\\n|\\r','')) as amount,
+trim(regexp_replace(freezeState,'\\n|\\r','')) as freezeState,
+trim(regexp_replace(freezeDesc,'\\n|\\r','')) as freezeDesc,
+trim(regexp_replace(freezeId,'\\n|\\r','')) as freezeId,
+trim(regexp_replace(createUserId,'\\n|\\r','')) as createUserId,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
+from mongo2hive.congress_t_credit_record;
