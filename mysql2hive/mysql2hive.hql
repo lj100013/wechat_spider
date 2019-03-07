@@ -582,3 +582,69 @@ trim(regexp_replace(source,'\\n|\\r','')) as source,
 trim(regexp_replace(post_flag,'\\n|\\r','')) as post_flag,
 trim(regexp_replace(faq_id,'\\n|\\r','')) as faq_id
 from mysql2hive.wordpress_wp_posts;
+
+
+
+--插入:mysql2hive.circle_circle_activity到pro.ods_circle_activity
+insert overwrite table pro.ods_circle_activity PARTITION(dt='${hivevar:preday}') 
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(type,'\\n|\\r','')) as type,
+trim(regexp_replace(agreement,'\\n|\\r','')) as agreement,
+trim(regexp_replace(commitLocation,'\\n|\\r','')) as commitLocation,
+trim(regexp_replace(imageUrl,'\\n|\\r','')) as imageUrl,
+trim(regexp_replace(simageUrl,'\\n|\\r','')) as simageUrl,
+trim(regexp_replace(startTime,'\\n|\\r','')) as startTime,
+trim(regexp_replace(endTime,'\\n|\\r','')) as endTime,
+trim(regexp_replace(rule,'\\n|\\r','')) as rule,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(name,'\\n|\\r','')) as name,
+trim(regexp_replace(businessType,'\\n|\\r','')) as businessType,
+trim(regexp_replace(creator,'\\n|\\r','')) as creator,
+trim(regexp_replace(ruleStartTime,'\\n|\\r','')) as ruleStartTime,
+trim(regexp_replace(ruleEndTime,'\\n|\\r','')) as ruleEndTime,
+trim(regexp_replace(eid,'\\n|\\r','')) as eid,
+trim(regexp_replace(companyName,'\\n|\\r','')) as companyName,
+trim(regexp_replace(companyId,'\\n|\\r','')) as companyId,
+trim(regexp_replace(unFreezeFlag,'\\n|\\r','')) as unFreezeFlag,
+trim(regexp_replace(rewardType,'\\n|\\r','')) as rewardType
+from mysql2hive.circle_circle_activity;
+
+
+
+--插入:mysql2hive.circle_circle_activity_redpaper到pro.ods_circle_activity_redpaper
+insert overwrite table pro.ods_circle_activity_redpaper PARTITION(dt='${hivevar:preday}') 
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(startTime,'\\n|\\r','')) as startTime,
+trim(regexp_replace(endTime,'\\n|\\r','')) as endTime,
+trim(regexp_replace(rule,'\\n|\\r','')) as rule,
+trim(regexp_replace(name,'\\n|\\r','')) as name,
+trim(regexp_replace(grade,'\\n|\\r','')) as grade,
+trim(regexp_replace(`sum`,'\\n|\\r','')) as `sum`,
+trim(regexp_replace(mayOptNum,'\\n|\\r','')) as mayOptNum,
+trim(regexp_replace(probability,'\\n|\\r','')) as probability,
+trim(regexp_replace(businessType,'\\n|\\r','')) as businessType,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(creator,'\\n|\\r','')) as creator,
+trim(regexp_replace(activityId,'\\n|\\r','')) as activityId,
+trim(regexp_replace(activityFlag,'\\n|\\r','')) as activityFlag,
+trim(regexp_replace(rewardType,'\\n|\\r','')) as rewardType
+from mysql2hive.circle_circle_activity_redpaper;
+
+
+
+
+--插入:mysql2hive.circle_circle_activity_redenvelopes到pro.ods_circle_activity_redenvelopes
+insert overwrite table pro.ods_circle_activity_redenvelopes PARTITION(dt='${hivevar:preday}') 
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(aid,'\\n|\\r','')) as aid,
+trim(regexp_replace(sid,'\\n|\\r','')) as sid,
+trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+trim(regexp_replace(amount,'\\n|\\r','')) as amount,
+trim(regexp_replace(randomNum,'\\n|\\r','')) as randomNum,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(receiveTime,'\\n|\\r','')) as receiveTime,
+trim(regexp_replace(user,'\\n|\\r','')) as user
+from mysql2hive.circle_circle_activity_redenvelopes;
