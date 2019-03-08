@@ -662,3 +662,27 @@ trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(receiveTime,'\\n|\\r','')) as receiveTime,
 trim(regexp_replace(user,'\\n|\\r','')) as user
 from mysql2hive.circle_circle_activity_redenvelopes;
+
+
+
+
+--插入:mysql2hive.coupon_coupon_user到pro.ods_coupon_user
+insert overwrite table pro.ods_coupon_user PARTITION(dt='${hivevar:preday}') 
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(applyId,'\\n|\\r','')) as applyId,
+trim(regexp_replace(couponId,'\\n|\\r','')) as couponId,
+trim(regexp_replace(name,'\\n|\\r','')) as name,
+trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+trim(regexp_replace(telephone,'\\n|\\r','')) as telephone,
+trim(regexp_replace(bizId,'\\n|\\r','')) as bizId,
+trim(regexp_replace(subBizId,'\\n|\\r','')) as subBizId,
+trim(regexp_replace(type,'\\n|\\r','')) as type,
+trim(regexp_replace(status,'\\n|\\r','')) as status,
+trim(regexp_replace(usingTime,'\\n|\\r','')) as usingTime,
+trim(regexp_replace(orderId,'\\n|\\r','')) as orderId,
+trim(regexp_replace(refundTime,'\\n|\\r','')) as refundTime,
+trim(regexp_replace(receiveTime,'\\n|\\r','')) as receiveTime,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime
+from mysql2hive.coupon_coupon_user;
