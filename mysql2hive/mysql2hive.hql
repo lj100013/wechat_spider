@@ -710,3 +710,23 @@ trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
 trim(regexp_replace(remark,'\\n|\\r','')) as remark
 from mysql2hive.credit_circle_recharge;
+
+
+
+--插入:mysql2hive.coupon_user_coupon_detail到pro.ods_user_coupon_detail
+insert overwrite table pro.ods_user_coupon_detail PARTITION(dt='${hivevar:preday}') 
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+trim(regexp_replace(applyId,'\\n|\\r','')) as applyId,
+trim(regexp_replace(couponId,'\\n|\\r','')) as couponId,
+trim(regexp_replace(orderId,'\\n|\\r','')) as orderId,
+trim(regexp_replace(description,'\\n|\\r','')) as description,
+trim(regexp_replace(faceValue,'\\n|\\r','')) as faceValue,
+trim(regexp_replace(status,'\\n|\\r','')) as status,
+trim(regexp_replace(type,'\\n|\\r','')) as type,
+trim(regexp_replace(bizId,'\\n|\\r','')) as bizId,
+trim(regexp_replace(subBizId,'\\n|\\r','')) as subBizId,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime
+from mysql2hive.coupon_user_coupon_detail;
