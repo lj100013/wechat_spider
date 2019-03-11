@@ -686,3 +686,27 @@ trim(regexp_replace(receiveTime,'\\n|\\r','')) as receiveTime,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime
 from mysql2hive.coupon_coupon_user;
+
+
+
+
+--插入:mysql2hive.credit_circle_recharge到pro.ods_circle_recharge
+insert overwrite table pro.ods_circle_recharge PARTITION(dt='${hivevar:preday}') 
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(payNo,'\\n|\\r','')) as payNo,
+trim(regexp_replace(amount,'\\n|\\r','')) as amount,
+trim(regexp_replace(integral,'\\n|\\r','')) as integral,
+trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+trim(regexp_replace(rechargeType,'\\n|\\r','')) as rechargeType,
+trim(regexp_replace(targerType,'\\n|\\r','')) as targerType,
+trim(regexp_replace(targerId,'\\n|\\r','')) as targerId,
+trim(regexp_replace(targerName,'\\n|\\r','')) as targerName,
+trim(regexp_replace(status,'\\n|\\r','')) as status,
+trim(regexp_replace(payTime,'\\n|\\r','')) as payTime,
+trim(regexp_replace(prepayId,'\\n|\\r','')) as prepayId,
+trim(regexp_replace(openId,'\\n|\\r','')) as openId,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
+trim(regexp_replace(remark,'\\n|\\r','')) as remark
+from mysql2hive.credit_circle_recharge;
