@@ -1719,3 +1719,54 @@ trim(regexp_replace(freezeId,'\\n|\\r','')) as freezeId,
 trim(regexp_replace(createUserId,'\\n|\\r','')) as createUserId,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
 from mongo2hive.congress_t_credit_record;
+
+
+
+
+--插入:mongo2hive.activity_t_red_packet到pro.ods_t_red_packet
+insert overwrite table pro.ods_t_red_packet PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(activityId,'\\n|\\r','')) as activityId,
+trim(regexp_replace(bizId,'\\n|\\r','')) as bizId,
+trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+trim(regexp_replace(userName,'\\n|\\r','')) as userName,
+trim(regexp_replace(amount,'\\n|\\r','')) as amount,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(haveDone,'\\n|\\r','')) as haveDone,
+trim(regexp_replace(redEnvelopeId,'\\n|\\r','')) as redEnvelopeId
+from mongo2hive.activity_t_red_packet;
+
+
+--插入:mongo2hive.h5marketing_t_promotion到pro.ods_t_promotion_h5marketing
+insert overwrite table pro.ods_t_promotion_h5marketing PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(title,'\\n|\\r','')) as title,
+trim(regexp_replace(status,'\\n|\\r','')) as status,
+trim(regexp_replace(rewardsType,'\\n|\\r','')) as rewardsType,
+trim(regexp_replace(promotionItemList,'\\n|\\r','')) as promotionItemList,
+trim(regexp_replace(relateActivityCnt,'\\n|\\r','')) as relateActivityCnt,
+trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+trim(regexp_replace(popupWindowFlag,'\\n|\\r','')) as popupWindowFlag,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime
+from mongo2hive.h5marketing_t_promotion;
+
+
+
+
+--插入:mongo2hive.h5marketing_t_redPaper_record到pro.ods_t_redPaper_record_h5marketing
+insert overwrite table pro.ods_t_redPaper_record_h5marketing PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(promotionId,'\\n|\\r','')) as promotionId,
+trim(regexp_replace(redPaperId,'\\n|\\r','')) as redPaperId,
+trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+trim(regexp_replace(amount,'\\n|\\r','')) as amount,
+trim(regexp_replace(haveDone,'\\n|\\r','')) as haveDone,
+trim(regexp_replace(exportType,'\\n|\\r','')) as exportType,
+trim(regexp_replace(shareImgUrl,'\\n|\\r','')) as shareImgUrl,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime
+from mongo2hive.h5marketing_t_redPaper_record;
