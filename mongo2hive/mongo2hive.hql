@@ -1770,3 +1770,74 @@ trim(regexp_replace(shareImgUrl,'\\n|\\r','')) as shareImgUrl,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime
 from mongo2hive.h5marketing_t_redPaper_record;
+
+
+
+
+--插入：mongo2hive.module_t_business_ad到pro.ods_t_business_ad
+insert overwrite table pro.ods_t_business_ad PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(adTitle,'\\n|\\r','')) as bizType,
+trim(regexp_replace(companyId,'\\n|\\r','')) as companyId,
+trim(regexp_replace(companyName,'\\n|\\r','')) as companyName,
+trim(regexp_replace(adType,'\\n|\\r','')) as adType,
+trim(regexp_replace(businessInfo_businessType,'\\n|\\r','')) as businessInfo_businessType,
+trim(regexp_replace(businessInfo_meetingId,'\\n|\\r','')) as businessInfo_meetingId,
+trim(regexp_replace(businessInfo_meetingName,'\\n|\\r','')) as businessInfo_meetingName,
+trim(regexp_replace(businessInfo_minutes,'\\n|\\r','')) as businessInfo_minutes,
+trim(regexp_replace(surveyType,'\\n|\\r','')) as surveyType,
+trim(regexp_replace(surveyOnePoint,'\\n|\\r','')) as surveyOnePoint,
+trim(regexp_replace(surveyTotalPoint,'\\n|\\r','')) as surveyTotalPoint,
+trim(regexp_replace(surveyLeftPoint,'\\n|\\r','')) as surveyLeftPoint,
+trim(regexp_replace(surveyEndTime,'\\n|\\r','')) as surveyEndTime,
+trim(regexp_replace(range_rangeType,'\\n|\\r','')) as range_rangeType,
+trim(regexp_replace(range_userCheck,'\\n|\\r','')) as range_userCheck,
+trim(regexp_replace(status,'\\n|\\r','')) as status,
+trim(regexp_replace(createUserId,'\\n|\\r','')) as createUserId,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
+trim(regexp_replace(surveys,'\\n|\\r','')) as surveys,
+trim(regexp_replace(freezeId,'\\n|\\r','')) as freezeId,
+trim(regexp_replace(transactionIds,'\\n|\\r','')) as transactionIds
+from mongo2hive.module_t_business_ad;
+
+
+
+--插入：mongo2hive.module_t_business_ad_survey_record到pro.ods_t_business_ad_survey_record
+insert overwrite table pro.ods_t_business_ad_survey_record PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(adId,'\\n|\\r','')) as adId,
+trim(regexp_replace(answers,'\\n|\\r','')) as answers,
+trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime
+from mongo2hive.module_t_business_ad_survey_record;
+
+
+
+
+--插入：mongo2hive.health_t_survey到pro.ods_t_survey
+insert overwrite table pro.ods_t_survey PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(title,'\\n|\\r','')) as title,
+trim(regexp_replace(`desc`,'\\n|\\r','')) as `desc`,
+trim(regexp_replace(groupId,'\\n|\\r','')) as groupId,
+trim(regexp_replace(status,'\\n|\\r','')) as status,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(createUserId,'\\n|\\r','')) as createUserId,
+trim(regexp_replace(createUserType,'\\n|\\r','')) as createUserType,
+trim(regexp_replace(unionId,'\\n|\\r','')) as unionId,
+trim(regexp_replace(version,'\\n|\\r','')) as version,
+trim(regexp_replace(questionList,'\\n|\\r','')) as questionList,
+trim(regexp_replace(deleteUserType,'\\n|\\r','')) as deleteUserType,
+trim(regexp_replace(updateUserId,'\\n|\\r','')) as updateUserId,
+trim(regexp_replace(updateUserType,'\\n|\\r','')) as updateUserType,
+trim(regexp_replace(deleteTime,'\\n|\\r','')) as deleteTime,
+trim(regexp_replace(deleteUserId,'\\n|\\r','')) as deleteUserId,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
+trim(regexp_replace(appName,'\\n|\\r','')) as appName,
+trim(regexp_replace(range,'\\n|\\r','')) as range
+from mongo2hive.health_t_survey;
