@@ -9,4 +9,4 @@ echo '###########################'
 echo 'preday:'$preday
 echo '###########################'
 
-impala-shell --var=preday=${preday} -f /data/job_pro/dataX/mysql2hive/mysql2hive_credit.hql
+hive -hivevar preday=$preday -f /data/job_pro/dataX/mysql2hive/mysql2hive_credit.hql
