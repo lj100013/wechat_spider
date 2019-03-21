@@ -1279,7 +1279,8 @@ trim(regexp_replace(recordId,'\\n|\\r','')) as recordId,
 trim(regexp_replace(watchedLength,'\\n|\\r','')) as watchedLength,
 trim(regexp_replace(count1,'\\n|\\r','')) as count1,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
-trim(regexp_replace(wxName,'\\n|\\r','')) as wxName
+trim(regexp_replace(wxName,'\\n|\\r','')) as wxName,
+trim(regexp_replace(userId,'\\n|\\r','')) as userId
 from mongo2hive.health_t_meeting_h5_watched_log;
 
 
