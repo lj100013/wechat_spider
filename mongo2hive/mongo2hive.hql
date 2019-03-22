@@ -111,7 +111,8 @@ trim(regexp_replace(suspendInfo,'\\n|\\r','')) as suspendInfo,
 trim(regexp_replace(passIdRec,'\\n|\\r','')) as passIdRec,
 trim(regexp_replace(IDCardName,'\\n|\\r','')) as IDCardName,
 trim(regexp_replace(IDNum,'\\n|\\r','')) as IDNum,
-trim(regexp_replace(sysCheck,'\\n|\\r','')) as sysCheck
+trim(regexp_replace(sysCheck,'\\n|\\r','')) as sysCheck,
+trim(regexp_replace(circleId,'\\n|\\r','')) as circleId
 from mongo2hive.health_user;
 
 
