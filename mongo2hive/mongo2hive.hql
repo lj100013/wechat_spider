@@ -1842,3 +1842,18 @@ trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
 trim(regexp_replace(appName,'\\n|\\r','')) as appName,
 trim(regexp_replace(range,'\\n|\\r','')) as range
 from mongo2hive.health_t_survey;
+
+
+
+
+--插入:mongo2hive.module_t_credit_company到pro.ods_t_credit_company
+insert overwrite table pro.ods_t_credit_company PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(companyName,'\\n|\\r','')) as companyName,
+trim(regexp_replace(manager,'\\n|\\r','')) as manager,
+trim(regexp_replace(managerTel,'\\n|\\r','')) as managerTel,
+trim(regexp_replace(status,'\\n|\\r','')) as status,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime
+from mongo2hive.module_t_credit_company;
