@@ -1,6 +1,5 @@
 # -*- coding:utf-8 -*-
 import pymysql
-        print(str(len(content_nodes)))
 import lxml.html
 etree = lxml.html.etree
 import logging
