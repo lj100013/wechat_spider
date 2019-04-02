@@ -20,10 +20,11 @@ user=conf.get('esy', 'user')
 password=conf.get('esy', 'password')
 db=conf.get('esy', 'db')
 upload_url = conf.get('esy','upload_url')
+qiniu_url = conf.get('esy','qiniu_url')
 
 conn = pymysql.connect(host, user, password, db)
 cursor = conn.cursor()
-sql = "SELECT guid,source,dept,post_title,post_content,post_date FROM `wp_posts` where url is null"
+sql = "SELECT guid,source,dept,post_title,post_content,post_date FROM `wp_posts` where source in ('医脉通web','丁香园web')  and url is null"
 cursor.execute(sql)
 post_row = cursor.fetchall()
 
@@ -31,15 +32,15 @@ header = {"Content-Type": "application/json"}
 
 
 def write2_qiniu(html_content, name):
-    try:
-        html = base64.b64encode(html_content.encode('utf-8'))
-        qiniu_data = {"fileName": name, "contentBytes": html.decode(encoding='utf-8')}
-        textmod = json.dumps(qiniu_data).encode(encoding='utf-8')
-        res = requests.post(url=upload_url, headers=header, data=textmod)
+    html = base64.b64encode(html_content.encode('utf-8'))
+    qiniu_data = {"fileName": name, "contentBytes": html.decode(encoding='utf-8')}
+    textmod = json.dumps(qiniu_data).encode(encoding='utf-8')
+    res = requests.post(url=upload_url, headers=header, data=textmod)
+    if str(res.ok) == 'True':
         url = str(res.content,encoding='utf-8')
         return str(url)
-    except Exception as e:
-        print(e)
+    else:
+        return 'error'
 
 def parse2html(post_content):
     html_list=[]
@@ -68,8 +69,10 @@ try:
         logging.info('start:'+source+':'+guid+':'+post_title)
         html_content = parse2html(post_content)
         newUrl = write2_qiniu(html_content,'esy_'+guid)
+        if newUrl=='error':
+            logging.error('上传七牛失败:'+post_title+':'+guid)
+            continue
         logging.info('newUrl:'+newUrl)
-
         from lxml import etree
         rsp = etree.HTML(post_content)
         img_urls = rsp.xpath('//img/@src')
