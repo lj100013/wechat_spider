@@ -30,12 +30,12 @@ class Spider(object):
         conf.read("config.ini")
         secs = conf.sections()
         #mysql
-        host = conf.get('mysqldb', 'host')
-        port = conf.getint('mysqldb', 'port')
-        user = conf.get('mysqldb', 'user')
-        password = conf.get('mysqldb', 'password')
-        db = conf.get('mysqldb', 'db1')
-        charset = conf.get('mysqldb', 'charset')
+        host = conf.get('esy_mysqldb', 'host')
+        port = conf.getint('esy_mysqldb', 'port')
+        user = conf.get('esy_mysqldb', 'user')
+        password = conf.get('esy_mysqldb', 'password')
+        db = conf.get('esy_mysqldb', 'db1')
+        charset = conf.get('esy_mysqldb', 'charset')
         #七牛云地址
         self.qiuniu_url = conf.get('qiniu', 'url')
         self.replace_host = conf.get('qiniu', 'replace_host')
