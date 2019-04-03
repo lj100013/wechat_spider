@@ -1,3 +1,4 @@
+#coding:utf-8
 from dxy_spider import DxySpider
 from ymt_spider import YmtSpider
 from multiprocessing.dummy import Pool as ThreadPool
