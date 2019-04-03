@@ -27,7 +27,7 @@ class Spider(object):
     def _parseConfig(self):
         conf = configparser.ConfigParser()
         conf.read("config.ini")
-        sections = conf.sections()
+        secs = conf.sections()
         #mysql
         host = conf.get('mysqldb', 'host')
         port = conf.getint('mysqldb', 'port')
