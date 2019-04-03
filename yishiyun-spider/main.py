@@ -2,8 +2,9 @@ from dxy_spider import DxySpider
 from ymt_spider import YmtSpider
 from multiprocessing.dummy import Pool as ThreadPool
 import logging
-
-logging.basicConfig(level=logging.INFO,
+import sys
+import argparse
+logging.basicConfig(level=logging.WARNING,
                     format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
                     datefmt='%a, %d %b %Y %H:%M:%S')
                     #filename='yishiyu_spider.log',
@@ -38,11 +39,14 @@ if __name__ == "__main__":
                ('http://news.medlive.cn/oph/info/','眼科',22),('http://news.medlive.cn/ent/info/','耳鼻咽喉科',23),
                ('http://news.medlive.cn/oral/info/','口腔科',24),('http://news.medlive.cn/em/info/','急诊/重症',26),
                ('http://news.medlive.cn/xctmr/info/','影像科',27),('http://news.medlive.cn/lab/info/','检验科',28)]
-
-    dxy = DxySpider(first_time=True)
-    ymt = YmtSpider(first_time=True)
+    parser = argparse.ArgumentParser(description='manual to this script')
+    parser.add_argument('--first_time', type=bool, default=False)
+    args = parser.parse_args()
+    first_time = args.first_time
+    dxy = DxySpider(first_time=first_time)
+    ymt = YmtSpider(first_time=first_time)
     pool = ThreadPool(8)
-    #pool.map_async(dxy.crawl_page_source, dxy_url)
+    pool.map_async(dxy.crawl_page_source, dxy_url)
     pool.map_async(ymt.crawl_page_source, ymt_url)
     pool.close()
     pool.join()

@@ -64,10 +64,10 @@ class YmtSpider(Spider):
                                 continue
                             author = '医脉通web'
                             source = '医脉通web'
-                            content = detail_content.xpath('//*[@id="content"]/div[1]/div[1]/div/div[4]/div[1]')
+                            content = detail_content.xpath('//div[@class="content_body"]')
                             if len(content) > 0:
                                 content = etree.tostring(content[0], method='html').decode("utf-8")
-                                img_urls = detail_content.xpath('//p/img/@src')
+                                img_urls = detail_content.xpath('//img/@src')
                                 if len(img_urls) > 0:
                                     content = self.replace_img_url(img_urls, content, source)
                                 data = {'title': title, 'author': author, 'dept': dept, 'source': source,

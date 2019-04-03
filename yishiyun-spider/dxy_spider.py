@@ -10,7 +10,6 @@ class DxySpider(Spider):
         super(DxySpider, self).__init__(first_time)
         self.headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36"}
 
-
     def crawl_page_source(self, url_dept):
         url = url_dept[0]
         dept = url_dept[1]
