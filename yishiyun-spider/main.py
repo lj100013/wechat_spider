@@ -6,9 +6,9 @@ import sys
 import argparse
 logging.basicConfig(level=logging.WARNING,
                     format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
-                    datefmt='%a, %d %b %Y %H:%M:%S')
-                    #filename='yishiyu_spider.log',
-                    #filemode='a')
+                    datefmt='%a, %d %b %Y %H:%M:%S'
+                    filename='yishiyu_spider.log',
+                    filemode='a')
 if __name__ == "__main__":
     dxy_url = [('http://heart.dxy.cn/tag/news', '心血管'), ('http://endo.dxy.cn/tag/news', '内分泌'),
                ('http://neuro.dxy.cn/tag/news', '神经'), ('http://chest.dxy.cn/tag/news', '呼吸'),
