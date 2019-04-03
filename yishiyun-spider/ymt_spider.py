@@ -1,3 +1,4 @@
+#coding:utf-8
 from meta_spider import Spider
 import requests
 from lxml import etree

@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from abc import abstractmethod
 import configparser
+#coding:utf-8
 import logging
 import pymysql
 import hashlib
