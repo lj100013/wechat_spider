@@ -66,21 +66,3 @@ phantomJS_path = '/data/program/phantomjs-2.1.1-linux-x86_64/bin/phantomjs'
 zhi_ma_apiUrl = "http://webapi.http.zhimacangku.com/getip?num=1&type=1&pro=&city=0&yys=0&port=1&pack=34734&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions="
 blank_jpeg_img = "NzKkzoeG5s2FcdXyTKYAErrs5QNBXGVS75aQnxYX1RmPQTRwN3CsZw5Dfjb3oiaYLjgNaWrFck8rJJRoqHxuItA.jpeg"
 driver_user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
-
-# MYSQL_HOST = '192.168.3.154'
-# MYSQL_USER = 'root'
-# LOG_LEVEL = 'WARNING'
-# MYSQL_PASSWORD = 'Dachen@222'
-# MYSQL_PORT = 3306
-# MYSQL_DB = 'wordpress'
-# CHARSET = 'utf8'
-
-#debug
-#img_base_url = 'http://bigdata.dev.file.dachentech.com.cn/'
-#online
-#img_base_url = 'http://content.file.mediportal.com.cn/'
-#debug
-#qiniu_service_url = 'http://192.168.2.108:8076/qiniu/upload/bigdata'
-#online
-#qiniu_service_url = 'http://xg.mediportal.com.cn/docapi/qiniu/upload/content?access_token=36e93fe6391d4e638635df2c286e73da'
-#debug = True
