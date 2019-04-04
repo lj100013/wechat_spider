@@ -10,6 +10,17 @@ from lxml import etree
 from urllib import request
 import urllib3
 import setting
+import configparser
+conf = configparser.ConfigParser()
+#conf.read(r"E:\job_script\utils\config.ini")
+conf.read("/data/job_pro/utils/config.ini")
+HOST=conf.get('weixin', 'host')
+PORT=int(conf.get('weixin', 'port'))
+USER=conf.get('weixin', 'username')
+PASSWORD=conf.get('weixin', 'password')
+DB=conf.get('weixin', 'database')
+CHARSET=conf.get('weixin', 'charset')
+qiniu_service_url=conf.get('weixin', 'qiniu_service_url')
 urllib3.disable_warnings()
 
 def du(url, name):
@@ -93,23 +104,6 @@ def sub_img_url(response):
         file_name = fname + img_format
         write2_qiniu(link, file_name)
         return content
-    # imgs = re.compile('.*?<img.*?=("http.*?").*?>', re.S).findall(rsp)
-    # if imgs:
-    #     img_url = list(set([i.replace('"', "") for i in imgs if len(i) > 40]))
-    #     for url in img_url:
-    #         old_img_url = "src=" + '"' + url + '"'
-    #         iid = max(url.split("/"), key=lambda x: len(x))
-    #         if "mmbiz.qpic.cn" in url:
-    #             url = url + "&tp=webp&wxfrom=5&wx_lazy=1"
-    #             old_img_url = "data-src=" + '"' + url.replace("&tp=webp&wxfrom=5&wx_lazy=1", "") + '"'
-    #         if "academic.oup.com" not in url:
-    #             now_img_url = "src=" + du(url, iid)
-    #             print("原始图片链接为：", old_img_url)
-    #             print("返回的url：", now_img_url)
-    #             rsp = rsp.replace(old_img_url, now_img_url)
-    #     return rsp
-    # else:
-    #     return rsp
 
 
 # 隐藏更多信息需要传入html文本字符串和xpath规则(文本内容)，对哪个标签进行隐藏
@@ -125,13 +119,6 @@ def hide_data(datas, content_xpath, hide_xpath="</p>"):
         return content
     except:
         pass
-
-
-# 默认参数hide是以p标签作为隐藏标签
-# def hide_and_sub(response, xpath, hide_xpath):
-#     tmp = sub_img_url(response)
-#     content = hide_data(tmp, xpath, hide_xpath)
-#     return content
 
 def hide_content(response, content_xpath, hide_xpath="</p>"):
     try:
@@ -182,19 +169,16 @@ def replace_img_url(response, content):
         write2_qiniu(link, file_name)
         return content
 
+
 def write2_qiniu(url, name):
     try:
-        img = requests.get(url=url)
+        img = requests.get(url=url, verify=False)
         pic = base64.b64encode(img.content)
         qiniu_data = {"fileName": name, "contentBytes": pic.decode(encoding='utf-8')}
         textmod = json.dumps(qiniu_data).encode(encoding='utf-8')
         header_dict = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko',
                    "Content-Type": "application/json"}
-        if setting.debug:
-            re_url = 'http://192.168.2.108:8076/qiniu/upload/bigdata'
-        else:
-            re_url = 'http://xg.mediportal.com.cn/docapi/qiniu/upload/content?access_token=36e93fe6391d4e638635df2c286e73da'
-
+        re_url = qiniu_service_url
         req = request.Request(url=re_url, data=textmod, headers=header_dict)
         res = request.urlopen(req)
         n_url = res.read()
@@ -218,18 +202,8 @@ def hide_and_sub(response, xpath, hide_xpath):
 
 # 数据库去重操作(传入postname)
 def database_filter():
-    '''
-    :param type(args) == str
-    :return: 存在是[id]
-    '''
-    host = setting.MYSQL_HOST
-    user = setting.MYSQL_USER
-    psd = setting.MYSQL_PASSWORD
-    db = setting.MYSQL_DB
-    c = setting.CHARSET
-    port = setting.MYSQL_PORT
     # 数据库连接
-    con = pymysql.connect(host=host, user=user, passwd=psd, db=db, charset=c, port=port)
+    con = pymysql.connect(host=HOST, user=USER, passwd=PASSWORD, db=DB, charset=CHARSET, port=PORT)
     # 数据库游标
     _end = con.cursor()
     print("mysql connect succes")
@@ -244,14 +218,8 @@ def database_filter():
 
 # 数据库去重操作(传入guid)
 def is_exists(guid):
-    host = setting.MYSQL_HOST
-    user = setting.MYSQL_USER
-    psd = setting.MYSQL_PASSWORD
-    db = setting.MYSQL_DB
-    c = setting.CHARSET
-    port = setting.MYSQL_PORT
     # 数据库连接
-    con = pymysql.connect(host=host, user=user, passwd=psd, db=db, charset=c, port=port)
+    con = pymysql.connect(host=HOST, user=USER, passwd=PASSWORD, db=DB, charset=CHARSET, port=PORT)
     # 数据库游标
     _end = con.cursor()
     print("mysql connect succes")
