@@ -906,9 +906,10 @@ trim(regexp_replace(surveyTitle,'\\n|\\r','')) as surveyTitle,
 trim(regexp_replace(surveyDesc,'\\n|\\r','')) as surveyDesc,
 trim(regexp_replace(surveyUnionId,'\\n|\\r','')) as surveyUnionId,
 trim(regexp_replace(surveyVersion,'\\n|\\r','')) as surveyVersion,
-answerList,
+trim(regexp_replace(type,'\\n|\\r','')) as type,
 trim(regexp_replace(activeUserId,'\\n|\\r','')) as activeUserId,
-trim(regexp_replace(activeTime,'\\n|\\r','')) as activeTime
+trim(regexp_replace(activeTime,'\\n|\\r','')) as activeTime,
+answerList
 from mongo2hive.health_t_survey_answer;
 
 
@@ -1202,7 +1203,7 @@ trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(haveDone,'\\n|\\r','')) as haveDone,
 trim(regexp_replace(surveyId,'\\n|\\r','')) as surveyId,
 trim(regexp_replace(answerId,'\\n|\\r','')) as answerId,
-trim(regexp_replace(answers,'\\n|\\r','')) as answers
+answers
 from mongo2hive.activity_t_assistant;
 
 
@@ -1824,24 +1825,24 @@ from mongo2hive.module_t_business_ad_survey_record;
 insert overwrite table pro.ods_t_survey PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(appName,'\\n|\\r','')) as appName,
 trim(regexp_replace(title,'\\n|\\r','')) as title,
-trim(regexp_replace(`desc`,'\\n|\\r','')) as `desc`,
+trim(regexp_replace(des,'\\n|\\r','')) as des,
 trim(regexp_replace(groupId,'\\n|\\r','')) as groupId,
 trim(regexp_replace(status,'\\n|\\r','')) as status,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(createUserId,'\\n|\\r','')) as createUserId,
 trim(regexp_replace(createUserType,'\\n|\\r','')) as createUserType,
-trim(regexp_replace(unionId,'\\n|\\r','')) as unionId,
-trim(regexp_replace(version,'\\n|\\r','')) as version,
-trim(regexp_replace(questionList,'\\n|\\r','')) as questionList,
-trim(regexp_replace(deleteUserType,'\\n|\\r','')) as deleteUserType,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
 trim(regexp_replace(updateUserId,'\\n|\\r','')) as updateUserId,
 trim(regexp_replace(updateUserType,'\\n|\\r','')) as updateUserType,
 trim(regexp_replace(deleteTime,'\\n|\\r','')) as deleteTime,
 trim(regexp_replace(deleteUserId,'\\n|\\r','')) as deleteUserId,
-trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
-trim(regexp_replace(appName,'\\n|\\r','')) as appName,
-trim(regexp_replace(range,'\\n|\\r','')) as range
+trim(regexp_replace(deleteUserType,'\\n|\\r','')) as deleteUserType,
+trim(regexp_replace(unionId,'\\n|\\r','')) as unionId,
+trim(regexp_replace(versions,'\\n|\\r','')) as versions,
+trim(regexp_replace(range,'\\n|\\r','')) as range,
+questionList
 from mongo2hive.health_t_survey;
 
 
