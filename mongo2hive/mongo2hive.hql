@@ -1479,9 +1479,9 @@ trim(regexp_replace(step,'\\n|\\r','')) as step,
 trim(regexp_replace(adddress,'\\n|\\r','')) as adddress,
 trim(regexp_replace(browerMessage,'\\n|\\r','')) as browerMessage,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
-trim(regexp_replace(phoneNumber,'\\n|\\r','')) as phoneNumber
+trim(regexp_replace(phoneNumber,'\\n|\\r','')) as phoneNumber,
+trim(regexp_replace(data,'\\n|\\r','')) as data
 from mongo2hive.circleetl_circle_operation_info;
-
 
 
 --插入：mongo2hive.health_t_meeting_share_record到pro.ods_t_meeting_share_record
