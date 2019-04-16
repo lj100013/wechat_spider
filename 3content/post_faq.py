@@ -8,15 +8,27 @@ import time
 import requests
 from io import BytesIO
 from PIL import Image
+import configparser
+conf = configparser.ConfigParser()
+conf.read("D://job_script/utils/config.ini")
+secs = conf.sections()
 
-pool = redis.ConnectionPool(host='47.107.25.123', port='19000', max_connections=10,password='dachen$1111')
-ret = redis.Redis(connection_pool=pool)
+host = conf.get('3content','host')
+user = conf.get('3content','user')
+passwd = conf.get('3content','passwd')
+db = conf.get('3content','db')
+post_faq_url = conf.get('3content','post_faq_url')
+InfoId = conf.get('3content','InfoId')
+MajorId = conf.get('3content','MajorId')
+creator = conf.get('3content','creator')
+columnId = conf.get('3content','columnId')
+
 
 for key in dept_cfg:
-    db = pymysql.connect("192.168.3.154", "root", "Dachen@222", "wordpress")
+    db = pymysql.connect(host, user, passwd, db)
     cursor = db.cursor()
     top=dept_cfg[key]
-    sql = "SELECT post_name,source,dept,post_title,post_content,post_date FROM wp_posts  where dept='%s' and post_status='publish' and post_flag<>1 and source <>'中洪博元医学实验帮'  order by post_date desc limit %d" % (key,top)
+    sql = "SELECT post_name,source,dept,post_title,post_content,post_date FROM wp_posts  where dept='%s' and post_status='publish' and post_flag<>1 and source not in('中洪博元医学实验帮','丁香园web','医脉通web')  order by post_date desc limit %d" % (key,top)
     # sql = "SELECT post_name,source,dept,post_title,post_content,post_date FROM wp_posts  where post_name = '855495ae2943e272f360fc13f9dc6edb' "
     cursor.execute(sql)
     res = cursor.fetchall()
@@ -73,13 +85,6 @@ for key in dept_cfg:
                 if len(faq_id)>5 :
                     usql="update wp_posts set post_flag=1 ,faq_id='%s' where post_name='%s'" %(faq_id,post_name)
                     print(key+':'+usql)
-                    if dept in dept_all:
-                        dps=dept_all[dept].split(',')
-                        ret.lpush('3CONTENT:'+dps[0],faq_id)
-                        ret.lpush('3CONTENT:'+dps[1],faq_id)
-                    else :
-                        ret.lpush('3CONTENT:'+dept,faq_id)
-                    ret.sadd('3CONTENT',faq_id)
                     db.ping(reconnect=True)
                     cursor.execute(usql)
                     db.commit()

@@ -39,11 +39,4 @@ dept_all = {
     'YXAD':'YX,YXAD',
 }
 
-# post_faq_url='http://testapi.mediportal.com.cn/faq/nologin/threeparty/post'
-post_faq_url='http://xg.mediportal.com.cn/faq/nologin/threeparty/post'
-# post_faq_url='http://192.168.3.161:8154/nologin/threeparty/post'
-InfoId='512215874854215680' #圈子id-[临床医学资讯圈]
-MajorId='512219553560813568' #圈子id-[三方专业圈]
-creator='277632'
-columnId='59aa6d2430121c9b63497d57' #栏目
 
