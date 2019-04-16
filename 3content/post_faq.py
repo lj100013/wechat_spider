@@ -10,7 +10,8 @@ from io import BytesIO
 from PIL import Image
 import configparser
 conf = configparser.ConfigParser()
-conf.read("D://job_script/utils/config.ini")
+# conf.read("D://job_script/utils/config.ini")
+conf.read("/data/job_pro/utils/config.ini")
 secs = conf.sections()
 
 host = conf.get('3content','host')
