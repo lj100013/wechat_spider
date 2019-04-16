@@ -112,7 +112,8 @@ trim(regexp_replace(passIdRec,'\\n|\\r','')) as passIdRec,
 trim(regexp_replace(IDCardName,'\\n|\\r','')) as IDCardName,
 trim(regexp_replace(IDNum,'\\n|\\r','')) as IDNum,
 trim(regexp_replace(sysCheck,'\\n|\\r','')) as sysCheck,
-trim(regexp_replace(circleId,'\\n|\\r','')) as circleId
+trim(regexp_replace(circleId,'\\n|\\r','')) as circleId,
+trim(regexp_replace(doctor_titleRank,'\\n|\\r','')) as doctor_titleRank
 from mongo2hive.health_user;
 
 
@@ -1859,3 +1860,17 @@ trim(regexp_replace(status,'\\n|\\r','')) as status,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime
 from mongo2hive.module_t_credit_company;
+
+
+
+--插入:mongo2hive.esy_equipment_manage_t_location_info到pro.ods_t_location_info
+insert overwrite table pro.ods_t_location_info PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(longitude,'\\n|\\r','')) as longitude,
+trim(regexp_replace(latitude,'\\n|\\r','')) as latitude,
+trim(regexp_replace(location,'\\n|\\r','')) as location,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(eqId,'\\n|\\r','')) as eqId,
+trim(regexp_replace(eqNo,'\\n|\\r','')) as eqNo
+from mongo2hive.esy_equipment_manage_t_location_info;
