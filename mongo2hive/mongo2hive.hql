@@ -1874,3 +1874,18 @@ trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(eqId,'\\n|\\r','')) as eqId,
 trim(regexp_replace(eqNo,'\\n|\\r','')) as eqNo
 from mongo2hive.esy_equipment_manage_t_location_info;
+
+
+
+--插入:mongo2hive.activity_t_doctor_share到pro.ods_t_doctor_share
+insert overwrite table pro.ods_t_doctor_share PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(shareCode,'\\n|\\r','')) as shareCode,
+trim(regexp_replace(shareType,'\\n|\\r','')) as shareType,
+trim(regexp_replace(doctorId,'\\n|\\r','')) as doctorId,
+trim(regexp_replace(assistantId,'\\n|\\r','')) as assistantId,
+trim(regexp_replace(bizId,'\\n|\\r','')) as bizId,
+trim(regexp_replace(shareContent,'\\n|\\r','')) as shareContent,
+trim(regexp_replace(shareTime,'\\n|\\r','')) as shareTime
+from mongo2hive.activity_t_doctor_share;
