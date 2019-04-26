@@ -3,12 +3,14 @@ from db import *
 from setting import *
 from utils import *
 import time
+import re
 from multiprocessing.dummy import Pool as ThreadPool
 import os
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium import webdriver
 import math
 import random
+from urllib.parse import quote
 import configparser
 conf = configparser.ConfigParser()
 #conf.read(r"E:\job_script\utils\config.ini")
@@ -31,21 +33,26 @@ def get_ip():
     print('代理ip数: ' + str(ip_count))
     return res
 
-def format_url(url, text, proxies):
-    def _parse_url(url, pads):
-        b = math.floor(random.random() * 100) + 1
-        a = url.find("url=")
-        c = url.find("&k=")
-        if a != -1 and c == -1:
-            a = url[a + sum([int(i) for i in pads]) + b]
-        return '{}&k={}&h={}'.format(url, b, a)
 
+def parse_url(url, pads):
+    b = math.floor(random.random() * 100) + 1
+    a = url.find("url=")
+    c = url.find("&k=")
+    if a != -1 and c == -1:
+        a = url[a + sum([int(i) for i in pads]) + b]
+    return '{}&k={}&h={}'.format(url, b, a)
+
+
+def format_url(url, main_url, cookie_jar, text, proxies):
     if url.startswith('/link?url='):
         url = 'https://weixin.sogou.com{}'.format(url)
         patt = r'href\.substr\(a\+(\d+)\+parseInt\("(\d+)"\)\+b,1\)'
         pads = re.findall(patt, text)
-        url = _parse_url(url, pads[0] if pads else [])
-        response = requests.get(url, headers=main_headers, verify=False, proxies=proxies)
+        url = parse_url(url, pads[0] if pads else [])
+        headers = main_headers.copy()
+        headers['Referer'] = main_url
+        headers["Cookie"] = cookie_jar
+        response = requests.get(url, headers=headers, verify=False, proxies=proxies)
         content = response.text
         pattern = r"'([\s\S]*?)'"
         id_node = re.findall(pattern, content)
@@ -57,27 +64,39 @@ def format_url(url, text, proxies):
     return url
 
 def spider_wechat(name):
-    mail_url = base_url + name
+    url_name = quote(name)
+    mail_url = base_url + url_name
     print(mail_url)
     ips = get_ip().strip()
-    proxies = {"https": "https://" + ips}
+    proxies = {'http': ips, 'https': ips}
     print(proxies)
     host = ips.split(":")[0]
     port = ips.split(":")[1]
     null_url = True
-    wechart_url = ''
-    text = ''
+    a_url = ''
     wechat_ip_count = 0
 
     while null_url:
         try:
-            response = requests.get(mail_url, headers=sogou_header, proxies=proxies)
-            text = response.text
-            content = etree.HTML(text)
+            time.sleep(3)
+            response = requests.get(mail_url, headers=main_headers, proxies=proxies)
+            content = etree.HTML(response.text)
             urls = content.xpath('//*[@id="sogou_vr_11002301_box_0"]/div/div[2]/p[1]/a/@href')
             if len(urls) > 0:
-                wechart_url = urls[0]
-                null_url = False
+                cookie = response.cookies
+                cookie_jar = ''
+                for coo in iter(cookie):
+                    name = coo.name
+                    value = coo.value
+                    scoo = name + '=' + value + ';'
+                    cookie_jar += scoo
+                if 'SNUID=' in cookie_jar:
+                    time.sleep(2)
+                    a_url = format_url(urls[0], mail_url, cookie_jar, response.text, proxies)
+                    if 'SNUID=1' not in a_url:
+                        null_url = False
+                else:
+                    return 1
             else:
                 new_ips = get_ip().strip()
                 print("重新获取代理ip：{}".format(new_ips))
@@ -110,13 +129,15 @@ def spider_wechat(name):
     wechat_ip_count = 0
 
     while no_article:
+        if not a_url:
+            break
+
         service_args = ["--proxy-type=https", "--proxy=%s:%s" % (host, port)]
         driver = webdriver.PhantomJS(phantomJSdriver, desired_capabilities=dcap, service_args=service_args)
         driver.set_page_load_timeout(20)
         driver.set_script_timeout(20)
 
         try:
-            a_url = format_url(wechart_url, text, proxies)
             driver.get(a_url)
             time.sleep(2)
             content = driver.page_source
@@ -135,8 +156,7 @@ def spider_wechat(name):
                 new_ips = get_ip().strip()
                 print("重新获取代理ip：{}".format(new_ips))
                 wechat_ip_count += 1
-                proxies = {
-                    "https": "https://" + new_ips}
+                proxies = {"https": "https://" + new_ips}
                 online_ips = new_ips.split(":")
                 if len(online_ips) > 1:
                     host = online_ips[0]
@@ -146,8 +166,7 @@ def spider_wechat(name):
             new_ips = get_ip().strip()
             print("重新获取代理ip：{}".format(new_ips))
             wechat_ip_count += 1
-            proxies = {
-                "https": "https://" + new_ips}
+            proxies = {"https": "https://" + new_ips}
             online_ips = new_ips.split(":")
             if len(online_ips) > 1:
                 host = online_ips[0]
@@ -217,11 +236,9 @@ def spider_wechat(name):
                 img_format = '.jpeg'
             elif '=gif' in link:
                 img_format = '.gif'
-
             first_string = 'src="' + img_base_url + fname + img_format
             origian_first = 'data-src="' + link
             content = content.replace(origian_first, first_string)
-
             file_name = fname + img_format
             writed = write2_qiniu(link, file_name)
             if writed == '':
@@ -231,9 +248,7 @@ def spider_wechat(name):
 
         if img_not_post:
             continue
-
         blank_pattern = "background-image: url([\s\S]*?);background"
-
         if wxname == '中洪博元医学实验帮':
             blank_pattern = "-webkit-border-image: url([\s\S]*?) 20 fill"
 

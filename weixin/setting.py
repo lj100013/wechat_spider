@@ -39,10 +39,6 @@ name_keyword = {
 }
 
 base_url = "https://weixin.sogou.com/weixin?type=1&s_from=input&query="
-sogou_header = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36",
-    "Host": "weixin.sogou.com"
-}
 
 weixin_header = {
     "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36",
@@ -50,15 +46,14 @@ weixin_header = {
 }
 
 main_headers = {
-            "Host": "weixin.sogou.com",
-            "Connection": "Keep-Alive",
-            "Upgrade-Insecure-Requests": "1",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36",
-            "Referer": "https://weixin.sogou.com/weixin?type=1&query=%E6%AF%8F%E6%97%A5%E5%8C%BB%E5%AD%A6%E8%B5%84%E8%AE%AF&ie=utf8&s_from=input&_sug_=n&_sug_type_=1&w=01015002&oq=&ri=99&sourceid=sugg&sut=0&sst0=1554099429071&lkt=0%2C0%2C0&p=40040108",
-            "Cookie": "SUID=A7B00FB72F20910A000000005ABC4EC2; SUV=1522290377774645; SMYUV=1522290377776035; CXID=2D6311EC7124CB182D9C4AC5D01C58C3; wuid=AAEHfWwQIQAAAAqGCmK1ZwkAGwY=; ssuid=2994604160; pex=C864C03270DED3DD8A06887A372DA219231FFAC25A9D64AE09E82AED12E416AC; ABTEST=0|1554087014|v1; IPLOC=CN4403; JSESSIONID=aaarADVkUHXuy5wDUBjNw; PHPSESSID=vhfc0ks1keok0d7sn8fgp3p9e0; weixinIndexVisited=1; SNUID=1126C3483035B55AA14BEF3A30D65EF6; sct=541",
-            "Accept-Encoding": "gzip, deflate, br",
-            "Accept-Language": "zh-CN,zh;q=0.9",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3"
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Accept-Language': 'zh-CN,zh;q=0.9',
+            'Cache-Control': 'max-age=0',
+            'Connection': 'keep-alive',
+            'Host': 'weixin.sogou.com',
+            'Upgrade-Insecure-Requests': '1',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36'
         }
 
 phantomJS_path = '/data/program/phantomjs-2.1.1-linux-x86_64/bin/phantomjs'

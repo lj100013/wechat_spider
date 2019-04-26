@@ -1,7 +1,6 @@
 import base64
 import hashlib
 import json
-import re
 import time
 import pymysql
 import requests
@@ -21,6 +20,7 @@ PASSWORD=conf.get('weixin', 'password')
 DB=conf.get('weixin', 'database')
 CHARSET=conf.get('weixin', 'charset')
 qiniu_service_url=conf.get('weixin', 'qiniu_service_url')
+img_base_url=conf.get('weixin', 'img_base_url')
 urllib3.disable_warnings()
 
 def du(url, name):
