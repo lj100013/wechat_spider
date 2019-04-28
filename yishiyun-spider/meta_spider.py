@@ -19,7 +19,7 @@ class Spider(object):
                  retryTimes=3):
         self.retryTimes = retryTimes
         self.first_time = first_time
-
+        self.proxies = None
     @abstractmethod
     def crawl_page_source(self, url):
         """crawl page source from web """
@@ -150,7 +150,10 @@ class Spider(object):
         sava image into qiniu
         """
         try:
-            img = requests.get(url=imgUrl)
+            if self.proxies is None:
+                img = requests.get(url=imgUrl)
+            else:
+                img = requests.get(url=imgUrl,proxies = self.proxies)
             pic = base64.b64encode(img.content)
             qiniu_data = {"fileName": name, "contentBytes": pic.decode(encoding='utf-8')}
             textmod = json.dumps(qiniu_data).encode(encoding='utf-8')

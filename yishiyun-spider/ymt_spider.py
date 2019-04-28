@@ -35,7 +35,7 @@ class YmtSpider(Spider):
                 return self.doRequest(self,url,headers,data,retrytimes-1,method)
             except Exception as e:
                 self.proxies = self.get_proxies()
-                logging.WARNING('出错重试{}'.format(e))
+                logging.warning('出错重试{}'.format(e))
                 return self.doRequest(self,url,headers,data,retrytimes-1,method)
         return None
 
