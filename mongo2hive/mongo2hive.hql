@@ -910,7 +910,7 @@ trim(regexp_replace(surveyVersion,'\\n|\\r','')) as surveyVersion,
 trim(regexp_replace(type,'\\n|\\r','')) as type,
 trim(regexp_replace(activeUserId,'\\n|\\r','')) as activeUserId,
 trim(regexp_replace(activeTime,'\\n|\\r','')) as activeTime,
-answerList
+trim(regexp_replace(answerList,'\\n|\\r',''))  as answerList
 from mongo2hive.health_t_survey_answer;
 
 
