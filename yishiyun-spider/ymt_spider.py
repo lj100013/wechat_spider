@@ -91,7 +91,8 @@ class YmtSpider(Spider):
                         if createtime < deadLine:
                             break
                         detail_url = host_url + url_list[i]
-                        detail_response = requests.get(detail_url, headers=headers0)
+                        #detail_response = requests.get(detail_url, headers=headers0)
+                        detail_response = self.doRequest(detail_url, headers=headers0,data=None,retrytimes=3,method='get')
                         detail_content = etree.HTML(detail_response.text)
                         title = detail_content.xpath('//*[@id="content"]/div[1]/div[1]/div/h1/text()')
                         if len(title) > 0:
