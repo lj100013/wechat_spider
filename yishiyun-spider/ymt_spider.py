@@ -4,24 +4,22 @@ import requests
 from lxml import etree
 import logging
 import json
-from utils import get_ip
 import traceback
 class YmtSpider(Spider):
     """YiMaiTong spider"""
     def __init__(self, first_time):
         super(YmtSpider, self).__init__(first_time)
-        self.proxies = self.get_proxies()
 
-    def get_proxies(self):
-        ip = get_ip(3)
-        if len(ip) > 0 and ':' in ip:
-            proxies = {
-                'http': ip,
-                'https': ip
-            }
-            return proxies
-
-        return None
+    # def get_proxies(self):
+    #     ip = get_ip(3)
+    #     if len(ip) > 0 and ':' in ip:
+    #         proxies = {
+    #             'http': ip,
+    #             'https': ip
+    #         }
+    #         return proxies
+    #
+    #     return None
 
     def doRequest(self,url,headers,data,retrytimes,method):
         if retrytimes >= 0:
@@ -118,5 +116,5 @@ class YmtSpider(Spider):
                         else:
                             logging.warning("the title is empty!!!")
             except Exception as e:
-                traceback.print_exc()
+                #traceback.print_exc()
                 logging.error("failed to crawl yimaitong:{}".format(e))

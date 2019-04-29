@@ -6,7 +6,7 @@ from multiprocessing.dummy import Pool as ThreadPool
 import logging
 import sys
 import argparse
-logging.basicConfig(level=logging.WARNING,
+logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
                     datefmt='%a, %d %b %Y %H:%M:%S',
                     filename='yishiyu_spider.log',
@@ -47,7 +47,7 @@ if __name__ == "__main__":
     first_time = args.first_time
     dxy = DxySpider(first_time=first_time)
     pool = ThreadPool(4)
-    pool.map_async(dxy.crawl_page_source, dxy_url)
+    #pool.map_async(dxy.crawl_page_source, dxy_url)
     ymt = YmtSpider(first_time=first_time)
     pool.map_async(ymt.crawl_page_source, ymt_url)
     pool.close()

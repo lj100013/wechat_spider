@@ -10,6 +10,7 @@ import base64
 import json
 from urllib import request
 from datetime import timedelta, date
+from utils import get_ip
 
 class Spider(object):
     """YISHIYUN meta Spider definition."""
@@ -24,6 +25,17 @@ class Spider(object):
     def crawl_page_source(self, url):
         """crawl page source from web """
         pass
+
+    def get_proxies(self):
+        ip = get_ip(3)
+        if len(ip) > 0 and ':' in ip:
+            proxies = {
+                'http': ip,
+                'https': ip
+            }
+            return proxies
+
+        return None
 
     def _parseConfig(self):
         conf = configparser.ConfigParser()
@@ -151,10 +163,19 @@ class Spider(object):
         """
         try:
             if self.proxies is None:
-                img = requests.get(url=imgUrl)
+                response = requests.get(url=imgUrl)
             else:
-                img = requests.get(url=imgUrl,proxies = self.proxies)
-            pic = base64.b64encode(img.content)
+                #img = requests.get(url=imgUrl)
+                response = requests.get(url=imgUrl,headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36'},proxies = self.proxies)
+            if response.status_code == 200:
+                pic = base64.b64encode(response.content)
+            else:
+                self.proxies = self.get_proxies()
+                response = requests.get(url=imgUrl, headers={
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36'},
+                                        proxies=self.proxies)
+                pic = base64.b64encode(response.content)
+            #print(response.text)
             qiniu_data = {"fileName": name, "contentBytes": pic.decode(encoding='utf-8')}
             textmod = json.dumps(qiniu_data).encode(encoding='utf-8')
             header_dict = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko',
@@ -163,6 +184,7 @@ class Spider(object):
             res = request.urlopen(req)
 
         except Exception as e:
+
             logging.warning("retry to save image into qiniu:{}".format(e))
 
     def get_deadline(self,days_ago):
