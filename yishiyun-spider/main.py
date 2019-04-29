@@ -6,7 +6,7 @@ from multiprocessing.dummy import Pool as ThreadPool
 import logging
 import sys
 import argparse
-logging.basicConfig(level=logging.INFO,
+logging.basicConfig(level=logging.WARNING,
                     format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
                     datefmt='%a, %d %b %Y %H:%M:%S',
                     filename='yishiyu_spider.log',
