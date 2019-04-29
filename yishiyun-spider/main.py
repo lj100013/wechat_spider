@@ -46,8 +46,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
     first_time = args.first_time
     dxy = DxySpider(first_time=first_time)
-    pool = ThreadPool(4)
-    #pool.map_async(dxy.crawl_page_source, dxy_url)
+    pool = ThreadPool(6)
+    pool.map_async(dxy.crawl_page_source, dxy_url)
     ymt = YmtSpider(first_time=first_time)
     pool.map_async(ymt.crawl_page_source, ymt_url)
     pool.close()
