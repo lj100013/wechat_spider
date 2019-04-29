@@ -23,6 +23,8 @@ class YmtSpider(Spider):
 
     def doRequest(self,url,headers,data,retrytimes,method):
         if retrytimes >= 0:
+            if self.proxies is None:
+                self.proxies = self.get_proxies()
             try:
                 if method == 'get':
                     response = requests.get(url,headers=headers,proxies = self.proxies)
