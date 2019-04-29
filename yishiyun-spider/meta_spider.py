@@ -170,7 +170,6 @@ class Spider(object):
             if response.status_code == 200:
                 pic = base64.b64encode(response.content)
             else:
-                print(response.text)
                 self.proxies = self.get_proxies()
                 response = requests.get(url=imgUrl, proxies=self.proxies)
                 pic = base64.b64encode(response.content)
