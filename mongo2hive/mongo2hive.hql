@@ -842,13 +842,17 @@ from mongo2hive.module_t_faq_favorites;
 
 
 --插入：mongo2hive.module_t_credit_record到pro.ods_t_credit_record
-insert overwrite table pro.ods_t_credit_record PARTITION(dt='${hivevar:preday}')   
+insert overwrite table pro.ods_t_credit_record 
 select 
 trim(regexp_replace(id,'\\n|\\r','')) as id,
 trim(regexp_replace(accountType,'\\n|\\r','')) as accountType,
 trim(regexp_replace(accountId,'\\n|\\r','')) as accountId,
 trim(regexp_replace(value,'\\n|\\r','')) as value,
+trim(regexp_replace(direction,'\\n|\\r','')) as direction,
 trim(regexp_replace(currentBalance,'\\n|\\r','')) as currentBalance,
+trim(regexp_replace(businesscode,'\\n|\\r','')) as businesscode,
+trim(regexp_replace(businessid,'\\n|\\r','')) as businessid,
+trim(regexp_replace(transid,'\\n|\\r','')) as transid,
 trim(regexp_replace(remark,'\\n|\\r','')) as remark,
 trim(regexp_replace(reason,'\\n|\\r','')) as reason,
 trim(regexp_replace(creater,'\\n|\\r','')) as creater,
