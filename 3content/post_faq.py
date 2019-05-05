@@ -23,10 +23,11 @@ InfoId = conf.get('3content','InfoId')
 MajorId = conf.get('3content','MajorId')
 creator = conf.get('3content','creator')
 columnId = conf.get('3content','columnId')
-db = pymysql.connect(host, user, passwd, db)
-cursor = db.cursor()
+
 
 for key in dept_cfg:
+    db = pymysql.connect(host, user, passwd, db)
+    cursor = db.cursor()
     top=dept_cfg[key]
     sql = "SELECT post_name,source,dept,post_title,post_content,post_date FROM wp_posts  where dept='%s' and post_status='publish' and post_flag<>1 and source not in('中洪博元医学实验帮','丁香园web','医脉通web')  order by post_date desc limit %d" % (key,top)
     # sql = "SELECT post_name,source,dept,post_title,post_content,post_date FROM wp_posts  where post_name = '855495ae2943e272f360fc13f9dc6edb' "
@@ -89,6 +90,9 @@ for key in dept_cfg:
                     cursor.execute(usql)
                     db.commit()
                     time.sleep(5)
+        db.close()
     except:
         print ("Error: unable to fecth data:"+post_name)
-db.close()
+
+
+
