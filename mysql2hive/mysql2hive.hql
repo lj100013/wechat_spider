@@ -730,3 +730,33 @@ trim(regexp_replace(subBizId,'\\n|\\r','')) as subBizId,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime
 from mysql2hive.coupon_user_coupon_detail;
+
+
+
+--插入:mysql2hive.credit_credit_virtual_account到pro.ods_credit_virtual_account
+insert overwrite table pro.ods_credit_virtual_account PARTITION(dt='${hivevar:preday}') 
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(virtual_id,'\\n|\\r','')) as virtual_id,
+trim(regexp_replace(balance,'\\n|\\r','')) as balance,
+trim(regexp_replace(business_code,'\\n|\\r','')) as business_code,
+trim(regexp_replace(parent_id,'\\n|\\r','')) as parent_id,
+trim(regexp_replace(parent_type,'\\n|\\r','')) as parent_type,
+trim(regexp_replace(create_time,'\\n|\\r','')) as create_time,
+trim(regexp_replace(update_time,'\\n|\\r','')) as update_time
+from mysql2hive.credit_credit_virtual_account;
+
+
+
+
+--插入:mysql2hive.credit_credit_business_income到pro.ods_credit_business_income
+insert overwrite table pro.ods_credit_business_income PARTITION(dt='${hivevar:preday}') 
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(owner_id,'\\n|\\r','')) as owner_id,
+trim(regexp_replace(balance,'\\n|\\r','')) as balance,
+trim(regexp_replace(init_balance,'\\n|\\r','')) as init_balance,
+trim(regexp_replace(name,'\\n|\\r','')) as name,
+trim(regexp_replace(create_time,'\\n|\\r','')) as create_time,
+trim(regexp_replace(update_time,'\\n|\\r','')) as update_time
+from mysql2hive.credit_credit_business_income;
