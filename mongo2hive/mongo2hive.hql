@@ -1,5 +1,10 @@
 --运营分析一期中用到的表
-
+--同一个sql允许并行任务的最大线程数
+set hive.exec.parallel.thread.number=8;
+set mapreduce.map.memory.mb=4096; 
+set mapreduce.map.java.opts=-Xmx3600m;
+set mapreduce.reduce.memory.mb=4096; 
+set mapreduce.reduce.java.opts=-Xmx3600m;
 --插入:mongo2hive.health_b_hospital到pro.ods_b_hospital
 insert overwrite table pro.ods_b_hospital  
 select 
