@@ -760,3 +760,18 @@ trim(regexp_replace(name,'\\n|\\r','')) as name,
 trim(regexp_replace(create_time,'\\n|\\r','')) as create_time,
 trim(regexp_replace(update_time,'\\n|\\r','')) as update_time
 from mysql2hive.credit_credit_business_income;
+
+
+--插入:mysql2hive.excellent_class_j_comment到pro.ods_j_comment
+insert overwrite table pro.ods_j_comment PARTITION(dt='${hivevar:preday}') 
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(courseId,'\\n|\\r','')) as courseId,
+trim(regexp_replace(commentatorId,'\\n|\\r','')) as commentatorId,
+trim(regexp_replace(commentatorIntroduction,'\\n|\\r','')) as commentatorIntroduction,
+trim(regexp_replace(content,'\\n|\\r','')) as content,
+trim(regexp_replace(status,'\\n|\\r','')) as status,
+trim(regexp_replace(commentId,'\\n|\\r','')) as commentId,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime
+from mysql2hive.excellent_class_j_comment;
