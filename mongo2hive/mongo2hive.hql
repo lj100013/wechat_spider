@@ -1899,8 +1899,6 @@ trim(regexp_replace(shareContent,'\\n|\\r','')) as shareContent,
 trim(regexp_replace(shareTime,'\\n|\\r','')) as shareTime
 from mongo2hive.activity_t_doctor_share;
 
-
-
 with t as (select * from pro.ods_t_promotion where dt='${hivevar:preday}')
 insert overwrite table dim.dim_promotion_survey
 select 
@@ -1909,3 +1907,15 @@ title,
 status,
 get_json_object(promotion, '$.surveyId')
 from t lateral view outer explode(promotionitemlist) p as promotion where get_json_object(promotion, '$.surveyId') is not null;
+
+insert OVERWRITE table pro.ods_t_business_ad_survey
+select 
+id,
+userid,
+businessadid,
+point,
+updatetime,
+surveytype,
+name,
+surveyid,
+createtime from mongo2hive.module_t_business_ad_survey;
