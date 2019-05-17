@@ -733,3 +733,23 @@ surveytype,
 name,
 surveyid,
 createtime from mongo2hive.module_t_business_ad_survey;
+
+
+
+
+--插入：mongo2hive.health_t_meeting_upload_record到pro.ods_t_meeting_upload_record
+insert overwrite table pro.ods_t_meeting_upload_record PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(recordId,'\\n|\\r','')) as recordId,
+trim(regexp_replace(recordUrl,'\\n|\\r','')) as recordUrl,
+trim(regexp_replace(createFrom,'\\n|\\r','')) as createFrom,
+trim(regexp_replace(recordDuration,'\\n|\\r','')) as recordDuration,
+trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+trim(regexp_replace(channelId,'\\n|\\r','')) as channelId,
+trim(regexp_replace(recordTime,'\\n|\\r','')) as recordTime,
+trim(regexp_replace(recordEndTime,'\\n|\\r','')) as recordEndTime,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(persistentId,'\\n|\\r','')) as persistentId,
+trim(regexp_replace(persistentStu,'\\n|\\r','')) as persistentStu
+from mongo2hive.health_t_meeting_upload_record;
