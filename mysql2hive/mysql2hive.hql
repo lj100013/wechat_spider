@@ -775,3 +775,100 @@ trim(regexp_replace(commentId,'\\n|\\r','')) as commentId,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime
 from mysql2hive.excellent_class_j_comment;
+
+
+
+
+--插入:mysql2hive.esy_account_manage_t_account_info到pro.ods_t_account_info
+insert overwrite table pro.ods_t_account_info PARTITION(dt='${hivevar:preday}') 
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(accountNo,'\\n|\\r','')) as accountNo,
+trim(regexp_replace(accountName,'\\n|\\r','')) as accountName,
+trim(regexp_replace(accountUserId,'\\n|\\r','')) as accountUserId,
+trim(regexp_replace(accountUserType,'\\n|\\r','')) as accountUserType,
+trim(regexp_replace(accountHeadImgUrl,'\\n|\\r','')) as accountHeadImgUrl,
+trim(regexp_replace(edeptId,'\\n|\\r','')) as edeptId,
+trim(regexp_replace(eqId,'\\n|\\r','')) as eqId,
+trim(regexp_replace(eqNo,'\\n|\\r','')) as eqNo,
+trim(regexp_replace(meetingNumber,'\\n|\\r','')) as meetingNumber,
+trim(regexp_replace(manageKey,'\\n|\\r','')) as manageKey,
+trim(regexp_replace(accountStatus,'\\n|\\r','')) as accountStatus,
+trim(regexp_replace(activateGetDay,'\\n|\\r','')) as activateGetDay,
+trim(regexp_replace(validUntil,'\\n|\\r','')) as validUntil,
+trim(regexp_replace(activateTime,'\\n|\\r','')) as activateTime,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
+trim(regexp_replace(useStatus,'\\n|\\r','')) as useStatus
+from mysql2hive.esy_account_manage_t_account_info;
+
+
+
+
+
+--插入:mysql2hive.esy_account_manage_t_account_companyOrg_info到pro.ods_t_account_companyOrg_info
+insert overwrite table pro.ods_t_account_companyOrg_info PARTITION(dt='${hivevar:preday}') 
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(accountId,'\\n|\\r','')) as accountId,
+trim(regexp_replace(companyId,'\\n|\\r','')) as companyId,
+trim(regexp_replace(companyName,'\\n|\\r','')) as companyName,
+trim(regexp_replace(orgId,'\\n|\\r','')) as orgId,
+trim(regexp_replace(orgName,'\\n|\\r','')) as orgName,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
+from mysql2hive.esy_account_manage_t_account_companyOrg_info;
+
+
+
+
+--插入:mysql2hive.esy_account_manage_t_account_edept_info到pro.ods_t_account_edept_info
+insert overwrite table pro.ods_t_account_edept_info PARTITION(dt='${hivevar:preday}') 
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(accountId,'\\n|\\r','')) as accountId,
+trim(regexp_replace(edeptId,'\\n|\\r','')) as edeptId,
+trim(regexp_replace(edeptName,'\\n|\\r','')) as edeptName,
+trim(regexp_replace(hospitalId,'\\n|\\r','')) as hospitalId,
+trim(regexp_replace(hospitalName,'\\n|\\r','')) as hospitalName,
+trim(regexp_replace(hospitalAddress,'\\n|\\r','')) as hospitalAddress,
+trim(regexp_replace(deptId,'\\n|\\r','')) as deptId,
+trim(regexp_replace(deptName,'\\n|\\r','')) as deptName,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
+from mysql2hive.esy_account_manage_t_account_edept_info;
+
+
+
+
+
+--插入:mysql2hive.esy_account_manage_t_account_payment_record到pro.ods_t_account_payment_record
+insert overwrite table pro.ods_t_account_payment_record PARTITION(dt='${hivevar:preday}') 
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(accountId,'\\n|\\r','')) as accountId,
+trim(regexp_replace(paymentId,'\\n|\\r','')) as paymentId,
+trim(regexp_replace(paymentTime,'\\n|\\r','')) as paymentTime,
+trim(regexp_replace(paymentAmount,'\\n|\\r','')) as paymentAmount,
+trim(regexp_replace(unitType,'\\n|\\r','')) as unitType,
+trim(regexp_replace(incrValidUntil,'\\n|\\r','')) as incrValidUntil,
+trim(regexp_replace(validUntil,'\\n|\\r','')) as validUntil,
+trim(regexp_replace(paymentCode,'\\n|\\r','')) as paymentCode,
+trim(regexp_replace(payUser,'\\n|\\r','')) as payUser,
+trim(regexp_replace(remark,'\\n|\\r','')) as remark,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
+from mysql2hive.esy_account_manage_t_account_payment_record;
+
+
+--插入:mysql2hive.cloud_currency_account到pro.ods_t_account
+insert overwrite table pro.ods_t_account PARTITION(dt='${hivevar:preday}') 
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(businessId,'\\n|\\r','')) as businessId,
+trim(regexp_replace(name,'\\n|\\r','')) as name,
+trim(regexp_replace(type,'\\n|\\r','')) as type,
+trim(regexp_replace(status,'\\n|\\r','')) as status,
+trim(regexp_replace(totOut,'\\n|\\r','')) as totOut,
+trim(regexp_replace(totIncome,'\\n|\\r','')) as totIncome,
+trim(regexp_replace(balance,'\\n|\\r','')) as balance,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
+from mysql2hive.cloud_currency_account;

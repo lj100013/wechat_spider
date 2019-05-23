@@ -753,3 +753,36 @@ trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(persistentId,'\\n|\\r','')) as persistentId,
 trim(regexp_replace(persistentStu,'\\n|\\r','')) as persistentStu
 from mongo2hive.health_t_meeting_upload_record;
+
+
+
+
+--插入:mongo2hive.esy_equipment_manage_t_equipment_info到pro.ods_t_equipment_info
+insert overwrite table pro.ods_t_equipment_info PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(eqNo,'\\n|\\r','')) as eqNo,
+trim(regexp_replace(eqCoded,'\\n|\\r','')) as eqCoded,
+trim(regexp_replace(eqName,'\\n|\\r','')) as eqName,
+trim(regexp_replace(eqRomId,'\\n|\\r','')) as eqRomId,
+trim(regexp_replace(eqRomType,'\\n|\\r','')) as eqRomType,
+trim(regexp_replace(eqRomVersion,'\\n|\\r','')) as eqRomVersion,
+trim(regexp_replace(eqSpecId,'\\n|\\r','')) as eqSpecId,
+trim(regexp_replace(eqSpecification,'\\n|\\r','')) as eqSpecification,
+trim(regexp_replace(eqMacAddress,'\\n|\\r','')) as eqMacAddress,
+trim(regexp_replace(flowCardNo,'\\n|\\r','')) as flowCardNo,
+trim(regexp_replace(eqPassword,'\\n|\\r','')) as eqPassword,
+trim(regexp_replace(eqStatus,'\\n|\\r','')) as eqStatus,
+trim(regexp_replace(registerType,'\\n|\\r','')) as registerType,
+trim(regexp_replace(registerTime,'\\n|\\r','')) as registerTime,
+trim(regexp_replace(stockStatus,'\\n|\\r','')) as stockStatus,
+trim(regexp_replace(logisticsStatus,'\\n|\\r','')) as logisticsStatus,
+trim(regexp_replace(esyAccountId,'\\n|\\r','')) as esyAccountId,
+trim(regexp_replace(esyAccountNo,'\\n|\\r','')) as esyAccountNo,
+trim(regexp_replace(eqSize,'\\n|\\r','')) as eqSize,
+trim(regexp_replace(eqType,'\\n|\\r','')) as eqType,
+trim(regexp_replace(motherboardType,'\\n|\\r','')) as motherboardType,
+trim(regexp_replace(sourceType,'\\n|\\r','')) as sourceType,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime
+from mongo2hive.esy_equipment_manage_t_equipment_info;
