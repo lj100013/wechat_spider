@@ -872,3 +872,44 @@ trim(regexp_replace(balance,'\\n|\\r','')) as balance,
 trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
 from mysql2hive.cloud_currency_account;
+
+
+
+--插入:mysql2hive.credit_credit_invest到pro.ods_credit_invest
+insert overwrite table pro.ods_credit_invest PARTITION(dt='${hivevar:preday}') 
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(business_code,'\\n|\\r','')) as business_code,
+trim(regexp_replace(amount,'\\n|\\r','')) as amount,
+trim(regexp_replace(init_amount,'\\n|\\r','')) as init_amount,
+trim(regexp_replace(remark,'\\n|\\r','')) as remark,
+trim(regexp_replace(create_time,'\\n|\\r','')) as create_time,
+trim(regexp_replace(update_time,'\\n|\\r','')) as update_time
+from mysql2hive.credit_credit_invest;
+
+
+
+
+--插入:mysql2hive.credit_credit_account_summary到pro.ods_credit_account_summary
+insert overwrite table pro.ods_credit_account_summary PARTITION(dt='${hivevar:preday}') 
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(amount,'\\n|\\r','')) as amount,
+trim(regexp_replace(type,'\\n|\\r','')) as type,
+trim(regexp_replace(name,'\\n|\\r','')) as name,
+trim(regexp_replace(create_time,'\\n|\\r','')) as create_time,
+trim(regexp_replace(update_time,'\\n|\\r','')) as update_time
+from mysql2hive.credit_credit_account_summary;
+
+
+
+--插入:mysql2hive.credit_credit_account到pro.ods_credit_account
+insert overwrite table pro.ods_credit_account PARTITION(dt='${hivevar:preday}') 
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(account_type,'\\n|\\r','')) as account_type,
+trim(regexp_replace(account_id,'\\n|\\r','')) as account_id,
+trim(regexp_replace(balance,'\\n|\\r','')) as balance,
+trim(regexp_replace(create_time,'\\n|\\r','')) as create_time,
+trim(regexp_replace(update_time,'\\n|\\r','')) as update_time
+from mysql2hive.credit_credit_account;
