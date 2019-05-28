@@ -786,3 +786,18 @@ trim(regexp_replace(sourceType,'\\n|\\r','')) as sourceType,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime
 from mongo2hive.esy_equipment_manage_t_equipment_info;
+
+
+
+
+--插入：mongo2hive.health_t_meeting_apply_compere到pro.ods_t_meeting_apply_compere
+insert overwrite table pro.ods_t_meeting_apply_compere PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(meetingId,'\\n|\\r','')) as meetingId,
+trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+trim(regexp_replace(applyStatus,'\\n|\\r','')) as applyStatus,
+trim(regexp_replace(verifyUserId,'\\n|\\r','')) as verifyUserId,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(verifyTime,'\\n|\\r','')) as verifyTime
+from mongo2hive.health_t_meeting_apply_compere;
