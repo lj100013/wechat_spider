@@ -913,3 +913,30 @@ trim(regexp_replace(balance,'\\n|\\r','')) as balance,
 trim(regexp_replace(create_time,'\\n|\\r','')) as create_time,
 trim(regexp_replace(update_time,'\\n|\\r','')) as update_time
 from mysql2hive.credit_credit_account;
+
+
+
+
+
+--插入:mysql2hive.excellent_class_j_material到pro.ods_j_material
+insert overwrite table pro.ods_j_material PARTITION(dt='${hivevar:preday}') 
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(title,'\\n|\\r','')) as title,
+trim(regexp_replace(type,'\\n|\\r','')) as type,
+trim(regexp_replace(labelDept,'\\n|\\r','')) as labelDept,
+trim(regexp_replace(labelDisease,'\\n|\\r','')) as labelDisease,
+trim(regexp_replace(labelCustom,'\\n|\\r','')) as labelCustom,
+trim(regexp_replace(coverUrl,'\\n|\\r','')) as coverUrl,
+trim(regexp_replace(status,'\\n|\\r','')) as status,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+nvl(get_json_object(audioVideo,'$.type'),'') as audiovideo_type,
+nvl(get_json_object(audioVideo,'$.play_url'),'') as audiovideo_play_url,
+nvl(get_json_object(audioVideo,'$.play_first'),'') as audiovideo_play_first,
+nvl(get_json_object(audioVideo,'$.play_time'),'') as audiovideo_play_time,
+nvl(get_json_object(audioVideo,'$.size'),'') as audiovideo_size,
+nvl(get_json_object(audioVideo,'$.suffix'),'') as audiovideo_suffix,
+nvl(get_json_object(audioVideo,'$.name'),'') as audiovideo_name,
+nvl(get_json_object(audioVideo,'$.pre_play_url'),'') as audiovideo_pre_play_url
+from mysql2hive.excellent_class_j_material;
