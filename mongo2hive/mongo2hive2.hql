@@ -801,3 +801,37 @@ trim(regexp_replace(verifyUserId,'\\n|\\r','')) as verifyUserId,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(verifyTime,'\\n|\\r','')) as verifyTime
 from mongo2hive.health_t_meeting_apply_compere;
+
+
+
+
+--插入：mongo2hive.circledaq_circle_operation_type到pro.ods_circle_operation_type
+insert overwrite table pro.ods_circle_operation_type PARTITION(dt='${hivevar:preday}')   
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(type,'\\n|\\r','')) as type,
+trim(regexp_replace(value,'\\n|\\r','')) as value,
+trim(regexp_replace(description,'\\n|\\r','')) as description,
+trim(regexp_replace(icon,'\\n|\\r','')) as icon,
+trim(regexp_replace(sort,'\\n|\\r','')) as sort
+from mongo2hive.circledaq_circle_operation_type;
+
+
+
+
+--插入：mongo2hive.basepost_reply_info到pro.ods_reply_info
+insert overwrite table pro.ods_reply_info PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(postId,'\\n|\\r','')) as postId,
+trim(regexp_replace(commentId,'\\n|\\r','')) as commentId,
+trim(regexp_replace(replyId,'\\n|\\r','')) as replyId,
+trim(regexp_replace(cards,'\\n|\\r','')) as cards,
+trim(regexp_replace(content,'\\n|\\r','')) as content,
+trim(regexp_replace(sortIndex,'\\n|\\r','')) as sortIndex,
+trim(regexp_replace(authorId,'\\n|\\r','')) as authorId,
+trim(regexp_replace(authorName,'\\n|\\r','')) as authorName,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
+trim(regexp_replace(statusFlag,'\\n|\\r','')) as statusFlag
+from mongo2hive.basepost_reply_info;
