@@ -196,7 +196,9 @@ ELSE '' END as cid,
 trim(regexp_replace(recommend,'\\n|\\r','')) as recommend,
 trim(regexp_replace(grade,'\\n|\\r','')) as grade,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
-trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
+trim(regexp_replace(safeLabel,'\\n|\\r','')) as safeLabel,
+trim(regexp_replace(gradeSuggest,'\\n|\\r','')) as gradeSuggest
 from mongo2hive.module_t_faq_question;
 
 
@@ -376,7 +378,9 @@ trim(regexp_replace(authCircleLogoUrl,'\\n|\\r','')) as authCircleLogoUrl,
 trim(regexp_replace(publisherType,'\\n|\\r','')) as publisherType,
 trim(regexp_replace(isprivate,'\\n|\\r','')) as isprivate,
 trim(regexp_replace(grade,'\\n|\\r','')) as grade,
-trim(regexp_replace(hall,'\\n|\\r','')) as hall
+trim(regexp_replace(hall,'\\n|\\r','')) as hall,
+trim(regexp_replace(safeLabel,'\\n|\\r','')) as safeLabel,
+trim(regexp_replace(gradeSuggest,'\\n|\\r','')) as gradeSuggest
 from mongo2hive.diseasediscuss_disease_info;
 
 

@@ -279,7 +279,12 @@ trim(regexp_replace(createName,'\\n|\\r','')) as createName,
 trim(regexp_replace(checkStatus,'\\n|\\r','')) as checkStatus,
 trim(regexp_replace(checkId,'\\n|\\r','')) as checkId,
 trim(regexp_replace(checkTime,'\\n|\\r','')) as checkTime,
-trim(regexp_replace(grade,'\\n|\\r','')) as grade
+trim(regexp_replace(grade,'\\n|\\r','')) as grade,
+trim(regexp_replace(liveType,'\\n|\\r','')) as liveType,
+trim(regexp_replace(safeLabel,'\\n|\\r','')) as safeLabel,
+trim(regexp_replace(gradeSuggest,'\\n|\\r','')) as gradeSuggest,
+trim(regexp_replace(contractRelate,'\\n|\\r','')) as contractRelate,
+trim(regexp_replace(contractState,'\\n|\\r','')) as contractState
 from mysql2hive.circle_school_t_course;
 
 
