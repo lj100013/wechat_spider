@@ -8,7 +8,7 @@ mysqlcoursedb = pymysql.connect("120.79.73.179", "etl_user", "readsgaP3", "circl
 es = Elasticsearch([{'host': '39.108.135.243', 'port': 9280}])
 mysql_settings = {'host': '120.79.73.179', 'port': 3306, 'user': 'etl_user', 'passwd': 'readsgaP3'}
 mongoclient = pymongo.MongoClient('mongodb://120.79.73.179:27017/',username='etl_user',password='readsgaP3')
-starttime=1557273600
+starttime=1558627200
 
 # mysqlcircledb = pymysql.connect("192.168.3.162", "root", "123456", "circle")
 # mysqlcoursedb = pymysql.connect("192.168.3.162", "root", "123456", "circle_school")
