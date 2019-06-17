@@ -835,3 +835,59 @@ trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
 trim(regexp_replace(statusFlag,'\\n|\\r','')) as statusFlag
 from mongo2hive.basepost_reply_info;
+
+
+insert overwrite table pro.ods_micro_school_t_praise_log PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id, 
+trim(regexp_replace(classId,'\\n|\\r','')) as classId, 
+trim(regexp_replace(courseId,'\\n|\\r','')) as courseId, 
+trim(regexp_replace(ownerId,'\\n|\\r','')) as ownerId, 
+trim(regexp_replace(userId,'\\n|\\r','')) as userId, 
+trim(regexp_replace(time,'\\n|\\r','')) as time, 
+trim(regexp_replace(clientAppId,'\\n|\\r','')) as clientAppId
+from mongo2hive.micro_school_t_praise_log;
+
+CREATE TABLE IF NOT EXISTS pro.ods_micro_school_t_learn_log
+(
+id string,
+courseId string,
+userId string,
+time string,
+action string,
+`desc` string,
+amount string,
+unit string
+) PARTITIONED by (dt string)
+stored as parquet;
+
+insert OVERWRITE table  pro.ods_micro_school_t_learn_log partition(dt='${hivevar:preday}') 
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(courseId,'\\n|\\r','')) as courseId,
+trim(regexp_replace(userid,'\\n|\\r','')) as userid,
+trim(regexp_replace(time,'\\n|\\r','')) as time,
+trim(regexp_replace(action,'\\n|\\r','')) as action,
+trim(regexp_replace(`desc`,'\\n|\\r','')) as `desc`,
+get_json_object(trim(regexp_replace(param,'\\n|\\r','')),'$.amount'),get_json_object(trim(regexp_replace(param,'\\n|\\r','')),'$.unit')
+from  mongo2hive.micro_school_t_learn_log;
+
+
+
+
+
+--插入：mongo2hive.health_t_meeting_dpi_grade到pro.ods_t_meeting_dpi_grade
+insert overwrite table pro.ods_t_meeting_dpi_grade PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(meetingId,'\\n|\\r','')) as meetingId,
+trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+trim(regexp_replace(agoraUserId,'\\n|\\r','')) as agoraUserId,
+trim(regexp_replace(audioGrade,'\\n|\\r','')) as audioGrade,
+trim(regexp_replace(videoSD,'\\n|\\r','')) as videoSD,
+trim(regexp_replace(videoHD,'\\n|\\r','')) as videoHD,
+trim(regexp_replace(videoHDP,'\\n|\\r','')) as videoHDP,
+trim(regexp_replace(sid,'\\n|\\r','')) as sid,
+trim(regexp_replace(appId,'\\n|\\r','')) as appId,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
+from mongo2hive.health_t_meeting_dpi_grade;

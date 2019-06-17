@@ -121,7 +121,11 @@ trim(regexp_replace(circleId,'\\n|\\r','')) as circleId,
 trim(regexp_replace(doctor_titleRank,'\\n|\\r','')) as doctor_titleRank
 from mongo2hive.health_user;
 
-
+insert overwrite table ods.ods_user_expertise
+select id,expertise
+from
+(select id,doctor_expertise from  pro.ods_user where dt='${hivevar:preday}' and doctor_expertise is not null
+) a lateral view explode(split(concat_ws(',',doctor_expertise),',')) r1 AS expertise;
 
 
 --运营分析二期中用到的表
