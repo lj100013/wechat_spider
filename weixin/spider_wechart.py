@@ -126,6 +126,7 @@ def spider_wechat(name):
     dcap["phantomjs.page.settings.userAgent"] = (driver_user_agent)
     no_article = True
     wechart_urls = []
+    url_date = {}
     wechat_ip_count = 0
 
     while no_article:
@@ -143,14 +144,20 @@ def spider_wechat(name):
             content = driver.page_source
             page = etree.HTML(content)
             n_urls = page.xpath('//h4[@class="weui_media_title"]/@hrefs')
+            dates = page.xpath('//p[@class="weui_media_extra_info"]/text()')
             if len(n_urls) > 0:
                 head_url = "https://mp.weixin.qq.com"
+                index = 0
                 if len(n_urls) > 10:
                     n_urls = n_urls[:10]
+                    dates = dates[:10]
+
                 for n_url in n_urls:
                     n_url = n_url.replace("http://mp.weixin.qq.com", "")
                     detail_url = head_url + n_url
                     wechart_urls.append(detail_url)
+                    url_date[detail_url] = dates[index]
+                    index += 1
                     no_article = False
             else:
                 new_ips = get_ip().strip()
@@ -204,6 +211,7 @@ def spider_wechat(name):
             print("author not exist")
             continue
         wxname = authors[0].strip()
+
         iframes = rsp.xpath('//iframe[@class="video_iframe"]/@data-src')
         title = rsp.xpath('//h2[@class="rich_media_title"]/text()')[0].strip('\n').strip()
         print("spidering " + title)
@@ -283,11 +291,9 @@ def spider_wechat(name):
             wechat_data['key_word'] = name_keyword['视远惟明▪惟视眼科']
 
         wechat_data['wxname'] = wechat_data['author']
-        datas = re.sub(r"\s+", "", url_content.replace("\xa5", ""))
-        date_re = re.compile('varpublish_time="(.*?)"')
-        temp_datas = date_re.findall(datas)
-        if len(temp_datas) > 0:
-            tmp = temp_datas[0]
+        if line in url_date:
+            create_date = url_date[line]
+            tmp = formate_date(create_date)
             wechat_data['create_time'] = tmp
             wechat_data['content'] = content
             wechat_data['gid'] = gid
