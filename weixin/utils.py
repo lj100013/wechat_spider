@@ -189,6 +189,13 @@ def write2_qiniu(url, name):
         return ''
         
 
+def formate_date(create_date):
+    date_time = create_date.replace('年', '-')
+    date_time = date_time.replace('月', '-')
+    date_time = date_time.replace('日', '')
+    date_time = date_time + ' 00:00:00'
+    return date_time
+
 # 默认参数hide是以p标签作为隐藏标签
 def hide_and_sub(response, xpath, hide_xpath):
     #tmp = sub_img_url(response)
