@@ -1,3 +1,4 @@
+import datetime
 import pymongo
 from impala.dbapi import connect
 import pymysql
@@ -71,6 +72,7 @@ sql = 'select count(*) from %s.%s;' % (kudu_db,kudu_collection)
 kudu_cur.execute(sql)
 kudu_count = kudu_cur.fetchall()[0][0]
 
+date =  datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 difference = abs(source_count-kudu_count)
 
 # 如果不一致，发送邮件
@@ -78,9 +80,28 @@ if difference != 0:
     mailserver = "smtp.163.com"
     username_send = 'kuduconfig@163.com'
     password = 'a123456'
-    username_recv = ['user1@dachentech.com.cn', 'user2@dachentech.com.cn']
-    mail = MIMEText('<p><b>%s</b>\t%s.%s 总数:%s</p><p><b>KUDU</b>\t%s.%s 总数:%s</p>差值:<font color="#FF0000">%s</font>'
-                    % (source_type.upper(),source_db,source_collection,source_count,kudu_db,kudu_collection,kudu_count,difference),"html","utf-8")
+    username_recv = ['kuduconfig@163.com', 'user2@dachentech.com.cn']
+    content=  '<table color="CCCC33" width="800" border="1" cellspacing="0" cellpadding="5" text-align="center">' \
+                        '<tr>' \
+                                '<td style="background:#000; color:#FFF"><center><b>统计时间</b></center></td>' \
+                                '<td style="background:#000; color:#FFF"><center><b>源表类型</b></center></td>' \
+                                '<td style="background:#000; color:#FFF"><center><b>源表</b></center></td>' \
+                                '<td style="background:#000; color:#FFF"><center><b>源表总数</b></center></td>' \
+                                '<td style="background:#000; color:#FFF"><center><b>目标表</b></center></td>' \
+                                '<td style="background:#000; color:#FFF"><center><b>目标表总数</b></center></td>' \
+                                '<td style="background:#000; color:#FFF"><center><b>差值</b></center></td>' \
+                        '</tr>' \
+                        '<tr>' \
+                                '<td><center>%s</center></td>' \
+                                '<td><center>%s</center></td>' \
+                                '<td><center>%s.%s</center></td>' \
+                                '<td><center>%s</center></td>' \
+                                '<td><center>%s.%s</center></td>' \
+                                '<td><center>%s</center></td>' \
+                                '<td><font color="#FF0000"><center>%s</center><font></td>' \
+              '</tr>' \
+              '</table>' % (date,source_type.upper(),source_db,source_collection,source_count,kudu_db,kudu_collection,kudu_count,difference)
+    mail = MIMEText(content,"html","utf-8")
     mail['Subject'] = '错误：数据不一致'
     mail['From'] = username_send
     mail['To'] = ','.join(username_recv)
