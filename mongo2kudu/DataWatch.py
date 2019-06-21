@@ -2,14 +2,13 @@ import datetime
 import pymongo
 from impala.dbapi import connect
 import pymysql
-import sys
 import configparser
 import smtplib
 from email.mime.text import MIMEText
 
 conf = configparser.ConfigParser()
-conf.read(r"D:\job_script\utils\config.ini")
-# conf.read("/data/job_pro/utils/config.ini")
+# conf.read(r"D:\job_script\utils\config.ini")
+conf.read("/data/job_pro/utils/config.ini")
 CONF_HOST = conf.get('conf_mysql', 'host')
 CONF_PORT = conf.get('conf_mysql', 'port')
 CONF_UN = conf.get('conf_mysql', 'username')
@@ -73,7 +72,8 @@ for row in results:
         '<td><center>%s.%s</center></td>' \
         '<td><center>%s</center></td>' \
         '<td><font color="#FF0000"><center>%s</center><font></td>' \
-        '</tr>' % (date,source_type.upper(),source_db,source_collection,source_count,kudu_db,kudu_collection,kudu_count,difference)
+        '</tr>' % (date,source_type.upper(),source_db,source_collection,
+                   source_count,kudu_db,kudu_collection,kudu_count,difference)
 
 # 如果表不为空,发送邮件
 if d != "":
@@ -81,7 +81,7 @@ if d != "":
     username_send = 'kuduconfig@163.com'
     password = 'a123456'
     username_recv = ['kuduconfig@163.com', 'user2@dachentech.com.cn']
-    content = '<table width="800" border="1" cellspacing="0" cellpadding="5" text-align="center">' \
+    content = '<table width="800" border="1" cellspacing="0" cellpadding="5" style="border-collapse:collapse;">' \
               '<tr>' \
               '<td style="background:#BEBEBE; color:#000"><center><b>统计时间</b></center></td>' \
               '<td style="background:#BEBEBE; color:#000"><center><b>源表类型</b></center></td>' \
