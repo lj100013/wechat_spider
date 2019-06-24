@@ -80,7 +80,7 @@ if d != "":
     mailserver = "smtp.163.com"
     username_send = 'kuduconfig@163.com'
     password = 'a123456'
-    username_recv = ['kuduconfig@163.com', 'user2@dachentech.com.cn']
+    username_recv = ['kuduconfig@163.com', 'yangzhiyuan0344@dingtalk.com']
     content = '<table width="800" border="1" cellspacing="0" cellpadding="5" style="border-collapse:collapse;">' \
               '<tr>' \
               '<td style="background:#BEBEBE; color:#000"><center><b>统计时间</b></center></td>' \
