@@ -32,7 +32,6 @@ for key in dept_cfg:
     # sql = "SELECT post_name,source,dept,post_title,post_content,post_date FROM wp_posts  where post_name = '855495ae2943e272f360fc13f9dc6edb' "
     cursor.execute(sql)
     res = cursor.fetchall()
-    print(type(res))
     try:
         for row in res:
             p_data={}
