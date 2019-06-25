@@ -21,7 +21,7 @@ DB=conf.get('weixin', 'database')
 CHARSET=conf.get('weixin', 'charset')
 qiniu_service_url=conf.get('weixin', 'qiniu_service_url')
 img_base_url=conf.get('weixin', 'img_base_url')
-urllib3.disable_warnings()
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def du(url, name):
     print(url)

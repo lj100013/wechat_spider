@@ -117,7 +117,7 @@ def spider_wechat(name):
                 host = online_ips[0]
                 port = online_ips[1]
 
-        if wechat_ip_count > 15:
+        if wechat_ip_count > 15 or ip_count > 500:
             return 1
 
     phantomJSdriver = phantomJS_path
