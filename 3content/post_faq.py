@@ -28,7 +28,7 @@ cursor = db.cursor()
 
 for key in dept_cfg:
     top=dept_cfg[key]
-    sql = "SELECT post_name,source,dept,post_title,post_content,post_date FROM wp_posts  where dept='%s' and post_status='publish' and post_flag<>1 and source not in('中洪博元医学实验帮','丁香园web','医脉通web')  order by post_date desc limit %d" % (key,top)
+    sql = "call getInfoByRownum('%s',%d);" % (key,top)
     # sql = "SELECT post_name,source,dept,post_title,post_content,post_date FROM wp_posts  where post_name = '855495ae2943e272f360fc13f9dc6edb' "
     cursor.execute(sql)
     res = cursor.fetchall()
@@ -65,7 +65,7 @@ for key in dept_cfg:
                     im = Image.open(tmpIm)
                     imgs = im.size
                     lv = imgs[0]/imgs[1]
-                    if 1.1<lv<3.8 and imgs[0]>100:
+                    if 0.8<lv<4.8 and imgs[0]>100:
                         p_data['coverUrl']=img_urls[i]
                         break;
             if 'coverUrl' not in p_data:
