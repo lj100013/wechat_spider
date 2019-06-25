@@ -108,6 +108,3 @@ if d != "":
         smtp.quit()
 # print(results)
 config_con.close()
-
-
-
