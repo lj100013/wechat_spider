@@ -4002,3 +4002,40 @@ WITH SERDEPROPERTIES('mongo.columns.mapping'='{
 TBLPROPERTIES('mongo.uri'='mongodb://admin:admin@192.168.3.251:27017/module.t_business_ad_survey?authSource=admin');
 
 
+drop table mongo2hive.micro_school_t_praise_log;
+CREATE EXTERNAL TABLE IF NOT EXISTS mongo2hive.micro_school_t_praise_log
+(
+id string comment '',
+classid string comment '',
+courseid string comment '',
+ownerid string comment '',
+userid string comment '',
+time string comment '',
+clientappid string comment ''
+)
+STORED BY 'com.mongodb.hadoop.hive.MongoStorageHandler'
+WITH SERDEPROPERTIES('mongo.columns.mapping'='{
+"id":"_id",
+"classId":"classId",
+"courseId":"courseId",
+"ownerId":"ownerId",
+"userId":"userId",
+"time":"time",
+"clientAppId":"clientAppId"
+}')
+TBLPROPERTIES('mongo.uri'='mongodb://admin:admin@192.168.3.251:27017/micro-school.t_praise_log?authSource=admin');
+
+
+drop table pro.ods_micro_school_t_praise_log;
+create table pro.ods_micro_school_t_praise_log
+(
+id string comment '',
+classid string comment '',
+courseid string comment '',
+ownerid string comment '',
+userid string comment '',
+time string comment '',
+clientappid string comment ''
+)
+partitioned by(dt string)
+stored as textfile;
