@@ -784,8 +784,15 @@ trim(regexp_replace(eqType,'\\n|\\r','')) as eqType,
 trim(regexp_replace(motherboardType,'\\n|\\r','')) as motherboardType,
 trim(regexp_replace(sourceType,'\\n|\\r','')) as sourceType,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
-trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
+trim(regexp_replace(checkStatus,'\\n|\\r','')) as checkStatus,
+trim(regexp_replace(checkTime,'\\n|\\r','')) as checkTime,
+trim(regexp_replace(inspectorNo,'\\n|\\r','')) as inspectorNo,
+trim(regexp_replace(batchNo,'\\n|\\r','')) as batchNo,
+trim(regexp_replace(serialNo,'\\n|\\r','')) as serialNo,
+trim(regexp_replace(isInstallApp,'\\n|\\r','')) as isInstallApp
 from mongo2hive.esy_equipment_manage_t_equipment_info;
+
 
 
 
