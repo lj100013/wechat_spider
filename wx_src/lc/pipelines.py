@@ -38,7 +38,7 @@ class LcPipeline(object):
         # wx_data = []
         # wx_data.append((id, url, source, createtime))
 
-        conn = connect(host='192.168.3.158', port=21050)
+        conn = connect(host='192.168.3.121', port=21050)
         cur = conn.cursor()
         print("connect succes")
         print("=======================")

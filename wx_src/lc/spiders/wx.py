@@ -17,7 +17,7 @@ class WechatSpider(scrapy.Spider):
         time2 = 1420041600000
 
         ids = []
-        conn = connect(host='192.168.3.158', port=21050)
+        conn = connect(host='192.168.3.121', port=21050)
         cur = conn.cursor()
         # 使用 cursor() 方法创建一个游标对象 cursor
         try:
@@ -32,7 +32,7 @@ class WechatSpider(scrapy.Spider):
         finally:
             cur.close()
 
-        myclient = pymongo.MongoClient(host='120.79.73.179', port=27017,username='etl_user',password='readsgaP3')
+        myclient = pymongo.MongoClient(host='192.168.3.162', port=27017,username='admin',password='SOh3TbYhx8ypJPxmt')
         mydb = myclient["module"]
         mycol = mydb["t_faq_question"]
 
