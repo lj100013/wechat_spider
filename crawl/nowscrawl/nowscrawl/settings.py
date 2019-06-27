@@ -18,11 +18,11 @@ NEWSPIDER_MODULE = 'nowscrawl.spiders'
 # REDIRECT_ENABLED = False
 # 这些都是你的数据库登录的一些数据
 
-MYSQL_HOST = '192.168.3.154'
+MYSQL_HOST = '192.168.3.122'
 MYSQL_USER = 'root'
 
 # 你自己数据库的密码
-MYSQL_PASSWORD = 'Dachen@222'
+MYSQL_PASSWORD = 'dachen@123'
 MYSQL_PORT = 3306
 
 # 你自己数据库的名称
