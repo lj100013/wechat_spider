@@ -4,6 +4,15 @@ from lc.items import LcItem
 import time
 import pymongo
 from impala.dbapi import connect
+import configparser
+conf = configparser.ConfigParser()
+conf.read("/data/job_pro/utils/config.ini")
+IMPALA_HOST=conf.get('impaladb', 'host')
+IMPALA_PORT=int(conf.get('impaladb', 'port'))
+MONGO_HOST=conf.get('mongo', 'host')
+MONGO_PORT=int(conf.get('mongo', 'port'))
+MONGO_USER=conf.get('mongo', 'user')
+MONGO_PASSWORD=conf.get('mongo', 'password')
 
 
 class WechatSpider(scrapy.Spider):
@@ -17,7 +26,7 @@ class WechatSpider(scrapy.Spider):
         time2 = 1420041600000
 
         ids = []
-        conn = connect(host='192.168.3.121', port=21050)
+        conn = connect(host=IMPALA_HOST, port=IMPALA_PORT) 
         cur = conn.cursor()
         # 使用 cursor() 方法创建一个游标对象 cursor
         try:
@@ -32,7 +41,7 @@ class WechatSpider(scrapy.Spider):
         finally:
             cur.close()
 
-        myclient = pymongo.MongoClient(host='192.168.3.162', port=27017,username='admin',password='SOh3TbYhx8ypJPxmt')
+        myclient = pymongo.MongoClient(host=MONGO_HOST, port=MONGO_PORT,username=MONGO_USER,password=MONGO_PASSWORD)
         mydb = myclient["module"]
         mycol = mydb["t_faq_question"]
 

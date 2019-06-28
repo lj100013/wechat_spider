@@ -10,6 +10,11 @@ import time
 import pymysql
 from scrapy.conf import settings
 from impala.dbapi import connect
+import configparser
+conf = configparser.ConfigParser()
+conf.read("/data/job_pro/utils/config.ini")
+HOST=conf.get('impaladb', 'host')
+PORT=int(conf.get('impaladb', 'port'))
 
 '''
 ----------------  正在爬取 xxx  -------------------
@@ -38,7 +43,7 @@ class LcPipeline(object):
         # wx_data = []
         # wx_data.append((id, url, source, createtime))
 
-        conn = connect(host='192.168.3.121', port=21050)
+        conn = connect(host=HOST, port=PORT)
         cur = conn.cursor()
         print("connect succes")
         print("=======================")
