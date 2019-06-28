@@ -9,6 +9,14 @@
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
+import configparser
+conf = configparser.ConfigParser()
+conf.read("/data/job_pro/utils/config.ini")
+MYSQL_HOST=conf.get('mysqldb', 'host')
+MYSQL_PORT=int(conf.get('mysqldb', 'port'))
+MYSQL_USER=conf.get('mysqldb', 'user')
+MYSQL_PASSWORD=conf.get('mysqldb', 'password')
+
 BOT_NAME = 'nowscrawl'
 
 LOG_LEVEL= 'WARNING'
@@ -16,14 +24,6 @@ LOG_LEVEL= 'WARNING'
 SPIDER_MODULES = ['nowscrawl.spiders']
 NEWSPIDER_MODULE = 'nowscrawl.spiders'
 # REDIRECT_ENABLED = False
-# 这些都是你的数据库登录的一些数据
-
-MYSQL_HOST = '192.168.3.122'
-MYSQL_USER = 'root'
-
-# 你自己数据库的密码
-MYSQL_PASSWORD = 'dachen@123'
-MYSQL_PORT = 3306
 
 # 你自己数据库的名称
 MYSQL_DB = 'wordpress'
