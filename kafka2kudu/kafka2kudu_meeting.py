@@ -8,6 +8,14 @@ import configparser
 from requests.adapters import HTTPAdapter
 import time
 
+GROUP_ID=''
+AUTO_OFFSET_RESET=''
+if len(sys.argv)<2:
+  AUTO_OFFSET_RESET='earliest'
+  GROUP_ID='meeting'
+else:
+  AUTO_OFFSET_RESET=sys.argv[1].strip()
+  GROUP_ID=sys.argv[2].strip()
 
 conf = configparser.ConfigParser()
 conf.read("/data/job_pro/utils/config.ini")
@@ -22,9 +30,11 @@ cursor = conn.cursor()
 
 #建立kafkaConsumer连接
 HOSTS=conf.get('kafka_meeting', 'hosts')
-GROUP_ID=conf.get('kafka_meeting', 'group_id')
-AUTO_OFFSET_RESET=conf.get('kafka_meeting', 'auto_offset_reset')
 TOPIC=conf.get('kafka_meeting', 'topic')
+print('======================CONFIG================================')
+print('HOSTS is :'+HOSTS+'\n'+'TOPIC is :'+TOPIC)
+print('AUTO_OFFSET_RESET is :'+AUTO_OFFSET_RESET+'\n'+'GROUP_ID is :'+GROUP_ID)
+print('======================CONFIG================================')
 consumer = KafkaConsumer(TOPIC,auto_offset_reset=AUTO_OFFSET_RESET,group_id=GROUP_ID,bootstrap_servers=[HOSTS])
 
 
@@ -36,8 +46,8 @@ session.mount('https://', HTTPAdapter(max_retries=3))
 
 
 #获取获取Url数据异常的数据存储目录，以及url里数据格式异常的数据存储目录
-URL_ERROR_PATH=conf.get('meeting', 'url_error_path')
-DATA_ERROR_PATH=conf.get('meeting', 'data_error_path')
+URL_ERROR_PATH=conf.get('meeting_log', 'url_error_path')
+DATA_ERROR_PATH=conf.get('meeting_log', 'data_error_path')
 
 
 
