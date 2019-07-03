@@ -384,7 +384,8 @@ trim(regexp_replace(isprivate,'\\n|\\r','')) as isprivate,
 trim(regexp_replace(grade,'\\n|\\r','')) as grade,
 trim(regexp_replace(hall,'\\n|\\r','')) as hall,
 trim(regexp_replace(safeLabel,'\\n|\\r','')) as safeLabel,
-trim(regexp_replace(gradeSuggest,'\\n|\\r','')) as gradeSuggest
+trim(regexp_replace(gradeSuggest,'\\n|\\r','')) as gradeSuggest,
+trim(regexp_replace(adminDel,'\\n|\\r','')) as adminDel
 from mongo2hive.diseasediscuss_disease_info;
 
 
