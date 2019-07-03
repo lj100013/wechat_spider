@@ -1,12 +1,23 @@
 # -*- coding:utf-8 -*-
 from kafka import KafkaConsumer
+from kafka import KafkaProducer
 import requests
 import json
 import sys
-import pyodbc
 import configparser
 from requests.adapters import HTTPAdapter
 import time
+from create_obj import *
+
+
+
+
+def convert_to_dict(obj):
+  '''把Object对象转换成Dict对象'''
+  dict = {}
+  dict.update(obj.__dict__)
+  return dict
+
 
 GROUP_ID=''
 AUTO_OFFSET_RESET=''
@@ -20,31 +31,42 @@ else:
 conf = configparser.ConfigParser()
 conf.read("/data/job_pro/utils/config.ini")
 
-#建立impala连接
-HOST=conf.get('impaladb', 'host')
-PORT=int(conf.get('impaladb', 'port'))
-cnxnstr = "Driver={/opt/cloudera/impalaodbc/lib/64/libclouderaimpalaodbc64.so};HOST=%s;PORT=%s;UID=hive;AuthMech=3;PWD=hive;UseSasl=0" % (HOST,PORT)
-conn = pyodbc.connect(cnxnstr, autocommit=True)
-cursor = conn.cursor()
-
 
 #建立kafkaConsumer连接
-HOSTS=conf.get('kafka_meeting', 'hosts')
+HOSTS_CONSUMER=conf.get('kafka_meeting', 'hosts')
 TOPIC=conf.get('kafka_meeting', 'topic')
-print('======================CONFIG================================')
-print('HOSTS is :'+HOSTS+'\n'+'TOPIC is :'+TOPIC)
+print('======================CONSUMER_CONFIG================================')
+print('HOSTS_CONSUMER is :'+HOSTS_CONSUMER+'\n'+'TOPIC is :'+TOPIC)
 print('AUTO_OFFSET_RESET is :'+AUTO_OFFSET_RESET+'\n'+'GROUP_ID is :'+GROUP_ID)
-print('======================CONFIG================================')
-hosts_arr=[]
-if ',' in HOSTS:
-  hostslist=HOSTS.split(',')
+print('======================CONSUMER_CONFIG================================')
+
+
+hosts_consumer_arr=[]
+if ',' in HOSTS_CONSUMER:
+  hostslist=HOSTS_CONSUMER.split(',')
   for i in range(0,len(hostslist)):
     host=hostslist[i].strip()
-    hosts_arr.append(host)
+    hosts_consumer_arr.append(host)
 else:
-  hosts_arr.append(HOSTS)
-consumer = KafkaConsumer(TOPIC,auto_offset_reset=AUTO_OFFSET_RESET,group_id=GROUP_ID,bootstrap_servers=hosts_arr)
+  hosts_consumer_arr.append(HOSTS_CONSUMER)
+#消费者
+consumer = KafkaConsumer(TOPIC,auto_offset_reset=AUTO_OFFSET_RESET,group_id=GROUP_ID,bootstrap_servers=hosts_consumer_arr)
 
+
+HOSTS_PRODUCER=conf.get('kafka', 'hosts')
+hosts_producer_arr=[]
+if ',' in HOSTS_PRODUCER:
+  hostslist=HOSTS_PRODUCER.split(',')
+  for i in range(0,len(hostslist)):
+    host=hostslist[i].strip()
+    hosts_producer_arr.append(host)
+else:
+  hosts_producer_arr.append(HOSTS_PRODUCER)
+#生产者
+producer = KafkaProducer(bootstrap_servers =hosts_producer_arr)
+print('======================PRODUCER_CONFIG================================')
+print('HOSTS_CONSUMER is :'+HOSTS_PRODUCER)
+print('======================PRODUCER_CONFIG================================')
 
 #保持请求之间的Cookies
 session=requests.session()
@@ -93,7 +115,8 @@ try:
         value=response.text.replace('\n','').replace(',]',']')
         #过滤掉不符合规则的测试数据
         #if not value.startswith('["') or len(value)==0:
-        if not '","' in value:
+        #len(value)>100不过滤一个Url只有一条数据的情况
+        if (not '","' in value) and len(value)>100:
           t=time.time()
           with open(DATA_ERROR_PATH,mode='a') as filename:
             filename.write(rlist[k]+'|'+str(int(t))+'\n')
@@ -105,19 +128,7 @@ try:
         error_data=value
         #string to list
         valuelist=json.loads(value)
-  
-        #类型0的数据
-        running_stats=[]
-        #类型1的数据
-        local_video_stats=[]
-        #类型2的数据
-        remote_video_stats=[]
-        #类型3的数据
-        local_action=[]
-        #类型4和5的数据
-        remote_action=[]
-        #类型6的数据
-        count_dpi=[]
+
         #遍历url获取到的list
         for i in range(0,len(valuelist)):
           record=valuelist[i]
@@ -139,63 +150,60 @@ try:
             cpuappusage=recordlist[13]
             cputotalusage=recordlist[14]
             deviceskunum=recordlist[15]
-            output_data='("%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s")' % (id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,role,duration,txbytes,rxbytes,txaudiokbitrate,rxaudiokbitrate,txvideokbitrate,rxvideokbitrate,cpuappusage,cputotalusage,deviceskunum)
-            running_stats.append(output_data)
+            dstype='ods_meeting_running_stats_r'
+            #生成ods_meeting_running_stats_r对象
+            data=ods_meeting_running_stats_r(id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,role,duration,txbytes,rxbytes,txaudiokbitrate,rxaudiokbitrate,txvideokbitrate,rxvideokbitrate,cpuappusage,cputotalusage,deviceskunum,dstype)
+            res=json.dumps(convert_to_dict(data),separators=(',',':')).encode('utf-8')
+            producer.send('pro_meeting_running_stats_R2P3',res)
           elif datatype=='1':
             width=recordlist[5]
             height=recordlist[6]
             framerate=recordlist[7]
             bitrate=recordlist[8]
-            output_data='("%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s")' % (id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,width,height,framerate,bitrate)
-            local_video_stats.append(output_data)
+            dstype='ods_meeting_local_video_stats_r'
+            data=ods_meeting_local_video_stats_r(id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,width,height,framerate,bitrate,dstype)
+            res=json.dumps(convert_to_dict(data),separators=(',',':')).encode('utf-8')
+            producer.send('pro_meeting_local_video_stats_R2P3',res)
           elif datatype=='2':
             width=recordlist[5]
             height=recordlist[6]
             bitrate=recordlist[7]
             framerate=recordlist[8]
-            output_data='("%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s")' % (id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,width,height,bitrate,framerate)
-            remote_video_stats.append(output_data)
+            dstype='ods_meeting_remote_video_stats_r'
+            data=ods_meeting_remote_video_stats_r(id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,width,height,bitrate,framerate,dstype)
+            res=json.dumps(convert_to_dict(data),separators=(',',':')).encode('utf-8')
+            producer.send('pro_meeting_remote_video_stats_R2P3',res)
           elif datatype=='3':
             action=recordlist[5]
-            output_data='("%s","%s","%s","%s","%s","%s","%s","%s","%s","%s")' % (id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,action)
-            local_action.append(output_data)
+            dstype='ods_meeting_local_action_r'
+            data=ods_meeting_local_action_r(id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,action,dstype)
+            res=json.dumps(convert_to_dict(data),separators=(',',':')).encode('utf-8')
+            producer.send('pro_meeting_local_action_R2P3',res)
           elif datatype=='4':
             action=recordlist[5]
-            output_data='("%s","%s","%s","%s","%s","%s","%s","%s","%s","%s")' % (id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,action)
-            remote_action.append(output_data)
+            dstype='ods_meeting_remote_action_r'
+            data=ods_meeting_remote_action_r(id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,action,dstype)
+            res=json.dumps(convert_to_dict(data),separators=(',',':')).encode('utf-8')
+            producer.send('pro_meeting_remote_action_R2P3',res)
           elif datatype=='5':
             action=''
             if recordlist[5]=='0':
               action='2'
             elif recordlist[5]=='1':
               action='3'
-            output_data='("%s","%s","%s","%s","%s","%s","%s","%s","%s","%s")' % (id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,action)
-            remote_action.append(output_data)
+            dstype='ods_meeting_remote_action_r'
+            data=ods_meeting_remote_action_r(id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,action,dstype)
+            res=json.dumps(convert_to_dict(data),separators=(',',':')).encode('utf-8')
+            producer.send('pro_meeting_remote_action_R2P3',res)
           elif datatype=='6':
             audiograde=recordlist[5]
             videosd=recordlist[6]
             videohd=recordlist[7]
             videohdp=recordlist[8]
-            output_data='("%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s")' % (id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,audiograde,videosd,videohd,videohdp)
-            count_dpi.append(output_data)
-        if len(running_stats)>0:
-          data=','.join(running_stats)
-          cursor.execute('UPSERT INTO ods.ods_meeting_running_stats_r (id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,`role`,duration,txbytes,rxbytes,txaudiokbitrate,rxaudiokbitrate,txvideokbitrate,rxvideokbitrate,cpuappusage,cputotalusage,deviceskunum) values' + data)
-        if len(local_video_stats)>0:
-          data=','.join(local_video_stats)
-          cursor.execute('UPSERT INTO ods.ods_meeting_local_video_stats_r (id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,width,height,framerate,bitrate) values' + data)
-        if len(remote_video_stats)>0:
-          data=','.join(remote_video_stats)
-          cursor.execute('UPSERT INTO ods.ods_meeting_remote_video_stats_r (id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,width,height,bitrate,framerate) values' + data)
-        if len(local_action)>0:
-          data=','.join(local_action)
-          cursor.execute('UPSERT INTO ods.ods_meeting_local_action_r (id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,action) values' + data)
-        if len(remote_action)>0:
-          data=','.join(remote_action)
-          cursor.execute('UPSERT INTO ods.ods_meeting_remote_action_r (id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,action) values' + data)
-        if len(count_dpi)>0:
-          data=','.join(count_dpi)
-          cursor.execute('UPSERT INTO ods.ods_meeting_count_dpi_r (id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,audiograde,videosd,videohd,videohdp) values' + data)
+            dstype='ods_meeting_count_dpi_r'
+            data=ods_meeting_count_dpi_r(id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,audiograde,videosd,videohd,videohdp,dstype)
+            res=json.dumps(convert_to_dict(data),separators=(',',':')).encode('utf-8')
+            producer.send('pro_meeting_count_dpi_R2P3',res)
 
 except Exception as e:
   print(e)
@@ -205,3 +213,4 @@ except Exception as e:
   #cursor.close()
   #conn.close()
   #consumer.close()
+
