@@ -603,7 +603,8 @@ isprivate string comment '1私密话题0非私密话题',
 grade string comment '内容评级A.B.C.D',
 hall string comment '是否大厅发布，老版本不存在该字段，仅大厅发布的保存',
 safeLabel string comment '内容安全建议',
-gradeSuggest string comment '内容等级建议 A、B、C'
+gradeSuggest string comment '内容等级建议 A、B、C',
+admindel string comment '管理员删除'
 )
 STORED BY 'com.mongodb.hadoop.hive.MongoStorageHandler'
 WITH SERDEPROPERTIES('mongo.columns.mapping'='{
@@ -637,7 +638,8 @@ WITH SERDEPROPERTIES('mongo.columns.mapping'='{
 "grade":"grade",
 "hall":"hall",
 "safeLabel":"safeLabel",
-"gradeSuggest":"gradeSuggest"
+"gradeSuggest":"gradeSuggest",
+"adminDel:adminDel"
 }')
 TBLPROPERTIES('mongo.uri'='mongodb://admin:admin@192.168.3.251:27017/diseasediscuss.disease_info?authSource=admin'); 
 
