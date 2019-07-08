@@ -48,10 +48,9 @@ def getTopic(database):
     conn_mysql.close()
     return data
 
-def setOffset(database):
+def setOffset(database,ts):
     conn_mysql = pymysql.connect(MYSQL_HOSTS,MYSQL_USERNAME,MYSQL_PASSWORD,MYSQL_DB)
     cur = conn_mysql.cursor()
-    ts=int(time.time())-1000
     sql = "replace into t_change_stream_offset(db,offset) values('%s',%d)" % (database,ts)
     logger.info('update offset Sql : '+sql)
     cur.execute(sql)
@@ -73,7 +72,7 @@ def getOffset(database):
 
 def term_sig_handler(signum, frame,database):
     logging.info('意外退出更新offset: %d' % signum)
-    ts=int(time.time())-1000
+    ts=int(time.time())-10000
     setOffset(database,ts)
     sys.exit(1)
 
@@ -92,7 +91,8 @@ if __name__ == '__main__':
             raise RuntimeError('Topic为空!')
         offset = getOffset(database)
         if offset==None:
-            setOffset(database)
+            offset=int(time.time())-10000
+            setOffset(database,offset)
         logger.info(database+'------------->'+str(offset))
         mongo_db = mongo_con.get_database(database)
         stream = mongo_db.watch(full_document = 'updateLookup',start_at_operation_time=bson.timestamp.Timestamp(int(offset),1))
@@ -104,7 +104,8 @@ if __name__ == '__main__':
             print(msg)
             producer.produce( msg)
     except Exception as e :
-        setOffset(database)
+        ts=int(time.time())-10000
+        setOffset(database,ts)
         logger.error(e)
-        producer.close()
+        # producer.close()
         sys.exit(1)
