@@ -52,7 +52,7 @@ def setOffset(database):
     conn_mysql = pymysql.connect(MYSQL_HOSTS,MYSQL_USERNAME,MYSQL_PASSWORD,MYSQL_DB)
     cur = conn_mysql.cursor()
     ts=int(time.time())-1000
-    sql = "replace into t_change_stream_offset(db,offset) values('%s','%s')" % (database,ts)
+    sql = "replace into t_change_stream_offset(db,offset) values('%s',%d)" % (database,ts)
     logger.info('update offset Sql : '+sql)
     cur.execute(sql)
     cur.close()
