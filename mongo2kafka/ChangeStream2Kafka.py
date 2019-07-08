@@ -82,8 +82,8 @@ kafka_client = KafkaClient(hosts = KAFKA_HOSTS)
 
 if __name__ == '__main__':
     try:
-        signal.signal(signal.SIGTERM, term_sig_handler)
-        signal.signal(signal.SIGINT, term_sig_handler)
+        signal.signal(signal.SIGTERM, term_sig_handler,database)
+        signal.signal(signal.SIGINT, term_sig_handler,database)
 
         topic = getTopic(database)
         logger.info(database+'------------->'+str(topic))
