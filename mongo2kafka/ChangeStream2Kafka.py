@@ -54,6 +54,7 @@ def setOffset(database,ts):
     sql = "replace into t_change_stream_offset(db,offset) values('%s',%d)" % (database,ts)
     logger.info('update offset Sql : '+sql)
     cur.execute(sql)
+    conn_mysql.commit()
     cur.close()
 
 def getOffset(database):
@@ -99,6 +100,7 @@ if __name__ == '__main__':
 
         tp = kafka_client.topics[topic]
         producer = tp.get_producer()
+        logger.info('*****************开始发送数据*****************')
         for change in stream:
             msg =bytes(dumps(change,ensure_ascii=False),encoding='utf8')
             # print(msg)
