@@ -70,8 +70,8 @@ def getOffset(database):
     conn_mysql.close()
     return data
 
-def term_sig_handler(signum, frame,database):
-    logging.info('意外退出更新offset: %d' % signum)
+def term_sig_handler(signum, frame):
+    logging.info('意外退出更新offset: %d,%s' % (signum,database))
     ts=int(time.time())-10000
     setOffset(database,ts)
     sys.exit(1)
@@ -82,8 +82,8 @@ kafka_client = KafkaClient(hosts = KAFKA_HOSTS)
 
 if __name__ == '__main__':
     try:
-        signal.signal(signal.SIGTERM, term_sig_handler,database)
-        signal.signal(signal.SIGINT, term_sig_handler,database)
+        signal.signal(signal.SIGTERM, term_sig_handler)
+        signal.signal(signal.SIGINT, term_sig_handler)
 
         topic = getTopic(database)
         logger.info(database+'------------->'+str(topic))
