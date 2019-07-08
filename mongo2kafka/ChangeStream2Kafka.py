@@ -101,7 +101,7 @@ if __name__ == '__main__':
         producer = tp.get_producer()
         for change in stream:
             msg =bytes(dumps(change,ensure_ascii=False),encoding='utf8')
-            print(msg)
+            # print(msg)
             producer.produce( msg)
     except Exception as e :
         ts=int(time.time())-10000
