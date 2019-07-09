@@ -1012,7 +1012,7 @@ insert overwrite table pro.ods_comment_info PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
 trim(regexp_replace(postId,'\\n|\\r','')) as postId,
-trim(regexp_replace(cards,'\\n|\\r','')) as cards,
+trim(regexp_replace(cards,'\\n|\\r|\\[|\\]','')) as cards,
 trim(regexp_replace(content,'\\n|\\r','')) as content,
 trim(regexp_replace(sortIndex,'\\n|\\r','')) as sortIndex,
 trim(regexp_replace(authorId,'\\n|\\r','')) as authorId,
