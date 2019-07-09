@@ -65,7 +65,7 @@ else:
 #生产者
 producer = KafkaProducer(bootstrap_servers =hosts_producer_arr)
 print('======================PRODUCER_CONFIG================================')
-print('HOSTS_CONSUMER is :'+HOSTS_PRODUCER)
+print('HOSTS_PRODUCER is :'+HOSTS_PRODUCER)
 print('======================PRODUCER_CONFIG================================')
 
 #保持请求之间的Cookies
