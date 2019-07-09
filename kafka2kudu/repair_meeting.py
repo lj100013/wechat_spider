@@ -106,7 +106,7 @@ try:
           dstype='ods_meeting_running_stats_r'
           #生成ods_meeting_running_stats_r对象
           data=ods_meeting_running_stats_r(id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,role,duration,txbytes,rxbytes,txaudiokbitrate,rxaudiokbitrate,txvideokbitrate,rxvideokbitrate,cpuappusage,cputotalusage,deviceskunum,dstype)
-          res=json.dumps(convert_to_dict(data),separators=(',',':'))
+          res=json.dumps(convert_to_dict(data),separators=(',',':')).encode('utf-8')
           producer.send('pro_meeting_running_stats_R2P3',res)
         elif datatype=='1':
           width=recordlist[5]
@@ -115,7 +115,7 @@ try:
           bitrate=recordlist[8]
           dstype='ods_meeting_local_video_stats_r'
           data=ods_meeting_local_video_stats_r(id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,width,height,framerate,bitrate,dstype)
-          res=json.dumps(convert_to_dict(data),separators=(',',':'))
+          res=json.dumps(convert_to_dict(data),separators=(',',':')).encode('utf-8')
           producer.send('pro_meeting_local_video_stats_R2P3',res)
         elif datatype=='2':
           width=recordlist[5]
@@ -124,19 +124,19 @@ try:
           framerate=recordlist[8]
           dstype='ods_meeting_remote_video_stats_r'
           data=ods_meeting_remote_video_stats_r(id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,width,height,bitrate,framerate,dstype)
-          res=json.dumps(convert_to_dict(data),separators=(',',':'))
+          res=json.dumps(convert_to_dict(data),separators=(',',':')).encode('utf-8')
           producer.send('pro_meeting_remote_video_stats_R2P3',res)
         elif datatype=='3':
           action=recordlist[5]
           dstype='ods_meeting_local_action_r'
           data=ods_meeting_local_action_r(id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,action,dstype)
-          res=json.dumps(convert_to_dict(data),separators=(',',':'))
+          res=json.dumps(convert_to_dict(data),separators=(',',':')).encode('utf-8')
           producer.send('pro_meeting_local_action_R2P3',res)
         elif datatype=='4':
           action=recordlist[5]
           dstype='ods_meeting_remote_action_r'
           data=ods_meeting_remote_action_r(id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,action,dstype)
-          res=json.dumps(convert_to_dict(data),separators=(',',':'))
+          res=json.dumps(convert_to_dict(data),separators=(',',':')).encode('utf-8')
           producer.send('pro_meeting_remote_action_R2P3',res)
         elif datatype=='5':
           action=''
@@ -146,7 +146,7 @@ try:
             action='3'
           dstype='ods_meeting_remote_action_r'
           data=ods_meeting_remote_action_r(id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,action,dstype)
-          res=json.dumps(convert_to_dict(data),separators=(',',':'))
+          res=json.dumps(convert_to_dict(data),separators=(',',':')).encode('utf-8')
           producer.send('pro_meeting_remote_action_R2P3',res)
         elif datatype=='6':
           audiograde=recordlist[5]
@@ -155,7 +155,7 @@ try:
           videohdp=recordlist[8]
           dstype='ods_meeting_count_dpi_r'
           data=ods_meeting_count_dpi_r(id,uid,createtime,apptype,clientappid,devicetype,deviceinfo,version,meetingid,audiograde,videosd,videohd,videohdp,dstype)
-          res=json.dumps(convert_to_dict(data),separators=(',',':'))
+          res=json.dumps(convert_to_dict(data),separators=(',',':')).encode('utf-8')
           producer.send('pro_meeting_count_dpi_R2P3',res)
 
 
