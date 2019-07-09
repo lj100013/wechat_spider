@@ -51,8 +51,8 @@ try:
   with open(URL_ERROR_PATH,'r',encoding='utf-8') as f:
     lines=f.readlines()
     for line in lines:
-      res=line.split('|')
-      r=res[1].strip()
+      result=line.split('|')
+      r=result[1].strip()
       rlist=r.split(',')
       apptype=rlist[0].strip()
       clientappid=rlist[1].strip()
