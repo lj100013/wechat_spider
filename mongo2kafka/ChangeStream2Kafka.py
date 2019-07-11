@@ -73,7 +73,7 @@ def getOffset(database):
 
 def term_sig_handler(signum, frame):
     logging.info('意外退出更新offset: %d,%s' % (signum,database))
-    ts=int(time.time())-10000
+    ts=int(time.time())-300
     setOffset(database,ts)
     sys.exit(1)
 
@@ -92,7 +92,7 @@ if __name__ == '__main__':
             raise RuntimeError('Topic为空!')
         offset = getOffset(database)
         if offset==None:
-            offset=int(time.time())-10000
+            offset=int(time.time())-300
             setOffset(database,offset)
         logger.info(database+'------------->'+str(offset))
         mongo_db = mongo_con.get_database(database)
@@ -106,7 +106,7 @@ if __name__ == '__main__':
             # print(msg)
             producer.produce( msg)
     except Exception as e :
-        ts=int(time.time())-10000
+        ts=int(time.time())-300
         setOffset(database,ts)
         logger.error(e)
         # producer.close()
