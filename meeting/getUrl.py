@@ -7,7 +7,11 @@ import configparser
 import time
 from create_obj import *
 
-
+def convert_to_dict(obj):
+  '''把Object对象转换成Dict对象'''
+  dict = {}
+  dict.update(obj.__dict__)
+  return dict
 
 GROUP_ID=''
 AUTO_OFFSET_RESET=''
