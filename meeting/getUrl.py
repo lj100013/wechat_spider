@@ -78,9 +78,10 @@ try:
       deviceinfo=reslist_split[3]
       version=reslist_split[4]
       url=reslist_split[5]
-      data=ods_meeting_url_r(createtime,apptype,clientappid,devicetype,deviceinfo,version,url)
-      res=json.dumps(convert_to_dict(data),separators=(',',':')).encode('utf-8')
-      producer.send('pro_meeting_url_R2P3',res)
+      if url.startswith('http'):
+        data=ods_meeting_url_r(createtime,apptype,clientappid,devicetype,deviceinfo,version,url)
+        res=json.dumps(convert_to_dict(data),separators=(',',':')).encode('utf-8')
+        producer.send('pro_meeting_url_R2P3',res)
 
 except Exception as e:
   print(e)
