@@ -71,7 +71,7 @@ try:
     rlist=json.loads(r)
     for k in range(0,len(rlist)):
       reslist_split=rlist[k].replace('["','').replace('"]','').split(',')
-      createtime=str(int(time.time()* 1000))
+      createtime=str(int(time.time()* 1000000))
       apptype=reslist_split[0]
       clientappid=reslist_split[1]
       devicetype=reslist_split[2]
