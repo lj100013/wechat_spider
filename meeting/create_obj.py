@@ -188,3 +188,20 @@ class ods_meeting_count_dpi_r:
     self.videohd=videohd
     self.videohdp=videohdp
     self.dstype=dstype
+
+class ods_meeting_url_r:
+  createtime=str
+  apptype=str
+  clientappid=str
+  devicetype=str
+  deviceinfo=str
+  version=str
+  url=str
+  def __init__(self,createtime,apptype,clientappid,devicetype,deviceinfo,version,url):
+    self.createtime=createtime
+    self.apptype=apptype
+    self.clientappid=clientappid
+    self.devicetype=devicetype
+    self.deviceinfo=deviceinfo
+    self.version=version
+    self.url=url
