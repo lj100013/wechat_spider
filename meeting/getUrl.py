@@ -71,7 +71,7 @@ try:
     rlist=json.loads(r)
     for k in range(0,len(rlist)):
       reslist_split=rlist[k].replace('["','').replace('"]','').split(',')
-      createtime=str(int(time.time()* 1000000))
+      createtime=str(int(time.time()* 1000))
       apptype=reslist_split[0]
       clientappid=reslist_split[1]
       devicetype=reslist_split[2]
@@ -79,7 +79,9 @@ try:
       version=reslist_split[4]
       url=reslist_split[5]
       if url.startswith('http'):
-        data=ods_meeting_url_r(createtime,apptype,clientappid,devicetype,deviceinfo,version,url)
+        urls=url.split('cn/')
+        id=urls[1]
+        data=ods_meeting_url_r(id,createtime,apptype,clientappid,devicetype,deviceinfo,version,url)
         res=json.dumps(convert_to_dict(data),separators=(',',':')).encode('utf-8')
         producer.send('pro_meeting_url_R2P3',res)
 

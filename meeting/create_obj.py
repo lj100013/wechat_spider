@@ -190,6 +190,7 @@ class ods_meeting_count_dpi_r:
     self.dstype=dstype
 
 class ods_meeting_url_r:
+  id=str
   createtime=str
   apptype=str
   clientappid=str
@@ -197,7 +198,8 @@ class ods_meeting_url_r:
   deviceinfo=str
   version=str
   url=str
-  def __init__(self,createtime,apptype,clientappid,devicetype,deviceinfo,version,url):
+  def __init__(self,id,createtime,apptype,clientappid,devicetype,deviceinfo,version,url):
+    self.id=id
     self.createtime=createtime
     self.apptype=apptype
     self.clientappid=clientappid
