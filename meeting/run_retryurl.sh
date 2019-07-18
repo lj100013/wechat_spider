@@ -12,3 +12,4 @@ if [ $? == 0 ];then
 	> /data/work/url_error/url_error.txt
 fi
 
+sleep 7m
