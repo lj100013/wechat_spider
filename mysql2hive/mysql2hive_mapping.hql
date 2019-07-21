@@ -598,17 +598,18 @@ payVoJson string,
 payUserJson string,
 status string comment '状态（1购买成功 2未成功 3订单已取消）',
 isrefund string comment '是否已经退款（0无 1是）',
+source string comment '报名来源',
 createTime string,
 updateTime string
 )
 STORED BY 'org.apache.hadoop.hive.jdbc.storagehandler.JdbcStorageHandler'
 TBLPROPERTIES (
   "mapred.jdbc.driver.class"="com.mysql.jdbc.Driver",
-  "mapred.jdbc.url"="jdbc:mysql://192.168.3.162:3306/excellent_class?useSSL=false",
-  "mapred.jdbc.username"="root",
+  "mapred.jdbc.url"="jdbc:mysql://120.79.73.179:3306/excellent_class?useSSL=false",
+  "mapred.jdbc.username"="etl_user",
   "mapred.jdbc.input.table.name"="j_class_signup",
   "mapred.jdbc.output.table.name" = "j_class_signup",
-  "mapred.jdbc.password"="123456",
+  "mapred.jdbc.password"="readsgaP3",
   "mapred.jdbc.hive.lazy.split"= "false"
 );
 
