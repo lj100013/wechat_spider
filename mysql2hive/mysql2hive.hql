@@ -375,6 +375,7 @@ trim(regexp_replace(payVoJson,'\\n|\\r','')) as payVoJson,
 trim(regexp_replace(payUserJson,'\\n|\\r','')) as payUserJson,
 trim(regexp_replace(status,'\\n|\\r','')) as status,
 trim(regexp_replace(isrefund,'\\n|\\r','')) as isrefund,
+trim(regexp_replace(source,'\\n|\\r','')) as source,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime
 from mysql2hive.excellent_class_j_class_signup;
