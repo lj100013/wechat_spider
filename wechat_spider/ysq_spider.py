@@ -2,10 +2,10 @@ import logging
 from multiprocessing.dummy import Pool as ThreadPool
 from multhread_spider import pipeline2db
 
-logging.basicConfig(level=logging.INFO,
-                    format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
-                    datefmt='%a, %d %b %Y %H:%M:%S',
-                    filemode='a')
+# logging.basicConfig(level=logging.INFO,
+#                     format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
+#                     datefmt='%a, %d %b %Y %H:%M:%S',
+#                     filemode='a')
 weixin_names = [("好医生","QK","ysq"),("丁香园","QK","ysq"),("看医界","INFO","ysq"),("医学界消化肝病频道","NKAC","ysq"),("小大夫漫画","QK","ysq"),("消化界","NKAC","ysq"),
                 ("MedSci梅斯","QK","ysq"),("华医网","QK","ysq"),("IBD学术情报官","NKAC","ysq"),("爱肝联盟","CRAC","ysq"),("临床肝胆病杂志","WKAB","ysq"),
                 ("消化时间","NKAC","ysq"),("医脉通消化科","NKAC","ysq"),("孙锋医生","WKAC","ysq"),("基层医师公社","QK","ysq"),("医学界","QK","ysq"),
