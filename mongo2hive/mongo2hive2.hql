@@ -896,3 +896,19 @@ trim(regexp_replace(sid,'\\n|\\r','')) as sid,
 trim(regexp_replace(appId,'\\n|\\r','')) as appId,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
 from mongo2hive.health_t_meeting_dpi_grade;
+
+
+
+--插入：mongo2hive.health_t_user_follow到pro.ods_t_user_follow
+insert overwrite table pro.ods_t_user_follow PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+trim(regexp_replace(userType,'\\n|\\r','')) as userType,
+trim(regexp_replace(followId,'\\n|\\r','')) as followId,
+trim(regexp_replace(followType,'\\n|\\r','')) as followType,
+trim(regexp_replace(followDesc,'\\n|\\r','')) as followDesc,
+trim(regexp_replace(enable,'\\n|\\r','')) as enable,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime
+from mongo2hive.health_t_user_follow;
