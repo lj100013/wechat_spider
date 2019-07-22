@@ -946,3 +946,27 @@ nvl(get_json_object(audioVideo,'$.suffix'),'') as audiovideo_suffix,
 nvl(get_json_object(audioVideo,'$.name'),'') as audiovideo_name,
 nvl(get_json_object(audioVideo,'$.pre_play_url'),'') as audiovideo_pre_play_url
 from mysql2hive.excellent_class_j_material;
+
+
+
+--插入:mysql2hive.pay_t_pay_record到pro.ods_t_pay_record
+insert overwrite table pro.ods_t_pay_record PARTITION(dt='${hivevar:preday}') 
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(order_id,'\\n|\\r','')) as order_id,
+trim(regexp_replace(user_id,'\\n|\\r','')) as user_id,
+trim(regexp_replace(pay_type,'\\n|\\r','')) as pay_type,
+trim(regexp_replace(pay_no,'\\n|\\r','')) as pay_no,
+trim(regexp_replace(pay_money,'\\n|\\r','')) as pay_money,
+trim(regexp_replace(pay_status,'\\n|\\r','')) as pay_status,
+trim(regexp_replace(biz_status,'\\n|\\r','')) as biz_status,
+trim(regexp_replace(transaction_id,'\\n|\\r','')) as transaction_id,
+trim(regexp_replace(partner,'\\n|\\r','')) as partner,
+trim(regexp_replace(create_time,'\\n|\\r','')) as create_time,
+trim(regexp_replace(success_time,'\\n|\\r','')) as success_time,
+trim(regexp_replace(complete_time,'\\n|\\r','')) as complete_time,
+trim(regexp_replace(serviceID,'\\n|\\r','')) as serviceID,
+trim(regexp_replace(notify_url,'\\n|\\r','')) as notify_url,
+trim(regexp_replace(body,'\\n|\\r','')) as body,
+trim(regexp_replace(multiPay,'\\n|\\r','')) as multiPay
+from mysql2hive.pay_t_pay_record;
