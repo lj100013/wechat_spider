@@ -43,7 +43,7 @@ def write2_qiniu(url, name):
                    "Content-Type": "application/json"}
         re_url = qiniu_service_url
         req = request.Request(url=re_url, data=textmod, headers=header_dict)
-        res = request.urlopen(req)
+        res = request.urlopen(req,timeout=5)
         n_url = res.read()
         return n_url
     except Exception as e:
