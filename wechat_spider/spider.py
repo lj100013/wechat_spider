@@ -231,7 +231,7 @@ class Spider(object):
                 return self._get_aticle_source(detail_url, name, retrytimes - 1)
         return [],[],[],[],[]
 
-    def pipeline2db(self,name_dept,retrytimes=5):
+    def pipeline2db(self,name_dept,retrytimes=3):
         name = name_dept[0]
         dept = name_dept[1]
         appname = name_dept[2]
