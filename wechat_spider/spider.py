@@ -163,7 +163,7 @@ class Spider(object):
                 content = driver.page_source
                 page = etree.HTML(content)
                 detailUrls = page.xpath('//h4[@class="weui_media_title"]/@hrefs')
-                dates = page.xpath('//p[@class="weui_media_extra.warning"]/text()')
+                dates = page.xpath('//p[@class="weui_media_extra_info"]/text()')
                 if len(detailUrls) > 10:
                     detailUrls = detailUrls[:10]
                     dates = dates[:10]
