@@ -5,7 +5,7 @@ import logging
 def parse_title(title):
     ids = title
     if len(title) < 2:
-        logging.info("length of title less than two chars!")
+        logging.warning("length of title less than two chars!")
         return ""
     try:
         post_name = hashlib.md5(ids.encode(encoding='UTF-8')).hexdigest()

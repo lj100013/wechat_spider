@@ -53,7 +53,7 @@ def process_item(item,appname):
         if term_id:
             str_sql = "INSERT INTO wordpress.wp_term_relationships(object_id,term_taxonomy_id, term_order)  SELECT LAST_INSERT_ID(),%s,0 from wp_posts limit 1" % (term_id)
             cue.execute(str_sql)
-        logging.info("sucess to write into mysql:{}-----{}".format(item["title"],item["wxname"]))
+        logging.warning("sucess to write into mysql:{}-----{}".format(item["title"],item["wxname"]))
     except Exception as e:
         logging.error('Insert error:', e)
         con.rollback()
