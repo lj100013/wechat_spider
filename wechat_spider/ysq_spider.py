@@ -31,7 +31,7 @@ weixin_names = [("好医生","QK","ysq"),("丁香园","QK","ysq"),("看医界","
                 ("神经介入资讯","SJ","ysq"),("医药魔方","INFO","ysq"),("赛博蓝","INFO","ysq"),("中洪博元医学实验帮","INFO","ysq"),("医咖会","INFO","ysq"),
                 ("生物学霸","INFO","ysq")]
 spider = Spider()
-pool = ThreadPool(2)
+pool = ThreadPool(1)
 pool.map(spider.pipeline2db, weixin_names)
 pool.close()
 pool.join()
