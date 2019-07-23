@@ -45,7 +45,7 @@ article_list_headers = {
 
 def get_proxies():
     ip = get_ip(3)
-    logging.info("get proxy ip:{}".format(ip))
+    logging.warning("get proxy ip:{}".format(ip))
     if ip and ':' in ip:
         proxies = {
             'http': ip,
@@ -112,19 +112,19 @@ def get_gzh_url(name,proxies,retrytimes):
                     if 'SNUID=1' not in detail_url:
                         return detail_url
                 else:
-                    logging.info("fail to process url of {}:{}".format(name,cookie_jar))
+                    logging.warning("fail to process url of {}:{}".format(name,cookie_jar))
                     proxies,host,port = get_proxies()
                     return get_gzh_url(name, proxies,retrytimes - 1)
             else:
-                logging.info("fail to get url of {}:{}".format(name,urls))
+                logging.warning("fail to get url of {}:{}".format(name,urls))
                 proxies, host, port = get_proxies()
                 return get_gzh_url(name,proxies,retrytimes-1)
         except ProxyError:
-            logging.info("proxyError,get new proxy ip!")
+            logging.warning("proxyError,get new proxy ip!")
             proxies, host, port = get_proxies()
             return get_gzh_url(name, proxies,retrytimes - 1)
         except Exception as e:
-            logging.info("happen exception,fail to get url of {}:{}".format(name,e))
+            logging.warning("happen exception,fail to get url of {}:{}".format(name,e))
             proxies, host, port = get_proxies()
             return get_gzh_url(name, proxies,retrytimes - 1)
     logging.error("fail to get url of {} after try three times".format(name))
@@ -159,24 +159,24 @@ def get_article_list(gzh_url,name,host,port,retrytimes):
             content = driver.page_source
             page = etree.HTML(content)
             detailUrls = page.xpath('//h4[@class="weui_media_title"]/@hrefs')
-            dates = page.xpath('//p[@class="weui_media_extra_info"]/text()')
+            dates = page.xpath('//p[@class="weui_media_extra.warning"]/text()')
             if len(detailUrls) > 10:
                 detailUrls = detailUrls[:10]
                 dates = dates[:10]
                 driver.quit()
                 return detailUrls,dates
             else:
-                logging.info("fail to get url of article list:{}".format(name))
+                logging.warning("fail to get url of article list:{}".format(name))
                 proxies, host, port = get_proxies()
                 driver.quit()
                 return get_article_list(gzh_url,name,host,port,retrytimes-1)
         except ProxyError:
-            logging.info("proxyError,get new proxy ip!")
+            logging.warning("proxyError,get new proxy ip!")
             proxies, host, port = get_proxies()
             driver.quit()
             return get_article_list(gzh_url,name, host,port,retrytimes - 1)
         except Exception as e:
-            logging.info("fail to get url of article list:{},{}".format(name,e))
+            logging.warning("fail to get url of article list:{},{}".format(name,e))
             driver.quit()
             proxies, host, port = get_proxies()
             return get_article_list(gzh_url,name, host,port,retrytimes - 1)
@@ -186,7 +186,7 @@ def get_article_list(gzh_url,name,host,port,retrytimes):
 def get_aticle_source(detail_url,name,proxies,retrytimes):
     while retrytimes >= 0:
         try:
-            # logging.info("do request to url:{}".format(detail_url))
+            # logging.warning("do request to url:{}".format(detail_url))
             #time.sleep(random.uniform(0, 3))
             response = requests.get(detail_url, headers = article_list_headers,proxies = proxies)
             response.encoding = 'utf-8'
@@ -210,7 +210,7 @@ def get_aticle_source(detail_url,name,proxies,retrytimes):
                 img_urls = page.xpath('//img/@data-src')
                 return content,authors,title,iframes,img_urls
             else:
-                logging.info("content is empty")
+                logging.warning("content is empty")
                 detail_url = page.xpath('//*[@id="js_share_source"]/@href')
                 if len(detail_url) > 0:
                     detail_url = detail_url[0]
@@ -218,7 +218,7 @@ def get_aticle_source(detail_url,name,proxies,retrytimes):
                 proxies, host, port = get_proxies()
                 return get_aticle_source(detail_url,name,proxies,retrytimes-1)
         except ProxyError:
-            logging.info("proxyError,get new proxy ip!")
+            logging.warning("proxyError,get new proxy ip!")
             proxies, host, port = get_proxies()
             return get_aticle_source(detail_url,name,proxies,retrytimes-1)
         except Exception as e:
@@ -235,7 +235,7 @@ def pipeline2db(name_dept,retrytimes=3):
     gzh_url = get_gzh_url(name,proxies,retrytimes)
     if len(gzh_url) > 0:
         logging.warning("sucess to get gzh_url!{}".format(name))
-        logging.info(gzh_url)
+        logging.warning(gzh_url)
         detail_urls,dates = get_article_list(gzh_url,name,host,port,retrytimes)
         if len(detail_urls) == len(dates) and len(detail_urls) > 0:
             for i in range(len(detail_urls)):

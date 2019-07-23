@@ -2,7 +2,7 @@ import logging
 from multiprocessing.dummy import Pool as ThreadPool
 from multhread_spider import pipeline2db
 from spider import Spider
-logging.basicConfig(level=logging.INFO,
+logging.basicConfig(level=logging.WARNING,
                     format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
                     datefmt='%a, %d %b %Y %H:%M:%S')
 weixin_names = [("赛柏蓝","INFO","yyr"),("健识局","INFO","yyr"),("药明康德","INFO","yyr"),("华招医药网","INFO","yyr"),("医招采","INFO","yyr"),("全药网","INFO","yyr"),

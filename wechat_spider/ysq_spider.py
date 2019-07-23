@@ -3,7 +3,7 @@ from multiprocessing.dummy import Pool as ThreadPool
 from multhread_spider import pipeline2db
 from spider import Spider
 
-logging.basicConfig(level=logging.INFO,
+logging.basicConfig(level=logging.WARNING,
                     format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
                     datefmt='%a, %d %b %Y %H:%M:%S')
 weixin_names = [("好医生","QK","ysq"),("丁香园","QK","ysq"),("看医界","INFO","ysq"),("医学界消化肝病频道","NKAC","ysq"),("小大夫漫画","QK","ysq"),("消化界","NKAC","ysq"),
@@ -30,8 +30,8 @@ weixin_names = [("好医生","QK","ysq"),("丁香园","QK","ysq"),("看医界","
                 ("中华消化外科杂志","NKAC","ysq"),("朝阳心脏超声","NKAA","ysq"),("危重症文献学习","ZZ","ysq"),("中华重症医学电子杂志","ZZ","ysq"),("神经现实","SJ","ysq"),
                 ("神经介入资讯","SJ","ysq"),("医药魔方","INFO","ysq"),("赛博蓝","INFO","ysq"),("中洪博元医学实验帮","INFO","ysq"),("医咖会","INFO","ysq"),
                 ("生物学霸","INFO","ysq")]
-spider = Spider()
-pool = ThreadPool(1)
-pool.map(spider.pipeline2db, weixin_names)
+# spider = Spider()
+pool = ThreadPool(4)
+pool.map(pipeline2db, weixin_names)
 pool.close()
 pool.join()
