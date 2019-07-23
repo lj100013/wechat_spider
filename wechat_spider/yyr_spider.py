@@ -11,6 +11,6 @@ weixin_names = [("赛柏蓝","INFO","yyr"),("健识局","INFO","yyr"),("药明�
 # weixin_names = [("中国医药创新促进会","INFO","yyr")]
 spider = Spider()
 pool = ThreadPool(1)
-pool.map(spider.pipeline2db, weixin_names)
+pool.map_async(spider.pipeline2db, weixin_names)
 pool.close()
 pool.join()
