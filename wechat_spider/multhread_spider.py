@@ -54,7 +54,7 @@ def get_proxies():
         host = ip.split(":")[0]
         port = ip.split(":")[1]
         return proxies,host,port
-    return None
+    return None,None,None
 
 def parse_url(url, pads):
     b = math.floor(random.random() * 100) + 1
@@ -145,7 +145,8 @@ def get_article_list(gzh_url,name,host,port,retrytimes):
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-gpu')
-        chrome_options.add_argument("--proxy-server=http://{}:{}".format(host,port))
+        if host and port:
+            chrome_options.add_argument("--proxy-server=http://{}:{}".format(host,port))
         chrome_options.add_argument('user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36"')
         # prefs = {"profile.managed_default_content_settings.images": 2}#禁止图片加载
         # chrome_options.add_experimental_option("prefs", prefs)
