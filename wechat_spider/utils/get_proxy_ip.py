@@ -19,7 +19,7 @@ def get_ip(retrytimes):
             logging.warning("fail to get proxy ip:{}".format(res))
             return get_ip(retrytimes - 1)
         except Exception as e:
-            logging.warning(e)
+            # logging.warning(e)
             return res.strip('\r\n')
     logging.error("fail to get proxy ip,return None:{}".format(res))
     return None
