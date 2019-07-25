@@ -21,7 +21,7 @@ mysqlcoursedb = pymysql.connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, "circle_
 es = Elasticsearch([{'host': ES_HOST, 'port': ES_PORT}])
 mysql_settings = {'host': MYSQL_HOST, 'port': MYSQL_PORT, 'user': MYSQL_USER, 'passwd': MYSQL_PASSWORD}
 mongoclient = pymongo.MongoClient(MONGO_CONECT,username=MONGO_USER,password=MONGO_PASSWORD)
-starttime=1563206400
+starttime=1563465600
 
 # 生产环境
 #mysqlcircledb = pymysql.connect("120.79.73.179", "etl_user", "readsgaP3", "circle")

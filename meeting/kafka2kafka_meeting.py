@@ -116,7 +116,7 @@ try:
         #过滤掉不符合规则的测试数据
         #if not value.startswith('["') or len(value)==0:
         #len(value)>100不过滤一个Url只有一条数据的情况
-        if (not '","' in value) and len(value)>130:
+        if ((not '","' in value) and len(value)>130) or len(value)<10:
           t=time.time()
           with open(DATA_ERROR_PATH,mode='a') as filename:
             filename.write(rlist[k]+'|'+str(int(t))+'\n')

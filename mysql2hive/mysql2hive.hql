@@ -970,3 +970,69 @@ trim(regexp_replace(notify_url,'\\n|\\r','')) as notify_url,
 trim(regexp_replace(body,'\\n|\\r','')) as body,
 trim(regexp_replace(multiPay,'\\n|\\r','')) as multiPay
 from mysql2hive.pay_t_pay_record;
+
+
+
+
+
+--插入:mysql2hive.dc_order_orders到pro.ods_orders
+insert overwrite table pro.ods_orders PARTITION(dt='${hivevar:preday}') 
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(goodsId,'\\n|\\r','')) as goodsId,
+trim(regexp_replace(sellerId,'\\n|\\r','')) as sellerId,
+trim(regexp_replace(sellerName,'\\n|\\r','')) as sellerName,
+trim(regexp_replace(sellerPhone,'\\n|\\r','')) as sellerPhone,
+trim(regexp_replace(buyersId,'\\n|\\r','')) as buyersId,
+trim(regexp_replace(buyersName,'\\n|\\r','')) as buyersName,
+trim(regexp_replace(buyersPhone,'\\n|\\r','')) as buyersPhone,
+trim(regexp_replace(buyersSystem,'\\n|\\r','')) as buyersSystem,
+trim(regexp_replace(price,'\\n|\\r','')) as price,
+trim(regexp_replace(number,'\\n|\\r','')) as number,
+trim(regexp_replace(unit,'\\n|\\r','')) as unit,
+trim(regexp_replace(cost,'\\n|\\r','')) as cost,
+trim(regexp_replace(amount,'\\n|\\r','')) as amount,
+trim(regexp_replace(orderNumber,'\\n|\\r','')) as orderNumber,
+trim(regexp_replace(preferential,'\\n|\\r','')) as preferential,
+trim(regexp_replace(status,'\\n|\\r','')) as status,
+trim(regexp_replace(mode,'\\n|\\r','')) as mode,
+trim(regexp_replace(expirationTime,'\\n|\\r','')) as expirationTime,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(businessType,'\\n|\\r','')) as businessType,
+trim(regexp_replace(payNo,'\\n|\\r','')) as payNo,
+trim(regexp_replace(orderPic,'\\n|\\r','')) as orderPic,
+trim(regexp_replace(orderTitle,'\\n|\\r','')) as orderTitle,
+trim(regexp_replace(openId,'\\n|\\r','')) as openId,
+trim(regexp_replace(orderTotalPrice,'\\n|\\r','')) as orderTotalPrice,
+trim(regexp_replace(preferentialTypes,'\\n|\\r','')) as preferentialTypes,
+trim(regexp_replace(payUserId,'\\n|\\r','')) as payUserId,
+trim(regexp_replace(payUserPhone,'\\n|\\r','')) as payUserPhone,
+trim(regexp_replace(invoice,'\\n|\\r','')) as invoice,
+trim(regexp_replace(productType,'\\n|\\r','')) as productType,
+trim(regexp_replace(payUserName,'\\n|\\r','')) as payUserName
+from mysql2hive.dc_order_orders;
+
+
+
+
+
+--插入:mysql2hive.pay_t_refund_record到pro.ods_t_refund_record
+insert overwrite table pro.ods_t_refund_record PARTITION(dt='${hivevar:preday}') 
+select 
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(order_id,'\\n|\\r','')) as order_id,
+trim(regexp_replace(pay_type,'\\n|\\r','')) as pay_type,
+trim(regexp_replace(pay_no,'\\n|\\r','')) as pay_no,
+trim(regexp_replace(transaction_id,'\\n|\\r','')) as transaction_id,
+trim(regexp_replace(refund_no,'\\n|\\r','')) as refund_no,
+trim(regexp_replace(money,'\\n|\\r','')) as money,
+trim(regexp_replace(refund_reason,'\\n|\\r','')) as refund_reason,
+trim(regexp_replace(refund_status,'\\n|\\r','')) as refund_status,
+trim(regexp_replace(biz_status,'\\n|\\r','')) as biz_status,
+trim(regexp_replace(create_time,'\\n|\\r','')) as create_time,
+trim(regexp_replace(success_time,'\\n|\\r','')) as success_time,
+trim(regexp_replace(complete_time,'\\n|\\r','')) as complete_time,
+trim(regexp_replace(notify_url,'\\n|\\r','')) as notify_url,
+trim(regexp_replace(pay_money,'\\n|\\r','')) as pay_money
+from mysql2hive.pay_t_refund_record;
