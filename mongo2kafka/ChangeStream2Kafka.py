@@ -117,6 +117,8 @@ if __name__ == '__main__':
         logger.info('*****************开始发送数据*****************')
         for change in stream:
             msg =bytes(dumps(change,ensure_ascii=False),encoding='utf8')
+            if len(msg)>80960:
+                logger.error('长度超限:'+msg)
             jsondata = str(msg,'utf-8')
             text = json.loads(jsondata)
             tb = text['ns']['db']+'.'+text['ns']['coll']
