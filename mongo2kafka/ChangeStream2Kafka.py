@@ -71,13 +71,9 @@ def term_sig_handler(signum, frame):
     setOffset(database,ts)
     sys.exit(1)
 
-def partitionDefine(keyToPartition,numPartitions):
-    if keyToPartition is None:
-        return random.randint(0, numPartitions-1)
-    else:
-        return abs(hash(keyToPartition)) %numPartitions
-
 if __name__ == '__main__':
+    database = sys.argv[1].split('.')[0]
+    # database = 'health'
     try:
         mongo_con = pymongo.MongoClient(host=HOST,port=PORT,username=USERNAME,password=PASSWORD)
 
@@ -91,8 +87,7 @@ if __name__ == '__main__':
               hosts_producer_arr.append(host)
         else:
             hosts_producer_arr.append(KAFKA_HOSTS)
-        # database = sys.argv[1].split('.')[0]
-        database = 'health'
+
         topic = getTopic(database)
         print(database+'------------->'+str(topic))
         if topic==None:
@@ -117,11 +112,11 @@ if __name__ == '__main__':
             jsondata = str(msg,'utf-8')
             text = json.loads(jsondata)
             tb = text['ns']['db']+'.'+text['ns']['coll']
-            i =partitionDefine(tb,numPartitions)
-            producer.send(msg,partition=i)
+            i = abs(hash(tb)) %numPartitions
+            producer.send(topic,msg,partition=i)
     except Exception as e :
         ts=int(time.time())-300
         setOffset(database,ts)
         print(e)
-        # producer.close()
+        producer.close()
         sys.exit(1)
