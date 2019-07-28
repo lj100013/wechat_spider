@@ -11,6 +11,14 @@ from kafka import KafkaProducer
 import configparser
 import time
 import signal
+import logging.handlers
+formatter = logging.Formatter("%(levelname)s %(message)s")
+handler1 = logging.StreamHandler()
+handler1.setFormatter(formatter)
+logger = logging.getLogger("logger")
+logger.setLevel(logging.INFO)
+logger.addHandler(handler1)
+
 
 conf = configparser.ConfigParser()
 # conf.read(r"D:\job_script\utils\config.ini")
@@ -32,7 +40,7 @@ def getTopic(database):
     conn_mysql = pymysql.connect(MYSQL_HOSTS,MYSQL_USERNAME,MYSQL_PASSWORD,MYSQL_DB)
     cur = conn_mysql.cursor()
     sql="select topic from t_change_stream_kafka where db='%s'" % (database)
-    print('getTpoic Sql: '+sql)
+    logger.info('getTpoic Sql: '+sql)
     cur.execute(sql)
     result = cur.fetchall()
     if len(result)>0:
@@ -46,7 +54,7 @@ def setOffset(database,ts):
     conn_mysql = pymysql.connect(MYSQL_HOSTS,MYSQL_USERNAME,MYSQL_PASSWORD,MYSQL_DB)
     cur = conn_mysql.cursor()
     sql = "replace into t_change_stream_offset(db,offset) values('%s',%d)" % (database,ts)
-    print('update offset Sql : '+sql)
+    logger.info('update offset Sql : '+sql)
     cur.execute(sql)
     conn_mysql.commit()
     cur.close()
@@ -55,7 +63,7 @@ def getOffset(database):
     conn_mysql = pymysql.connect(MYSQL_HOSTS,MYSQL_USERNAME,MYSQL_PASSWORD,MYSQL_DB)
     cur = conn_mysql.cursor()
     sql = "select offset from t_change_stream_offset where db='%s'" % (database)
-    print('getOffset Sql:'+ sql)
+    logger.info('getOffset Sql:'+ sql)
     cur.execute(sql)
     result = cur.fetchall()
     if len(result)>0:
@@ -66,7 +74,7 @@ def getOffset(database):
     return data
 
 def term_sig_handler(signum, frame):
-    print('意外退出更新offset: %d,%s' % (signum,database))
+    logger.info('意外退出更新offset: %d,%s' % (signum,database))
     ts=int(time.time())-300
     setOffset(database,ts)
     sys.exit(1)
@@ -89,7 +97,7 @@ if __name__ == '__main__':
             hosts_producer_arr.append(KAFKA_HOSTS)
 
         topic = getTopic(database)
-        print(database+'------------->'+str(topic))
+        logger.info(database+'------------->'+str(topic))
         if topic==None:
             raise RuntimeError('Topic为空!')
         offset = getOffset(database)
@@ -98,7 +106,7 @@ if __name__ == '__main__':
             offset=int(time.time())-300
             setOffset(database,offset)
 
-        print(database+'------------->'+str(offset))
+        logger.info(database+'------------->'+str(offset))
         mongo_db = mongo_con.get_database(database)
         stream = mongo_db.watch(full_document = 'updateLookup',start_at_operation_time=bson.timestamp.Timestamp(int(offset),1))
 
@@ -106,7 +114,7 @@ if __name__ == '__main__':
         partition = producer.partitions_for(topic)
         numPartitions = len(partition)
 
-        print('*****************开始发送数据*****************')
+        logger.info('*****************开始发送数据*****************')
         for change in stream:
             msg =bytes(dumps(change,ensure_ascii=False),encoding='utf8')
             jsondata = str(msg,'utf-8')
@@ -117,6 +125,6 @@ if __name__ == '__main__':
     except Exception as e :
         ts=int(time.time())-300
         setOffset(database,ts)
-        print(e)
+        logger.error(e)
         producer.close()
         sys.exit(1)
