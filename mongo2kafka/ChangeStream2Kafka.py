@@ -79,6 +79,21 @@ def term_sig_handler(signum, frame):
     setOffset(database,ts)
     sys.exit(1)
 
+def convert_n_bytes(n, b):
+    bits = b * 8
+    return (n + 2 ** (bits - 1)) % 2 ** bits - 2 ** (bits - 1)
+
+def convert_4_bytes(n):
+    return convert_n_bytes(n, 4)
+
+def getHashCode(s):
+    h = 0
+    n = len(s)
+    for i, c in enumerate(s):
+        h = h + ord(c) * 31 ** (n - 1 - i)
+    return convert_4_bytes(h)
+
+
 if __name__ == '__main__':
     database = sys.argv[1].split('.')[0]
     # database = 'health'
@@ -122,7 +137,7 @@ if __name__ == '__main__':
             jsondata = str(msg,'utf-8')
             text = json.loads(jsondata)
             tb = text['ns']['db']+'.'+text['ns']['coll']
-            i = abs(hash(tb)) %numPartitions
+            i = abs(getHashCode(tb)) %numPartitions
             producer.send(topic,msg,partition=i)
     except Exception as e :
         ts=int(time.time())-300
