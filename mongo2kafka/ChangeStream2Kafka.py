@@ -1,21 +1,24 @@
 # -*- coding:utf-8 -*-
+import random
+
 import bson
+import json
 import pymongo
 import pymysql
 import sys
 from bson.json_util import dumps
-from pykafka import KafkaClient
+from kafka import KafkaProducer
 import configparser
 import time
 import signal
-import logging
 import logging.handlers
-formatter = logging.Formatter("%(asctime)s %(name)s %(levelname)s %(message)s")
+formatter = logging.Formatter("%(levelname)s %(message)s")
 handler1 = logging.StreamHandler()
 handler1.setFormatter(formatter)
 logger = logging.getLogger("logger")
 logger.setLevel(logging.INFO)
 logger.addHandler(handler1)
+
 
 conf = configparser.ConfigParser()
 # conf.read(r"D:\job_script\utils\config.ini")
@@ -31,8 +34,7 @@ MYSQL_USERNAME=conf.get('mysqldb','user')
 MYSQL_PASSWORD=conf.get('mysqldb','password')
 MYSQL_DB=conf.get('mysqldb','dbreport')
 
-database = sys.argv[1].split('.')[0]
-# database = 'health'
+
 
 def getTopic(database):
     conn_mysql = pymysql.connect(MYSQL_HOSTS,MYSQL_USERNAME,MYSQL_PASSWORD,MYSQL_DB)
@@ -72,42 +74,74 @@ def getOffset(database):
     return data
 
 def term_sig_handler(signum, frame):
-    logging.info('意外退出更新offset: %d,%s' % (signum,database))
+    logger.info('意外退出更新offset: %d,%s' % (signum,database))
     ts=int(time.time())-300
     setOffset(database,ts)
     sys.exit(1)
 
-mongo_con = pymongo.MongoClient(host=HOST,port=PORT,username=USERNAME,password=PASSWORD)
-kafka_client = KafkaClient(hosts = KAFKA_HOSTS)
+def convert_n_bytes(n, b):
+    bits = b * 8
+    return (n + 2 ** (bits - 1)) % 2 ** bits - 2 ** (bits - 1)
+
+def convert_4_bytes(n):
+    return convert_n_bytes(n, 4)
+
+def getHashCode(s):
+    h = 0
+    n = len(s)
+    for i, c in enumerate(s):
+        h = h + ord(c) * 31 ** (n - 1 - i)
+    return convert_4_bytes(h)
 
 
 if __name__ == '__main__':
+    database = sys.argv[1].split('.')[0]
+    # database = 'health'
     try:
+        mongo_con = pymongo.MongoClient(host=HOST,port=PORT,username=USERNAME,password=PASSWORD)
+
         signal.signal(signal.SIGTERM, term_sig_handler)
         signal.signal(signal.SIGINT, term_sig_handler)
+        hosts_producer_arr=[]
+        if ',' in KAFKA_HOSTS:
+           hostslist=KAFKA_HOSTS.split(',')
+           for i in range(0,len(hostslist)):
+              host=hostslist[i].strip()
+              hosts_producer_arr.append(host)
+        else:
+            hosts_producer_arr.append(KAFKA_HOSTS)
 
         topic = getTopic(database)
         logger.info(database+'------------->'+str(topic))
         if topic==None:
             raise RuntimeError('Topic为空!')
         offset = getOffset(database)
+
         if offset==None:
             offset=int(time.time())-300
             setOffset(database,offset)
+
         logger.info(database+'------------->'+str(offset))
         mongo_db = mongo_con.get_database(database)
         stream = mongo_db.watch(full_document = 'updateLookup',start_at_operation_time=bson.timestamp.Timestamp(int(offset),1))
 
-        tp = kafka_client.topics[topic]
-        producer = tp.get_producer()
+        producer = KafkaProducer(bootstrap_servers = hosts_producer_arr)
+        partition = producer.partitions_for(topic)
+        numPartitions = len(partition)
+
         logger.info('*****************开始发送数据*****************')
         for change in stream:
             msg =bytes(dumps(change,ensure_ascii=False),encoding='utf8')
-            # print(msg)
-            producer.produce( msg)
+            jsondata = str(msg,'utf-8')
+            if len(msg)>80960:
+                logger.error('长度超限:'+jsondata)
+            text = json.loads(jsondata)
+            tb = text['ns']['db']+'.'+text['ns']['coll']
+            i = abs(getHashCode(tb)) %numPartitions
+            producer.send(topic,msg,partition=i)
     except Exception as e :
         ts=int(time.time())-300
         setOffset(database,ts)
         logger.error(e)
-        # producer.close()
+        producer.close()
         sys.exit(1)

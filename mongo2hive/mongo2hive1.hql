@@ -609,7 +609,9 @@ trim(regexp_replace(phoneType,'\\n|\\r','')) as phoneType,
 trim(regexp_replace(joinTime,'\\n|\\r','')) as joinTime,
 trim(regexp_replace(leaveTime,'\\n|\\r','')) as leaveTime,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
-trim(regexp_replace(visitIp,'\\n|\\r','')) as visitIp
+trim(regexp_replace(visitIp,'\\n|\\r','')) as visitIp,
+trim(regexp_replace(appid,'\\n|\\r','')) as appid,
+trim(regexp_replace(sid,'\\n|\\r','')) as sid
 from mongo2hive.health_t_meeting_joinrecord;
 
 
