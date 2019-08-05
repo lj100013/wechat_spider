@@ -1,10 +1,10 @@
 #!/bin/bash
-if [[ $1 == '' ]];then
+if [[ $2 == '' ]];then
    preday=`date -d "yesterday" +%Y-%m-%d`
    pre2day=`date -d "2 days ago" +%Y-%m-%d`
 else
-   preday=$1
-   pre2day=$2
+   preday=$2
+   pre2day=$3
 fi
 
 jobname=$1
