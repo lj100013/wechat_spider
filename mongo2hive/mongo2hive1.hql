@@ -1239,8 +1239,8 @@ from mongo2hive.activity_t_invitation;
 --content_attachments ,
 --trim(regexp_replace(creator,'\\n|\\r','')) as creator ,
 --trim(regexp_replace(author_id,'\\n|\\r','')) as author_id ,
---trim(regexp_replace(author_name,'\\n|\\r','')) as author_name ,
 --trim(regexp_replace(author_type,'\\n|\\r','')) as author_type ,
+--trim(regexp_replace(author_name,'\\n|\\r','')) as author_name ,
 --trim(regexp_replace(author_workunit,'\\n|\\r','')) as author_workunit ,
 --trim(regexp_replace(author_position,'\\n|\\r','')) as author_position ,
 --trim(regexp_replace(author_headpic,'\\n|\\r','')) as author_headpic ,
@@ -1257,4 +1257,4 @@ from mongo2hive.activity_t_invitation;
 --safeLabel ,
 --trim(regexp_replace(createTime,'\\n|\\r','')) as createTime ,
 --trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime 
---from mongo2hive.yy_post_t_post
+--from mongo2hive.yy_post_t_post;
