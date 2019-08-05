@@ -1235,6 +1235,7 @@ from mongo2hive.activity_t_invitation;
 --content_pics ,
 --content_videos ,
 --content_audios ,
+--content_supplements,
 --content_attachments ,
 --trim(regexp_replace(creator,'\\n|\\r','')) as creator ,
 --trim(regexp_replace(author_id,'\\n|\\r','')) as author_id ,
