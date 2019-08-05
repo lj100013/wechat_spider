@@ -1,7 +1,7 @@
 --T1
---ods建表:pro.ods_yhq_t_doctor_union_pack
---插入:mysql2hive.pack_t_doctor_union_pack到pro.ods_yhq_t_doctor_union_pack
-insert overwrite table pro.ods_yhq_t_doctor_union_pack PARTITION(dt='${hivevar:preday}') 
+--ods建表:pro.ods_yhzj_t_doctor_union_pack
+--插入:mysql2hive.pack_t_doctor_union_pack到pro.ods_yhzj_t_doctor_union_pack
+insert overwrite table pro.ods_yhzj_t_doctor_union_pack PARTITION(dt='${hivevar:preday}') 
 select 
 trim(regexp_replace(id,'\\n|\\r','')) as id,
 trim(regexp_replace(userId,'\\n|\\r','')) as userId,
@@ -20,9 +20,9 @@ from mysql2hive.pack_t_doctor_union_pack;
 
 
 --T2
---ods建表:pro.ods_yhq_t_order_session
---插入:mysql2hive.orders_t_order_session到pro.ods_yhq_t_order_session
-insert overwrite table pro.ods_yhq_t_order_session PARTITION(dt='${hivevar:preday}') 
+--ods建表:pro.ods_yhzj_t_order_session
+--插入:mysql2hive.orders_t_order_session到pro.ods_yhzj_t_order_session
+insert overwrite table pro.ods_yhzj_t_order_session PARTITION(dt='${hivevar:preday}') 
 select 
 trim(regexp_replace(id,'\\n|\\r','')) as id,
 trim(regexp_replace(orderId,'\\n|\\r','')) as orderId,
@@ -46,9 +46,9 @@ from mysql2hive.orders_t_order_session;
 
 
 --T3
---ods建表:pro.ods_yhq_t_prescription_detail
---插入:mysql2hive.drug_order_t_prescription_detail到pro.ods_yhq_t_prescription_detail
-insert overwrite table pro.ods_yhq_t_prescription_detail PARTITION(dt='${hivevar:preday}') 
+--ods建表:pro.ods_yhzj_t_prescription_detail
+--插入:mysql2hive.drug_order_t_prescription_detail到pro.ods_yhzj_t_prescription_detail
+insert overwrite table pro.ods_yhzj_t_prescription_detail PARTITION(dt='${hivevar:preday}') 
 select 
 trim(regexp_replace(id,'\\n|\\r','')) as id,
 trim(regexp_replace(prescriptionId,'\\n|\\r','')) as prescriptionId,
@@ -69,9 +69,9 @@ from mysql2hive.drug_order_t_prescription_detail;
 
 
 --T4
---ods建表:pro.ods_yhq_t_doctor_info
---插入:mysql2hive.pack_t_doctor_info到pro.ods_yhq_t_doctor_info
-insert overwrite table pro.ods_yhq_t_doctor_info PARTITION(dt='${hivevar:preday}') 
+--ods建表:pro.ods_yhzj_t_doctor_info
+--插入:mysql2hive.pack_t_doctor_info到pro.ods_yhzj_t_doctor_info
+insert overwrite table pro.ods_yhzj_t_doctor_info PARTITION(dt='${hivevar:preday}') 
 select 
 trim(regexp_replace(userId,'\\n|\\r','')) as userId,
 trim(regexp_replace(name,'\\n|\\r','')) as name,
@@ -93,9 +93,9 @@ from mysql2hive.pack_t_doctor_info;
 
 
 --T5
---ods建表:pro.ods_yhq_t_order
---插入:mysql2hive.orders_t_order到pro.ods_yhq_t_order
-insert overwrite table pro.ods_yhq_t_order PARTITION(dt='${hivevar:preday}') 
+--ods建表:pro.ods_yhzj_t_order
+--插入:mysql2hive.orders_t_order到pro.ods_yhzj_t_order
+insert overwrite table pro.ods_yhzj_t_order PARTITION(dt='${hivevar:preday}') 
 select 
 trim(regexp_replace(id,'\\n|\\r','')) as id,
 trim(regexp_replace(number,'\\n|\\r','')) as number,
@@ -115,9 +115,9 @@ from mysql2hive.orders_t_order;
 
 
 --T6
---ods建表:pro.ods_yhq_t_ext_order
---插入:mysql2hive.orders_t_ext_order到pro.ods_yhq_t_ext_order
-insert overwrite table pro.ods_yhq_t_ext_order PARTITION(dt='${hivevar:preday}') 
+--ods建表:pro.ods_yhzj_t_ext_order
+--插入:mysql2hive.orders_t_ext_order到pro.ods_yhzj_t_ext_order
+insert overwrite table pro.ods_yhzj_t_ext_order PARTITION(dt='${hivevar:preday}') 
 select 
 trim(regexp_replace(id,'\\n|\\r','')) as id,
 trim(regexp_replace(userId,'\\n|\\r','')) as userId,
@@ -138,9 +138,9 @@ from mysql2hive.orders_t_ext_order;
 
 
 --T7
---ods建表:pro.ods_yhq_t_charge_bill
---插入:mysql2hive.orders_t_charge_bill到pro.ods_yhq_t_charge_bill
-insert overwrite table pro.ods_yhq_t_charge_bill PARTITION(dt='${hivevar:preday}') 
+--ods建表:pro.ods_yhzj_t_charge_bill
+--插入:mysql2hive.orders_t_charge_bill到pro.ods_yhzj_t_charge_bill
+insert overwrite table pro.ods_yhzj_t_charge_bill PARTITION(dt='${hivevar:preday}') 
 select 
 trim(regexp_replace(id,'\\n|\\r','')) as id,
 trim(regexp_replace(userId,'\\n|\\r','')) as userId,
@@ -159,9 +159,9 @@ from mysql2hive.orders_t_charge_bill;
 
 
 --T8
---ods建表:pro.ods_yhq_t_drug_order
---插入:mysql2hive.drug_order_t_drug_order到pro.ods_yhq_t_drug_order
-insert overwrite table pro.ods_yhq_t_drug_order PARTITION(dt='${hivevar:preday}') 
+--ods建表:pro.ods_yhzj_t_drug_order
+--插入:mysql2hive.drug_order_t_drug_order到pro.ods_yhzj_t_drug_order
+insert overwrite table pro.ods_yhzj_t_drug_order PARTITION(dt='${hivevar:preday}') 
 select 
 trim(regexp_replace(id ,'\\n|\\r','')) as  id ,
 trim(regexp_replace(userId ,'\\n|\\r','')) as  userId ,
@@ -189,16 +189,3 @@ trim(regexp_replace(cancelTime ,'\\n|\\r','')) as  cancelTime ,
 trim(regexp_replace(finishTime ,'\\n|\\r','')) as  finishTime ,
 trim(regexp_replace(supplierName ,'\\n|\\r','')) as  supplierName 
 from mysql2hive.drug_order_t_drug_order;
-
-
-
-
-
-
-
-
-
-
-
-
-
