@@ -1220,8 +1220,8 @@ trim(regexp_replace(addCredited,'\\n|\\r','')) as addCredited
 from mongo2hive.activity_t_invitation;
 
 
---插入:mongo2hive.yy_post_t_post到pro.yyr_ods_t_post
---insert overwrite table pro.yyr_ods_t_post PARTITION(dt='${hivevar:preday}')
+--插入:mongo2hive.yy_post_t_post到pro.ods_yyr_t_post
+--insert overwrite table pro.ods_yyr_t_post PARTITION(dt='${hivevar:preday}')
 --select
 --trim(regexp_replace(id,'\\n|\\r','')) as id,
 --trim(regexp_replace(type,'\\n|\\r','')) as type,
