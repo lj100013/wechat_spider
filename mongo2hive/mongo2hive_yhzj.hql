@@ -2,9 +2,9 @@
 --医患圈pro.ods源表
 
 --T1
---ods建表：pro.ods_yhq_t_disease_label_auth_record
---插入：mongo2hive.member_manage_t_disease_label_auth_record到pro.ods_yhq_t_disease_label_auth_record
-insert overwrite table pro.ods_yhq_t_disease_label_auth_record PARTITION(dt='${hivevar:preday}')
+--ods建表：pro.ods_yhzj_t_disease_label_auth_record
+--插入：mongo2hive.member_manage_t_disease_label_auth_record到pro.ods_yhzj_t_disease_label_auth_record
+insert overwrite table pro.ods_yhzj_t_disease_label_auth_record PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
 trim(regexp_replace(unionId,'\\n|\\r','')) as unionId,
@@ -34,9 +34,9 @@ from mongo2hive.member_manage_t_disease_label_auth_record;
 
 
 --T2
---ods建表：pro.ods_yhq_t_join_record
---插入：mongo2hive.doctor_union_t_join_record到pro.ods_yhq_t_join_record
-insert overwrite table pro.ods_yhq_t_join_record PARTITION(dt='${hivevar:preday}')
+--ods建表：pro.ods_yhzj_t_join_record
+--插入：mongo2hive.doctor_union_t_join_record到pro.ods_yhzj_t_join_record
+insert overwrite table pro.ods_yhzj_t_join_record PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
 trim(regexp_replace(unionId,'\\n|\\r','')) as unionId,
@@ -54,9 +54,9 @@ from mongo2hive.doctor_union_t_join_record;
 
 
 --T3
---ods建表：pro.ods_yhq_m_medicalrecord_process
---插入：mongo2hive.medicalrecord_m_medicalrecord_process到pro.ods_yhq_m_medicalrecord_process
-insert overwrite table pro.ods_yhq_m_medicalrecord_process PARTITION(dt='${hivevar:preday}')
+--ods建表：pro.ods_yhzj_m_medicalrecord_process
+--插入：mongo2hive.medicalrecord_m_medicalrecord_process到pro.ods_yhzj_m_medicalrecord_process
+insert overwrite table pro.ods_yhzj_m_medicalrecord_process PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
 trim(regexp_replace(mid,'\\n|\\r','')) as mid,
@@ -74,9 +74,9 @@ from mongo2hive.medicalrecord_m_medicalrecord_process;
 
 
 --T4
---ods建表：pro.ods_yhq_t_union_info
---插入：mongo2hive.doctor_union_t_union_info到pro.ods_yhq_t_union_info
-insert overwrite table pro.ods_yhq_t_union_info PARTITION(dt='${hivevar:preday}')
+--ods建表：pro.ods_yhzj_t_union_info
+--插入：mongo2hive.doctor_union_t_union_info到pro.ods_yhzj_t_union_info
+insert overwrite table pro.ods_yhzj_t_union_info PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
 trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
@@ -109,29 +109,29 @@ from mongo2hive.doctor_union_t_union_info;
 
 
 --T5
---ods建表：pro.ods_yhq_t_care_plan_record
---插入：mongo2hive.careplan_t_care_plan_record到pro.ods_yhq_t_care_plan_record
-insert overwrite table pro.ods_yhq_t_care_plan_record PARTITION(dt='${hivevar:preday}')
+--ods建表：pro.ods_yhzj_t_care_plan_record
+--插入：mongo2hive.careplan_t_care_plan_record到pro.ods_yhzj_t_care_plan_record
+insert overwrite table pro.ods_yhzj_t_care_plan_record PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
 trim(regexp_replace(carePlanId,'\\n|\\r','')) as carePlanId,
 trim(regexp_replace(carePlanName,'\\n|\\r','')) as carePlanName,
 trim(regexp_replace(doctorId,'\\n|\\r','')) as doctorId,
 trim(regexp_replace(patientId,'\\n|\\r','')) as patientId,
-cast(size(orderIds) as string) as orderNum,
+cast(size(split(orderIds,'\\,')) as string) as orderNum,
 orderIds as orderIds,
 orderid as orderid
 from mongo2hive.careplan_t_care_plan_record 
-LATERAL VIEW explode(orderids) table_tmp AS orderId;
+LATERAL VIEW explode(split(regexp_replace(regexp_extract(orderids,'^\\[(.+)\\]$',1),'\\s+',''),'\\,')) table_tmp AS orderId;
 
 
 
 
 
 --T9
---ods建表：pro.ods_yhq_t_post_info
---插入：mongo2hive.dap_basepost_t_post_info到pro.ods_yhq_t_post_info
-insert overwrite table pro.ods_yhq_t_post_info PARTITION(dt='${hivevar:preday}')
+--ods建表：pro.ods_yhzj_t_post_info
+--插入：mongo2hive.dap_basepost_t_post_info到pro.ods_yhzj_t_post_info
+insert overwrite table pro.ods_yhzj_t_post_info PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
 trim(regexp_replace(source,'\\n|\\r','')) as source,
@@ -164,9 +164,9 @@ from mongo2hive.dap_basepost_t_post_info;
 
 
 --T11
---ods建表：pro.ods_yhq_t_comment_info
---插入：mongo2hive.dap_basepost_t_comment_info到pro.ods_yhq_t_comment_info
-insert overwrite table pro.ods_yhq_t_comment_info PARTITION(dt='${hivevar:preday}')
+--ods建表：pro.ods_yhzj_t_comment_info
+--插入：mongo2hive.dap_basepost_t_comment_info到pro.ods_yhzj_t_comment_info
+insert overwrite table pro.ods_yhzj_t_comment_info PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
 trim(regexp_replace(postId,'\\n|\\r','')) as postId,
@@ -185,9 +185,9 @@ from mongo2hive.dap_basepost_t_comment_info;
 
 
 --T12
---ods建表：pro.ods_yhq_t_thumb_up_info
---插入：mongo2hive.dap_basepost_t_thumb_up_info到pro.ods_yhq_t_thumb_up_info
-insert overwrite table pro.ods_yhq_t_thumb_up_info PARTITION(dt='${hivevar:preday}')
+--ods建表：pro.ods_yhzj_t_thumb_up_info
+--插入：mongo2hive.dap_basepost_t_thumb_up_info到pro.ods_yhzj_t_thumb_up_info
+insert overwrite table pro.ods_yhzj_t_thumb_up_info PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
 trim(regexp_replace(targetId,'\\n|\\r','')) as targetId,
@@ -199,9 +199,9 @@ from mongo2hive.dap_basepost_t_thumb_up_info;
 
 
 --T13
---ods建表：pro.ods_yhq_t_collection
---插入：mongo2hive.collection_t_collection到pro.ods_yhq_t_collection
-insert overwrite table pro.ods_yhq_t_collection PARTITION(dt='${hivevar:preday}')
+--ods建表：pro.ods_yhzj_t_collection
+--插入：mongo2hive.collection_t_collection到pro.ods_yhzj_t_collection
+insert overwrite table pro.ods_yhzj_t_collection PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
 trim(regexp_replace(userId,'\\n|\\r','')) as userId,
@@ -223,9 +223,9 @@ from mongo2hive.collection_t_collection;
 
 
 --T14
---ods建表：pro.ods_yhq_t_reward_info
---插入：mongo2hive.dap_basepost_t_reward_info到pro.ods_yhq_t_reward_info
-insert overwrite table pro.ods_yhq_t_reward_info PARTITION(dt='${hivevar:preday}')
+--ods建表：pro.ods_yhzj_t_reward_info
+--插入：mongo2hive.dap_basepost_t_reward_info到pro.ods_yhzj_t_reward_info
+insert overwrite table pro.ods_yhzj_t_reward_info PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
 trim(regexp_replace(note,'\\n|\\r','')) as note,
@@ -251,9 +251,9 @@ from mongo2hive.dap_basepost_t_reward_info;
 
 
 --T15
---ods建表：pro.ods_yhq_t_charge_info
---插入：mongo2hive.dap_basepost_t_charge_info到pro.ods_yhq_t_charge_info
-insert overwrite table pro.ods_yhq_t_charge_info PARTITION(dt='${hivevar:preday}')
+--ods建表：pro.ods_yhzj_t_charge_info
+--插入：mongo2hive.dap_basepost_t_charge_info到pro.ods_yhzj_t_charge_info
+insert overwrite table pro.ods_yhzj_t_charge_info PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
 trim(regexp_replace(unionId,'\\n|\\r','')) as unionId,
@@ -272,9 +272,9 @@ from mongo2hive.dap_basepost_t_charge_info;
 
 
 --T16
---ods建表：pro.ods_yhq_t_union_pack_setting
---插入：mongo2hive.pack_t_union_pack_setting到pro.ods_yhq_t_union_pack_setting
-insert overwrite table pro.ods_yhq_t_union_pack_setting PARTITION(dt='${hivevar:preday}')
+--ods建表：pro.ods_yhzj_t_union_pack_setting
+--插入：mongo2hive.pack_t_union_pack_setting到pro.ods_yhzj_t_union_pack_setting
+insert overwrite table pro.ods_yhzj_t_union_pack_setting PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
 trim(regexp_replace(unionId,'\\n|\\r','')) as unionId,
@@ -290,9 +290,9 @@ from mongo2hive.pack_t_union_pack_setting;
 
 
 --T17
---ods建表：pro.ods_yhq_t_follow_info
---插入：mongo2hive.dap_basepost_t_follow_info到pro.ods_yhq_t_follow_info
-insert overwrite table pro.ods_yhq_t_follow_info PARTITION(dt='${hivevar:preday}')
+--ods建表：pro.ods_yhzj_t_follow_info
+--插入：mongo2hive.dap_basepost_t_follow_info到pro.ods_yhzj_t_follow_info
+insert overwrite table pro.ods_yhzj_t_follow_info PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
 trim(regexp_replace(userId,'\\n|\\r','')) as userId,
@@ -306,9 +306,9 @@ from mongo2hive.dap_basepost_t_follow_info;
 
 
 --T18
---ods建表：pro.ods_yhq_user
---插入：mongo2hive.health_user到pro.ods_yhq_health_user
-insert overwrite table pro.ods_yhq_user PARTITION(dt='${hivevar:preday}')
+--ods建表：pro.ods_yhzj_user
+--插入：mongo2hive.health_user到pro.ods_yhzj_health_user
+insert overwrite table pro.ods_yhzj_user PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
 trim(regexp_replace(password,'\\n|\\r','')) as password,
@@ -343,14 +343,14 @@ trim(regexp_replace(sourceType,'\\n|\\r','')) as sourceType,
 trim(regexp_replace(birthday,'\\n|\\r','')) as birthday,
 trim(regexp_replace(city,'\\n|\\r','')) as city,
 trim(regexp_replace(userConfig_newMsgRemind,'\\n|\\r','')) as userConfig_newMsgRemind
-from mongo2hive.health_yhq_user
+from mongo2hive.health_yhzj_user
 where userType='1';
 
 
 --T19
---ods建表：pro.ods_yhq_t_care_plan
---插入：mongo2hive.careplan_t_care_plan到pro.ods_yhq_t_care_plan
-insert overwrite table pro.ods_yhq_t_care_plan PARTITION(dt='${hivevar:preday}')
+--ods建表：pro.ods_yhzj_t_care_plan
+--插入：mongo2hive.careplan_t_care_plan到pro.ods_yhzj_t_care_plan
+insert overwrite table pro.ods_yhzj_t_care_plan PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
 trim(regexp_replace(name,'\\n|\\r','')) as name,
@@ -382,9 +382,9 @@ from mongo2hive.careplan_t_care_plan;
 
 
 --T20
---ods建表：pro.ods_yhq_t_union_member
---插入：mongo2hive.doctor_union_t_union_member到pro.ods_yhq_t_union_member
-insert overwrite table pro.ods_yhq_t_union_member PARTITION(dt='${hivevar:preday}')
+--ods建表：pro.ods_yhzj_t_union_member
+--插入：mongo2hive.doctor_union_t_union_member到pro.ods_yhzj_t_union_member
+insert overwrite table pro.ods_yhzj_t_union_member PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
 trim(regexp_replace(unionId,'\\n|\\r','')) as unionId,
