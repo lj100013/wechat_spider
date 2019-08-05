@@ -1240,7 +1240,7 @@ from mongo2hive.activity_t_invitation;
 --trim(regexp_replace(author_id,'\\n|\\r','')) as author_id ,
 --trim(regexp_replace(author_name,'\\n|\\r','')) as author_name ,
 --trim(regexp_replace(author_type,'\\n|\\r','')) as author_type ,
---trim(regexp_replace(author_wordunit,'\\n|\\r','')) as author_workunit ,
+--trim(regexp_replace(author_workunit,'\\n|\\r','')) as author_workunit ,
 --trim(regexp_replace(author_position,'\\n|\\r','')) as author_position ,
 --trim(regexp_replace(author_headpic,'\\n|\\r','')) as author_headpic ,
 --trim(regexp_replace(isdel,'\\n|\\r','')) as isdel ,
