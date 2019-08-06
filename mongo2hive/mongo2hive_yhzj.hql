@@ -344,7 +344,7 @@ trim(regexp_replace(birthday,'\\n|\\r','')) as birthday,
 trim(regexp_replace(city,'\\n|\\r','')) as city,
 trim(regexp_replace(userConfig_newMsgRemind,'\\n|\\r','')) as userConfig_newMsgRemind
 from mongo2hive.health_yhzj_user
-where userType='1';
+where userType=1;
 
 
 --T19
