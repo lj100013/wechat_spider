@@ -15,7 +15,7 @@ conf = configparser.ConfigParser()
 conf.read("/data/job_pro/utils/config.ini")
 HOST=conf.get('impaladb', 'host')
 PORT=int(conf.get('impaladb', 'port'))
-
+cnxnstr = "Driver={/opt/cloudera/impalaodbc/lib/64/libclouderaimpalaodbc64.so};HOST=%s;PORT=%s;UID=hive;AuthMech=3;PWD=hive;UseSasl=0" % (HOST,PORT)
 '''
 ----------------  正在爬取 xxx  -------------------
 上传图片: xxx.jpg
@@ -43,7 +43,9 @@ class LcPipeline(object):
         # wx_data = []
         # wx_data.append((id, url, source, createtime))
 
-        conn = connect(host=HOST, port=PORT)
+        # conn = connect(host=HOST, port=PORT)
+        # cur = conn.cursor()
+        conn = pyodbc.connect(cnxnstr, autocommit=True)
         cur = conn.cursor()
         print("connect succes")
         print("=======================")
@@ -61,6 +63,7 @@ class LcPipeline(object):
             print(e)
         finally:
             cur.close()
+            conn.close()
 
         return item
 

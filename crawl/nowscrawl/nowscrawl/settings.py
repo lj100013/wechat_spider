@@ -12,10 +12,10 @@
 import configparser
 conf = configparser.ConfigParser()
 conf.read("/data/job_pro/utils/config.ini")
-MYSQL_HOST=conf.get('mysqldb', 'host')
-MYSQL_PORT=int(conf.get('mysqldb', 'port'))
-MYSQL_USER=conf.get('mysqldb', 'user')
-MYSQL_PASSWORD=conf.get('mysqldb', 'password')
+MYSQL_HOST=conf.get('weixin', 'host')
+MYSQL_PORT=int(conf.get('weixin', 'port'))
+MYSQL_USER=conf.get('weixin', 'user')
+MYSQL_PASSWORD=conf.get('weixin', 'password')
 
 BOT_NAME = 'nowscrawl'
 
