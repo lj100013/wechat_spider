@@ -26,8 +26,11 @@ class WechatSpider(scrapy.Spider):
         time2 = 1420041600000
 
         ids = []
-        conn = connect(host=IMPALA_HOST, port=IMPALA_PORT) 
+        cnxnstr = "Driver={/opt/cloudera/impalaodbc/lib/64/libclouderaimpalaodbc64.so};HOST=%s;PORT=%s;UID=hive;AuthMech=3;PWD=hive;UseSasl=0" % (IMPALA_HOST,IMPALA_PORT)
+        conn = pyodbc.connect(cnxnstr, autocommit=True)
         cur = conn.cursor()
+        # conn = connect(host=IMPALA_HOST, port=IMPALA_PORT) 
+        # cur = conn.cursor()
         # 使用 cursor() 方法创建一个游标对象 cursor
         try:
             str_sql = "select id from ods.ods_article_source" 
