@@ -443,6 +443,16 @@ trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
 from mongo2hive.online_marketing_t_promotion;
 
+with t as (select * from pro.ods_t_promotion where dt='${hivevar:preday}')
+insert overwrite table dim.dim_promotion_survey
+select 
+id,
+title,
+status,
+get_json_object(promotion, '$.surveyId')
+from t lateral view outer explode(promotionitemlist) p as promotion where get_json_object(promotion, '$.surveyId') is not null;
+
+
 --插入:mongo2hive.activity_t_meeting_activity到pro.ods_t_meeting_activity
 insert overwrite table pro.ods_t_meeting_activity PARTITION(dt='${hivevar:preday}') 
 select 
