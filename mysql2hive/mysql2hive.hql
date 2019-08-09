@@ -575,19 +575,19 @@ from mysql2hive.excellent_class_j_course_courseware;
 
 
 
---插入:mysql2hive.wordpress_wp_posts到pro.ods_wp_posts
-insert overwrite table pro.ods_wp_posts PARTITION(dt='${hivevar:preday}') 
-select 
-trim(regexp_replace(id,'\\n|\\r','')) as id,
-trim(regexp_replace(post_date,'\\n|\\r','')) as post_date,
-trim(regexp_replace(post_title,'\\n|\\r','')) as post_title,
-trim(regexp_replace(post_type,'\\n|\\r','')) as post_type,
-trim(regexp_replace(author,'\\n|\\r','')) as author,
-trim(regexp_replace(dept,'\\n|\\r','')) as dept,
-trim(regexp_replace(source,'\\n|\\r','')) as source,
-trim(regexp_replace(post_flag,'\\n|\\r','')) as post_flag,
-trim(regexp_replace(faq_id,'\\n|\\r','')) as faq_id
-from mysql2hive.wordpress_wp_posts;
+-- --插入:mysql2hive.wordpress_wp_posts到pro.ods_wp_posts
+-- insert overwrite table pro.ods_wp_posts PARTITION(dt='${hivevar:preday}') 
+-- select 
+-- trim(regexp_replace(id,'\\n|\\r','')) as id,
+-- trim(regexp_replace(post_date,'\\n|\\r','')) as post_date,
+-- trim(regexp_replace(post_title,'\\n|\\r','')) as post_title,
+-- trim(regexp_replace(post_type,'\\n|\\r','')) as post_type,
+-- trim(regexp_replace(author,'\\n|\\r','')) as author,
+-- trim(regexp_replace(dept,'\\n|\\r','')) as dept,
+-- trim(regexp_replace(source,'\\n|\\r','')) as source,
+-- trim(regexp_replace(post_flag,'\\n|\\r','')) as post_flag,
+-- trim(regexp_replace(faq_id,'\\n|\\r','')) as faq_id
+-- from mysql2hive.wordpress_wp_posts;
 
 
 
@@ -666,7 +666,7 @@ trim(regexp_replace(amount,'\\n|\\r','')) as amount,
 trim(regexp_replace(randomNum,'\\n|\\r','')) as randomNum,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(receiveTime,'\\n|\\r','')) as receiveTime,
-trim(regexp_replace(user,'\\n|\\r','')) as user
+trim(regexp_replace(`user`,'\\n|\\r','')) as `user`
 from mysql2hive.circle_circle_activity_redenvelopes;
 
 

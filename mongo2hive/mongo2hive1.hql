@@ -481,17 +481,6 @@ from mongo2hive.health_user_concern_dept;
 
 
 
---插入:mongo2hive.health_c_doctor_follow到pro.ods_c_doctor_follow
-insert overwrite table pro.ods_c_doctor_follow PARTITION(dt='${hivevar:preday}')  
-select 
-trim(regexp_replace(id,'\\n|\\r','')) as id,
-trim(regexp_replace(userId,'\\n|\\r','')) as userId,
-trim(regexp_replace(doctorId,'\\n|\\r','')) as doctorId,
-trim(regexp_replace(createTime,'\\n|\\r','')) as createTime 
-from mongo2hive.health_c_doctor_follow;
-
-
-
 
 
 --插入:mongo2hive.module_t_faq_user_label到pro.ods_t_faq_user_label
