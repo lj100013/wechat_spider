@@ -32,7 +32,7 @@ trim(regexp_replace(createUserId,'\\n|\\r','')) as createUserId,
 trim(regexp_replace(putCompany,'\\n|\\r','')) as putCompany,
 trim(regexp_replace(putCompanyName,'\\n|\\r','')) as putCompanyName,
 trim(regexp_replace(putSource,'\\n|\\r','')) as putSource,
-trim(regexp_replace(range,'\\n|\\r','')) as range,
+trim(regexp_replace(`range`,'\\n|\\r','')) as `range`,
 trim(regexp_replace(timelyPush,'\\n|\\r','')) as timelyPush,
 trim(regexp_replace(type,'\\n|\\r','')) as type,
 trim(regexp_replace(rawMaterialId,'\\n|\\r','')) as rawMaterialId,
@@ -102,14 +102,6 @@ trim(regexp_replace(userId,'\\n|\\r','')) as userId
 from mongo2hive.health_t_meeting_h5_watched_log;
 
 
---插入：mongo2hive.health_c_doctor_follow到pro.ods_c_doctor_follow
-insert overwrite table pro.ods_c_doctor_follow PARTITION(dt='${hivevar:preday}')
-select
-trim(regexp_replace(id,'\\n|\\r','')) as id,
-trim(regexp_replace(userId,'\\n|\\r','')) as userId,
-trim(regexp_replace(doctorId,'\\n|\\r','')) as doctorId,
-trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
-from mongo2hive.health_c_doctor_follow;
 
 
 --插入:mongo2hive.auth2_t_auth_account到pro.ods_t_auth_account
@@ -268,7 +260,7 @@ trim(regexp_replace(questions_score,'\\n|\\r','')) as questions_score,
 trim(regexp_replace(questions_options,'\\n|\\r','')) as questions_options,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(createUserId,'\\n|\\r','')) as createUserId,
-trim(regexp_replace(range,'\\n|\\r','')) as range
+trim(regexp_replace(`range`,'\\n|\\r','')) as `range`
 from mongo2hive.health_ScoreSheetPO;
 
 
@@ -665,7 +657,7 @@ trim(regexp_replace(deleteUserId,'\\n|\\r','')) as deleteUserId,
 trim(regexp_replace(deleteUserType,'\\n|\\r','')) as deleteUserType,
 trim(regexp_replace(unionId,'\\n|\\r','')) as unionId,
 trim(regexp_replace(versions,'\\n|\\r','')) as versions,
-trim(regexp_replace(range,'\\n|\\r','')) as range,
+trim(regexp_replace(`range`,'\\n|\\r','')) as `range`,
 questionList
 from mongo2hive.health_t_survey;
 
