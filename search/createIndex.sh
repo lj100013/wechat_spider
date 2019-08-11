@@ -1,4 +1,4 @@
-curl -XPUT http://39.108.135.243:9280/search_v2 -d'{
+curl -XPUT http://cdh3:9200/search_v2 -d'{
   "settings": {
     "refresh_interval": "5s",
     "number_of_shards": 6,
