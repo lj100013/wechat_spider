@@ -224,13 +224,13 @@ class Spider(object):
                         content, authors, title, iframes, img_urls = self._get_aticle_source(detail_url, name, retrytimes)
                         if len(title) > 0:
                             gid = parse_title(title)
-                            # if is_exists(gid,appname):
-                            #     continue
-                            # if len(img_urls) > 0:
-                            #     for pic_url in img_urls:
-                            #         is_upload,content = upload_pic(content,pic_url)
-                            #         if len(is_upload) == 0:
-                            #             continue
+                            if is_exists(gid,appname):
+                                continue
+                            if len(img_urls) > 0:
+                                for pic_url in img_urls:
+                                    is_upload,content = upload_pic(content,pic_url)
+                                    if len(is_upload) == 0:
+                                        continue
                             blank_pattern = "background-image: url([\s\S]*?);background"
                             if len(authors) > 0:
                                 wxname = authors[0].strip()
@@ -254,8 +254,8 @@ class Spider(object):
                                 wechat_data['create_time'] = create_date
                                 wechat_data['content'] = content
                                 wechat_data['gid'] = gid
-                                print(wechat_data["title"],  wechat_data['author'])
-                                #process_item(wechat_data,appname)
+                                # print(wechat_data["title"],  wechat_data['author'])
+                                process_item(wechat_data,appname)
         else:
             logging.warning("fail to get detail article url!!")
 
