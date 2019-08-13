@@ -72,7 +72,6 @@ for key in dept_cfg:
             #headers = {'Content-Type': 'application/json'}
             res = requests.post(url=yyr_post_url, headers=headers, data=json.dumps(p_data))
             rtext=json.loads(res.text)
-            print(rtext)
             if rtext['resultCode']==1:
                 faq_id=rtext['data']['id']
                 if len(faq_id)>5 :
