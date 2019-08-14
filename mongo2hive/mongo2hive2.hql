@@ -914,7 +914,10 @@ trim(regexp_replace(appVersion,'\\n|\\r','')) as appVersion,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
 trim(regexp_replace(androidStatusFlag,'\\n|\\r','')) as androidStatusFlag 
-from mongo2hive.integration_b_full_burialpoint_event;
+from mongo2hive.integration_b_full_burialpoint_event
+where length(trim(regexp_replace(regexp_replace(appName,'\\n|\\r',''),'.*\\.cms\\..*','')))>0
+;
+
 
 insert overwrite table pro.ods_b_full_burialpoint_config PARTITION(dt='${hivevar:preday}')
 select 
@@ -934,4 +937,6 @@ trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime ,
 trim(regexp_replace(appVersion,'\\n|\\r','')) as appVersion ,
 trim(regexp_replace(appName,'\\n|\\r','')) as appName 
-from mongo2hive.integration_b_full_burialpoint_config;
+from mongo2hive.integration_b_full_burialpoint_config
+where length(trim(regexp_replace(regexp_replace(appName,'\\n|\\r',''),'.*\\.cms\\..*','')))>0
+;
