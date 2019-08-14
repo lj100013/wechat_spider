@@ -154,6 +154,7 @@ if __name__ == '__main__':
                     msg_data['fullDocument']=doc
                 else:
                     msg_data[k]=v
+            msg_data=json.dumps(msg_data)
             producer.send(topic,bytes(str(msg_data),encoding='utf8'),partition=i)
     except Exception as e :
         ts=int(time.time())-300
