@@ -1,7 +1,14 @@
 #coding:utf-8
+import time
+import logging
 def formate_date(create_date):
-    date_time = create_date.replace('年', '-')
-    date_time = date_time.replace('月', '-')
-    date_time = date_time.replace('日', '')
-    date_time = date_time + ' 00:00:00'
+    timestamp = create_date.replace("document.write(timeConvert('", '').replace("'))","")
+    try:
+        timestamp = int(timestamp)
+    except Exception as e:
+        logging.error("failed to convert date format:{}".format(e))
+        timestamp = int(time.time())
+    timeArray = time.localtime(timestamp)
+    date_time = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
     return date_time
+
