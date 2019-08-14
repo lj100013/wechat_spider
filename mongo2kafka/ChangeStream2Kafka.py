@@ -93,6 +93,13 @@ def getHashCode(s):
         h = h + ord(c) * 31 ** (n - 1 - i)
     return convert_4_bytes(h)
 
+def key2lower(d):
+    new = {}
+    for k, v in d.items():
+        if isinstance(v, dict):
+            v = key2lower(v)
+        new[k.lower()] = v
+    return new
 
 if __name__ == '__main__':
     database = sys.argv[1].split('.')[0]
@@ -132,13 +139,24 @@ if __name__ == '__main__':
         logger.info('*****************开始发送数据*****************')
         for change in stream:
             msg =bytes(dumps(change,ensure_ascii=False),encoding='utf8')
+            print(type(msg))
             jsondata = str(msg,'utf-8')
             if len(msg)>80960:
                 logger.error('长度超限:'+jsondata)
             text = json.loads(jsondata)
             tb = text['ns']['db']+'.'+text['ns']['coll']
             i = abs(getHashCode(tb)) %numPartitions
-            producer.send(topic,msg,partition=i)
+
+            msg_data = {}
+            full_doc = text['fullDocument'] #将fullDocument里面的ky转小写
+            doc = key2lower(full_doc)
+            for k,v in text.items():
+                if k=='fullDocument':
+                    msg_data['fullDocument']=doc
+                else:
+                    msg_data[k]=v
+
+            producer.send(topic,msg_data,partition=i)
     except Exception as e :
         ts=int(time.time())-300
         setOffset(database,ts)
