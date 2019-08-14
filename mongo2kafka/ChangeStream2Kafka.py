@@ -139,7 +139,6 @@ if __name__ == '__main__':
         logger.info('*****************开始发送数据*****************')
         for change in stream:
             msg =bytes(dumps(change,ensure_ascii=False),encoding='utf8')
-            print(type(msg))
             jsondata = str(msg,'utf-8')
             if len(msg)>80960:
                 logger.error('长度超限:'+jsondata)
@@ -155,8 +154,7 @@ if __name__ == '__main__':
                     msg_data['fullDocument']=doc
                 else:
                     msg_data[k]=v
-
-            producer.send(topic,msg_data,partition=i)
+            producer.send(topic,bytes(str(msg_data),encoding='utf8'),partition=i)
     except Exception as e :
         ts=int(time.time())-300
         setOffset(database,ts)
