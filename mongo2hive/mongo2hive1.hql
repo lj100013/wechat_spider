@@ -119,7 +119,9 @@ trim(regexp_replace(IDNum,'\\n|\\r','')) as IDNum,
 trim(regexp_replace(sysCheck,'\\n|\\r','')) as sysCheck,
 trim(regexp_replace(circleId,'\\n|\\r','')) as circleId,
 trim(regexp_replace(doctor_titleRank,'\\n|\\r','')) as doctor_titleRank,
-trim(regexp_replace(doctor_userTag,'\\n|\\r','')) as doctor_userTag
+trim(regexp_replace(doctor_userTag,'\\n|\\r','')) as doctor_userTag,
+trim(regexp_replace(workUnit,'\\n|\\r','')) as workUnit,
+trim(regexp_replace(position,'\\n|\\r','')) as position
 from mongo2hive.health_user;
 
 insert overwrite table ods.ods_user_expertise

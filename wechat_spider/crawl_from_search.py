@@ -264,4 +264,4 @@ class Spider(object):
 #                         format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
 #                         datefmt='%a, %d %b %Y %H:%M:%S')
 #     spider = Spider()
-#     spider.pipeline2db(('赛柏蓝',"QK",'ysq'),'day',retrytimes=3)
+#     spider.pipeline2db(('赛柏蓝',"QK",'ysq',"oIWsFtwICTz_e61YkBoqO0EBmNe0"),'day',retrytimes=3)
