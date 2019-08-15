@@ -940,3 +940,25 @@ trim(regexp_replace(appName,'\\n|\\r','')) as appName
 from mongo2hive.integration_b_full_burialpoint_config
 where length(trim(regexp_replace(regexp_replace(appName,'\\n|\\r',''),'.*\\.cms\\..*','')))>0
 ;
+
+
+
+
+
+--插入：mongo2hive.module_t_ad_questionary到pro.ods_t_ad_questionary
+insert overwrite table pro.ods_t_ad_questionary PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+trim(regexp_replace(userType,'\\n|\\r','')) as userType,
+trim(regexp_replace(orgId,'\\n|\\r','')) as orgId,
+trim(regexp_replace(matelialId,'\\n|\\r','')) as matelialId,
+trim(regexp_replace(name,'\\n|\\r','')) as name,
+trim(regexp_replace(questionaryId,'\\n|\\r','')) as questionaryId,
+trim(regexp_replace(point,'\\n|\\r','')) as point,
+trim(regexp_replace(`desc`,'\\n|\\r','')) as `desc`,
+trim(regexp_replace(version,'\\n|\\r','')) as version,
+trim(regexp_replace(unionId,'\\n|\\r','')) as unionId,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime
+from mongo2hive.module_t_ad_questionary;
