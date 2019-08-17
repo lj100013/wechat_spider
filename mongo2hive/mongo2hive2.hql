@@ -919,7 +919,6 @@ from mongo2hive.integration_b_full_burialpoint_event
 where length(trim(regexp_replace(regexp_replace(appName,'\\n|\\r',''),'.*\\.cms\\..*','')))>0
 ;
 
-
 insert overwrite table pro.ods_b_full_burialpoint_config PARTITION(dt='${hivevar:preday}')
 select 
 trim(regexp_replace(id,'\\n|\\r','')) as id,

@@ -93,10 +93,17 @@ def getHashCode(s):
         h = h + ord(c) * 31 ** (n - 1 - i)
     return convert_4_bytes(h)
 
+def key2lower(d):
+    new = {}
+    for k, v in d.items():
+        if isinstance(v, dict):
+            v = key2lower(v)
+        new[k.lower()] = v
+    return new
 
 if __name__ == '__main__':
     database = sys.argv[1].split('.')[0]
-    # database = 'health'
+    # database = 'module'
     try:
         mongo_con = pymongo.MongoClient(host=HOST,port=PORT,username=USERNAME,password=PASSWORD)
 
@@ -138,7 +145,18 @@ if __name__ == '__main__':
             text = json.loads(jsondata)
             tb = text['ns']['db']+'.'+text['ns']['coll']
             i = abs(getHashCode(tb)) %numPartitions
-            producer.send(topic,msg,partition=i)
+
+            if 'fullDocument' in text:
+                msg_data = {}
+                full_doc = text['fullDocument'] #将fullDocument里面的ky转小写
+                doc = key2lower(full_doc)
+                for k,v in text.items():
+                    if k=='fullDocument':
+                        msg_data['fullDocument']=doc
+                    else:
+                        msg_data[k]=v
+                msg_data=json.dumps(msg_data)
+                producer.send(topic,bytes(str(msg_data),encoding='utf8'),partition=i)
     except Exception as e :
         ts=int(time.time())-300
         setOffset(database,ts)
