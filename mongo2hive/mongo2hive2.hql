@@ -913,7 +913,8 @@ trim(regexp_replace(appName,'\\n|\\r','')) as appName,
 trim(regexp_replace(appVersion,'\\n|\\r','')) as appVersion,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
-trim(regexp_replace(androidStatusFlag,'\\n|\\r','')) as androidStatusFlag 
+trim(regexp_replace(androidStatusFlag,'\\n|\\r','')) as androidStatusFlag,
+trim(regexp_replace(label,'\\n|\\r','')) as label
 from mongo2hive.integration_b_full_burialpoint_event;
 
 insert overwrite table pro.ods_b_full_burialpoint_config PARTITION(dt='${hivevar:preday}')
