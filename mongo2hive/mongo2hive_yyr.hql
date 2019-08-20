@@ -45,3 +45,11 @@ safeLabel ,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime ,
 trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime 
 from mongo2hive.yy_post_t_post;
+
+--插入:mongo2hive.yy_post_t_post_richtext到pro.ods_yyr_t_post_richtext
+insert overwrite table pro.ods_yyr_t_post_richtext PARTITION(dt='${hivevar:preday}')
+select
+trim(regexp_replace(id,'\\n|\\r','')) as id,
+trim(regexp_replace(richText,'\\n|\\r','')) as richtext,
+trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
+from mongo2hive.yyr_post_t_post_richtext;
