@@ -11,8 +11,8 @@ from PIL import Image
 import traceback
 import configparser
 conf = configparser.ConfigParser()
-#conf.read(r"F:\bigdata_project\utils\config.ini")
-conf.read("/data/job_pro/utils/config.ini")
+conf.read(r"F:\bigdata_project\utils\config.ini")
+# conf.read("/data/job_pro/utils/config.ini")
 secs = conf.sections()
 
 host = conf.get('3content','host')
@@ -75,8 +75,8 @@ try:
         if rtext['resultCode']==1:
             faq_id=rtext['data']['id']
             if len(faq_id)>5 :
+                print(faq_id)
                 usql="update wp_posts set post_flag=1 ,faq_id='%s' where post_name='%s'" %(faq_id,post_name)
-                print(key+':'+usql)
                 db.ping(reconnect=True)
                 cursor.execute(usql)
                 db.commit()
