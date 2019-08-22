@@ -11,8 +11,8 @@ from PIL import Image
 import traceback
 import configparser
 conf = configparser.ConfigParser()
-conf.read(r"F:\bigdata_project\utils\config.ini")
-# conf.read("/data/job_pro/utils/config.ini")
+# conf.read(r"F:\bigdata_project\utils\config.ini")
+conf.read("/data/job_pro/utils/config.ini")
 secs = conf.sections()
 
 host = conf.get('3content','host')
