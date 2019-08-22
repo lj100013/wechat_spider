@@ -259,9 +259,9 @@ class Spider(object):
         else:
             logging.warning("fail to get detail article url!!")
 
-# if __name__ == "__main__":
-#     logging.basicConfig(level=logging.WARNING,
-#                         format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
-#                         datefmt='%a, %d %b %Y %H:%M:%S')
-#     spider = Spider()
-#     spider.pipeline2db(('赛柏蓝',"QK",'ysq',"oIWsFtwICTz_e61YkBoqO0EBmNe0"),'day',retrytimes=3)
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.WARNING,
+                        format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
+                        datefmt='%a, %d %b %Y %H:%M:%S')
+    spider = Spider()
+    spider.pipeline2db(("药明康德","INFO","yyr","oIWsFt8_gjduyEZ5LGGmM38Y6E2k"),'alltime',retrytimes=3)
