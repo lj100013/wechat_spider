@@ -97,6 +97,8 @@ try:
       version=reslist_split[4]
       url=reslist_split[5]
       if url.startswith('http'):
+        #20190822声网域名更换，将域名中国的dachentech改为mediportal
+        url=url.replace('dachentech','mediportal')
         #获取url的数据
         session.keep_alive=False
         try:

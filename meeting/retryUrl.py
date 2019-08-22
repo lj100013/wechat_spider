@@ -76,7 +76,7 @@ try:
       #过滤掉不符合规则的测试数据
       #if not value.startswith('["') or len(value)==0:
       #len(value)>100不过滤一个Url只有一条数据的情况
-      if (not '","' in value) and len(value)>130:
+      if ((not '","' in value) and len(value)>130) or len(value)<10:
         print('数据格式异常的数据：'+r)
         continue
       error_record=r
