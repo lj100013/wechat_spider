@@ -3,6 +3,7 @@ import pymongo
 from bson import Timestamp
 from dbutil import es, mongoclient,starttime
 from queryUtil import get_suspend_user
+import sys
 
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
@@ -61,12 +62,12 @@ while True:
                     es_data = {}
                     # logging.info(doc)
                     data=doc['o']
-                    if doc['op'] == 'i':
+                    if doc['op'] == 'i' or (doc['op']=='u' and '$set' not in data):
                         es_id = doc['o']['_id']
                         if data['userType'] == 3 and 'doctor' in data:
                             es_data=packrow(data);
                             es.index(index='search', doc_type='user', body=es_data, id=es_id)
-                    if doc['op'] == 'u':
+                    if doc['op'] == 'u' and '$set' in data:
                         es_id = doc['o2']['_id']
                         data=data['$set']
                         if 'suspend' in data and data['suspend']==4:
@@ -106,4 +107,6 @@ while True:
                             es.update(index='search', doc_type='user', id=es_id,body={'doc':es_data}, ignore=[400, 404])
 
             except Exception as e:
+                logging.error(Exception, ":", doc)
                 logging.info(Exception, ":", e)
+                sys.exit(1)

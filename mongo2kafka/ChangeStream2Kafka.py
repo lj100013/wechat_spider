@@ -145,8 +145,7 @@ if __name__ == '__main__':
             text = json.loads(jsondata)
             tb = text['ns']['db']+'.'+text['ns']['coll']
             i = abs(getHashCode(tb)) %numPartitions
-
-            if 'fullDocument' in text:
+            if 'fullDocument' in text and text['fullDocument']!=None:
                 msg_data = {}
                 full_doc = text['fullDocument'] #将fullDocument里面的ky转小写
                 doc = key2lower(full_doc)
@@ -157,6 +156,8 @@ if __name__ == '__main__':
                         msg_data[k]=v
                 msg_data=json.dumps(msg_data)
                 producer.send(topic,bytes(str(msg_data),encoding='utf8'),partition=i)
+            else:
+                producer.send(topic,bytes(str(text),encoding='utf8'),partition=i)
     except Exception as e :
         ts=int(time.time())-300
         setOffset(database,ts)

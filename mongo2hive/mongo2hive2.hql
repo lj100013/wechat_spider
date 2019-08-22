@@ -18,7 +18,7 @@ trim(regexp_replace(amount,'\\n|\\r','')) as amount,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(haveDone,'\\n|\\r','')) as haveDone,
 trim(regexp_replace(surveyId,'\\n|\\r','')) as surveyId,
-trim(regexp_replace(answerId,'\\n|\\r','')) as answerId,
+nvl(get_json_object(answers[0],'$.answerId'),trim(regexp_replace(answerId,'\\n|\\r',''))) as answerId,
 answers
 from mongo2hive.activity_t_assistant;
 
