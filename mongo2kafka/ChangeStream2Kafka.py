@@ -157,7 +157,7 @@ if __name__ == '__main__':
                 msg_data=json.dumps(msg_data)
                 producer.send(topic,bytes(str(msg_data),encoding='utf8'),partition=i)
             else:
-                producer.send(topic,bytes(str(text),encoding='utf8'),partition=i)
+                producer.send(topic,bytes(str(json.dumps(text)),encoding='utf8'),partition=i)
     except Exception as e :
         ts=int(time.time())-300
         setOffset(database,ts)
