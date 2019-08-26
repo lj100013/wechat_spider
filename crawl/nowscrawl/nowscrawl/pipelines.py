@@ -6,7 +6,7 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import pymysql
 
-from scrapy.conf import settings
+import settings
 
 
 class NowscrawlPipeline(object):
