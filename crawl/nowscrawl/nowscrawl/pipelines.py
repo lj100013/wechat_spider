@@ -11,12 +11,12 @@ from nowscrawl import settings
 
 class NowscrawlPipeline(object):
     def process_item(self, item, spider):
-        host = settings['MYSQL_HOST']
-        user = settings['MYSQL_USER']
-        psd = settings['MYSQL_PASSWORD']
-        db = settings['MYSQL_DB']
-        c = settings['CHARSET']
-        port = settings['MYSQL_PORT']
+        host = settings.MYSQL_HOST
+        user = settings.MYSQL_USER
+        psd = settings.MYSQL_PASSWORD
+        db = settings.MYSQL_DB
+        c = settings.CHARSET
+        port = settings.MYSQL_PORT
         #数据库连接
         con = pymysql.connect(host=host, user=user, passwd=psd, db=db, charset=c, port=port)
         # 数据库游标
