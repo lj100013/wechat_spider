@@ -14,7 +14,7 @@ conf = configparser.ConfigParser()
 conf.read("/data/job_pro/utils/config.ini")
 MYSQL_HOST=conf.get('weixin', 'host')
 MYSQL_PORT=int(conf.get('weixin', 'port'))
-MYSQL_USER=conf.get('weixin', 'user')
+MYSQL_USER=conf.get('weixin', 'username')
 MYSQL_PASSWORD=conf.get('weixin', 'password')
 
 BOT_NAME = 'nowscrawl'
