@@ -6,7 +6,7 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import pymysql
 
-import settings
+from nowscrawl import settings
 
 
 class NowscrawlPipeline(object):
