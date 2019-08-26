@@ -1,5 +1,5 @@
 import pymysql
-from scrapy.conf import settings
+from nowscrawl import settings
 from urllib import request
 import json
 import time
