@@ -217,45 +217,48 @@ class Spider(object):
                     detail_urls,dates, num = self._get_article_urls(name,deadline,wxid,retrytimes,page = page,ft=ft,et=et)
                 if len(detail_urls) == len(dates) and len(detail_urls) > 0:
                     for i in range(len(detail_urls)):
-                        #time.sleep(random.uniform(0, 1))
-                        detail_url = detail_urls[i]
-                        detail_url = "https://mp.weixin.qq.com"+detail_url
-                        detail_url = detail_url.replace("http://mp.weixin.qq.com", "")
-                        content, authors, title, iframes, img_urls = self._get_aticle_source(detail_url, name, retrytimes)
-                        if len(title) > 0:
-                            gid = parse_title(title)
-                            if is_exists(gid,appname):
-                                continue
-                            if len(img_urls) > 0:
-                                for pic_url in img_urls:
-                                    is_upload,content = upload_pic(content,pic_url)
-                                    if len(is_upload) == 0:
-                                        continue
-                            blank_pattern = "background-image: url([\s\S]*?);background"
-                            if len(authors) > 0:
-                                wxname = authors[0].strip()
-                                if wxname == '中洪博元医学实验帮':
-                                    blank_pattern = "-webkit-border-image: url([\s\S]*?) 20 fill"
-                                blank_urls = re.findall(blank_pattern, content)
-                                blank_jpeg_img = "NzKkzoeG5s2FcdXyTKYAErrs5QNBXGVS75aQnxYX1RmPQTRwN3CsZw5Dfjb3oiaYLjgNaWrFck8rJJRoqHxuItA.jpeg"
-                                for blank_img in blank_urls:
-                                    file_name = blank_jpeg_img
-                                    first_string = img_base_url + file_name
-                                    blank_img = blank_img.replace('(', '')
-                                    blank_img = blank_img.replace(')', '')
-                                    content = content.replace(blank_img, first_string)
-                                content = fix_iframe(content,iframes)
-                                wechat_data = {}
-                                wechat_data['title'] = title
-                                wechat_data['author'] = wxname
-                                wechat_data['key_word'] = dept
-                                wechat_data['wxname'] = wechat_data['author']
-                                create_date = formate_date(dates[i])
-                                wechat_data['create_time'] = create_date
-                                wechat_data['content'] = content
-                                wechat_data['gid'] = gid
-                                # print(wechat_data["title"],  wechat_data['author'])
-                                process_item(wechat_data,appname)
+                        try:
+                            #time.sleep(random.uniform(0, 1))
+                            detail_url = detail_urls[i]
+                            detail_url = "https://mp.weixin.qq.com"+detail_url
+                            detail_url = detail_url.replace("http://mp.weixin.qq.com", "")
+                            content, authors, title, iframes, img_urls = self._get_aticle_source(detail_url, name, retrytimes)
+                            if len(title) > 0:
+                                gid = parse_title(title)
+                                if is_exists(gid,appname):
+                                    continue
+                                if len(img_urls) > 0:
+                                    for pic_url in img_urls:
+                                        is_upload,content = upload_pic(content,pic_url)
+                                        if len(is_upload) == 0:
+                                            continue
+                                blank_pattern = "background-image: url([\s\S]*?);background"
+                                if len(authors) > 0:
+                                    wxname = authors[0].strip()
+                                    if wxname == '中洪博元医学实验帮':
+                                        blank_pattern = "-webkit-border-image: url([\s\S]*?) 20 fill"
+                                    blank_urls = re.findall(blank_pattern, content)
+                                    blank_jpeg_img = "NzKkzoeG5s2FcdXyTKYAErrs5QNBXGVS75aQnxYX1RmPQTRwN3CsZw5Dfjb3oiaYLjgNaWrFck8rJJRoqHxuItA.jpeg"
+                                    for blank_img in blank_urls:
+                                        file_name = blank_jpeg_img
+                                        first_string = img_base_url + file_name
+                                        blank_img = blank_img.replace('(', '')
+                                        blank_img = blank_img.replace(')', '')
+                                        content = content.replace(blank_img, first_string)
+                                    content = fix_iframe(content,iframes)
+                                    wechat_data = {}
+                                    wechat_data['title'] = title
+                                    wechat_data['author'] = wxname
+                                    wechat_data['key_word'] = dept
+                                    wechat_data['wxname'] = wechat_data['author']
+                                    create_date = formate_date(dates[i])
+                                    wechat_data['create_time'] = create_date
+                                    wechat_data['content'] = content
+                                    wechat_data['gid'] = gid
+                                    # print(wechat_data["title"],  wechat_data['author'])
+                                    process_item(wechat_data,appname)
+                        except Exception as e:
+                            logging.warning("发生错误:{}".format(e))
         else:
             logging.warning("fail to get detail article url!!")
 
@@ -264,4 +267,4 @@ if __name__ == "__main__":
                         format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
                         datefmt='%a, %d %b %Y %H:%M:%S')
     spider = Spider()
-    spider.pipeline2db(("药明康德","INFO","yyr","oIWsFt8_gjduyEZ5LGGmM38Y6E2k"),'alltime',retrytimes=3)
+    spider.pipeline2db(("平安健康保险","INFO","yyr","oIWsFtxgIwpnTF8RUnxZOfnvQj3k"),'month',retrytimes=3)

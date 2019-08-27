@@ -43,6 +43,10 @@ def process_item(item,appname):
         term_id = result[0]
     ysq_identify = 'Y' if appname == 'ysq' else 'N'
     yyr_identify = 'Y' if appname == 'yyr' else 'N'
+    both_gzh = ["看医界","生物谷","丁香园","健康界","医药魔方","好医生","医学界","医师报"]
+    if item['author'] in both_gzh:
+        ysq_identify = 'Y'
+        yyr_identify = 'Y'
     remark = "<br />注：本网所有转载内容系出于传递信息之目的，且明确注明来源和/或作者，不希望被转载的媒体或个人可与我们联系，我们将立即进行删除处理，所有内容及观点仅供参考，不构成任何诊疗建议，对所引用信息的准确性和完整性不作任何保证"
     item["content"] = str(item["content"]) + remark
     try:
