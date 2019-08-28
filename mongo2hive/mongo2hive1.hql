@@ -1024,7 +1024,8 @@ trim(regexp_replace(authorName,'\\n|\\r','')) as authorName,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
 trim(regexp_replace(updateUser,'\\n|\\r','')) as updateUser,
-trim(regexp_replace(statusFlag,'\\n|\\r','')) as statusFlag
+trim(regexp_replace(statusFlag,'\\n|\\r','')) as statusFlag,
+trim(regexp_replace(diseaseId,'\\n|\\r','')) as diseaseId
 from mongo2hive.basepost_comment_info;
 
 --插入：mongo2hive.basepost_reward_info到pro.ods_reward_info
