@@ -39,7 +39,7 @@ def process_item(item,appname):
     str_sql = "SELECT term_id FROM wp_terms where name = '%s'" % (item["wxname"])
     cue.execute(str_sql)
     result = cue.fetchall()
-    if len(result) > 1:
+    if len(result) >= 1:
         term_id = result[0]
     ysq_identify = 'Y' if appname == 'ysq' else 'N'
     yyr_identify = 'Y' if appname == 'yyr' else 'N'
