@@ -43,7 +43,7 @@ conn = pyodbc.connect(cnxnstr, autocommit=True)
 cursor = conn.cursor()
 
 
-urlbakHql="select * from ods.ods_meeting_url_r where getday(createtime)>='2019-08-26'"
+urlbakHql="select * from ods.ods_meeting_url_r where id in('47093e422e1c4569b9a1d9d664d2a213','51d6648fec6146d3be4cdc2e7d7c6a9d','55247b0936604881a65b4681fdcb9907','6ae4bbbb694d4980a3e83721651489a9','6b625d1360cc4be68416c6ade79df841','7042ab5454fc48e7be26a26ceb879166','70b0ff3667e84e35abc5761370acf704')"
 cursor.execute(urlbakHql)
 res=cursor.fetchall()
 
