@@ -65,7 +65,7 @@ try:
                     db.ping(reconnect=True)
                     cursor.execute(usql)
                     db.commit()
-                    # time.sleep(5)
+                    time.sleep(5)
         except Exception as e:
             traceback.print_exc()
             print(e)
