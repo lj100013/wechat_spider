@@ -18,7 +18,7 @@ weixin_names = [("赛柏蓝","INFO","yyr","oIWsFtwICTz_e61YkBoqO0EBmNe0"),("健�
                 ("中国保险报","INFO","yyr","oIWsFtzlugTbjcWuYgddGTG-0eaM"),("高医医保物价","INFO","yyr","oIWsFtwykJjsuzOeGcFSuZfa3qWs"),("平安健康保险","INFO","yyr","oIWsFtxgIwpnTF8RUnxZOfnvQj3k")]
 
 
-num_threads = 1
+num_threads = 4
 def start_crawl(spider,sub_weixin_name):
     for weixin_name in sub_weixin_name:
         spider.pipeline2db(weixin_name,'week',retrytimes=3)
