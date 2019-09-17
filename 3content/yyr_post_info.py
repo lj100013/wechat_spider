@@ -6,6 +6,7 @@ from PIL import Image
 import traceback
 from utils.parse_config import *
 from utils.column_classify import column_classification,query_column
+import time
 
 db = pymysql.connect(host=mysql_host, port=mysql_port, user=mysql_user, password=mysql_password, db=mysql_db)
 cursor = db.cursor()
