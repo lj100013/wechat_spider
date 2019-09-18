@@ -15,7 +15,7 @@ with open(stop_words_path, 'r', encoding='utf-8') as f1:
         stop_words.append(stop_word.strip())
 
 
-lr_model = joblib.load(open('./utils/logistic.pkl','rb'))
+lr_model = pickle.load(open('./utils/logistic.pickle','rb'))
 loaded_vec = CountVectorizer(decode_error="replace", vocabulary=pickle.load(open("./utils/vectorizer.pickle", "rb")))
 tfidftransformer = pickle.load(open("./utils/transformer.pickle", "rb"))
 # lr_model = joblib.load(open('/data/job_pro/dataX/3content/utils/logistic.pkl','rb'))
