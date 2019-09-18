@@ -24,7 +24,7 @@ tfidftransformer = pickle.load(open("/data/job_pro/dataX/3content/utils/transfor
 
 def query_column():
     client = MongoClient('mongodb://{}:{}@{}:{}/'.format(mongo_user,mongo_password,mongo_host,mongo_port))
-    db = client['yy-post']
+    db = client['yy_post']
     col = db["t_column"]
     columns = ['其他','创新','医保','医院','招采','法规','研报','药企','药品','药店']
     name_id = {}
