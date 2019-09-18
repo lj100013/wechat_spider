@@ -14,6 +14,10 @@ with open(stop_words_path, 'r', encoding='utf-8') as f1:
     for stop_word in f1.readlines():
         stop_words.append(stop_word.strip())
 
+lr_model = joblib.load(open('/data/job_pro/dataX/3content/utils/logistic.pkl','rb'))
+loaded_vec = CountVectorizer(decode_error="replace", vocabulary=pickle.load(open("/data/job_pro/dataX/3content/utils/vectorizer.pickle", "rb")))
+tfidftransformer = pickle.load(open("/data/job_pro/dataX/3content/utils/transformer.pickle", "rb"))
+
 def query_column():
     client = MongoClient('mongodb://{}:{}@{}:{}/'.format(mongo_user,mongo_password,mongo_host,mongo_port))
     db = client['yy-post']
@@ -51,9 +55,6 @@ def transform_char(content):
 def column_classification(text):
     text = transform_char(text)
     labels = ['其他','创新','医保','医院','招采','法规','研报','药企','药品','药店']
-    lr_model = joblib.load(open('/data/job_pro/dataX/3content/utils/logistic.pkl','rb'))
-    loaded_vec = CountVectorizer(decode_error="replace", vocabulary=pickle.load(open("/data/job_pro/dataX/3content/utils/vectorizer.pickle", "rb")))
-    tfidftransformer = pickle.load(open("/data/job_pro/dataX/3content/utils/transformer.pickle", "rb"))
     seg_word = " ".join([i for i in list(jieba.cut(text)) if i not in stop_words])
     tfidf = tfidftransformer.transform(loaded_vec.transform([seg_word]))
     return labels[lr_model.predict(tfidf)[0]-1]
