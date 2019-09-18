@@ -2,10 +2,13 @@ import configparser
 
 config = configparser.ConfigParser()
 
-#config.read(r"F:\bigdata_project\utils\config.ini")
-config.read("/data/job_pro/utils/config.ini")
-words_lib_path = "/data/job_pro/dataX/3content/utils/words_lib"
-stop_words_path = '/data/job_pro/dataX/3content/utils/stop_words.txt'
+config.read(r"F:\bigdata_project\utils\config.ini")
+words_lib_path = "./utils/words_lib"
+stop_words_path = './utils/stop_words.txt'
+
+# config.read("/data/job_pro/utils/config.ini")
+# words_lib_path = "/data/job_pro/dataX/3content/utils/words_lib"
+# stop_words_path = '/data/job_pro/dataX/3content/utils/stop_words.txt'
 #mysql config
 mysql_host = config.get('weixin', 'host')
 mysql_port = config.getint('weixin', 'port')

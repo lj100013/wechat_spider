@@ -14,9 +14,13 @@ with open(stop_words_path, 'r', encoding='utf-8') as f1:
     for stop_word in f1.readlines():
         stop_words.append(stop_word.strip())
 
-lr_model = joblib.load(open('/data/job_pro/dataX/3content/utils/logistic.pkl','rb'))
-loaded_vec = CountVectorizer(decode_error="replace", vocabulary=pickle.load(open("/data/job_pro/dataX/3content/utils/vectorizer.pickle", "rb")))
-tfidftransformer = pickle.load(open("/data/job_pro/dataX/3content/utils/transformer.pickle", "rb"))
+
+lr_model = joblib.load(open('./utils/logistic.pkl','rb'))
+loaded_vec = CountVectorizer(decode_error="replace", vocabulary=pickle.load(open("./utils/vectorizer.pickle", "rb")))
+tfidftransformer = pickle.load(open("./utils/transformer.pickle", "rb"))
+# lr_model = joblib.load(open('/data/job_pro/dataX/3content/utils/logistic.pkl','rb'))
+# loaded_vec = CountVectorizer(decode_error="replace", vocabulary=pickle.load(open("/data/job_pro/dataX/3content/utils/vectorizer.pickle", "rb")))
+# tfidftransformer = pickle.load(open("/data/job_pro/dataX/3content/utils/transformer.pickle", "rb"))
 
 def query_column():
     client = MongoClient('mongodb://{}:{}@{}:{}/'.format(mongo_user,mongo_password,mongo_host,mongo_port))
