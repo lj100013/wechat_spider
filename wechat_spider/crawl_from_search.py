@@ -253,7 +253,7 @@ class Spider(object):
                                     wechat_data['wxname'] = wechat_data['author']
                                     create_date = formate_date(dates[i])
                                     wechat_data['create_time'] = create_date
-                                    wechat_data['content'] = content
+                                    wechat_data['content'] = content+ "<a href="+detail_url+">原文链接</a>"
                                     wechat_data['gid'] = gid
                                     # print(wechat_data["title"],  wechat_data['author'])
                                     process_item(wechat_data,appname)
