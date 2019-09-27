@@ -567,7 +567,7 @@ from mongo2hive.micro_school_t_course_entry;
 
 
 
---插入：mongo2hive.health_t_meeting到pro.ods_t_meeting
+--插入：mongo2hive.meeting_t_meeting到pro.ods_t_meeting
 insert overwrite table pro.ods_t_meeting PARTITION(dt='${hivevar:preday}')   
 select 
 trim(regexp_replace(id,'\\n|\\r','')) as id,
@@ -590,10 +590,10 @@ trim(regexp_replace(number,'\\n|\\r','')) as number,
 trim(regexp_replace(isStop,'\\n|\\r','')) as isStop,
 trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
 trim(regexp_replace(createUserId,'\\n|\\r','')) as createUserId
-from mongo2hive.health_t_meeting;
+from mongo2hive.meeting_t_meeting;
 
 
---插入：mongo2hive.health_t_meeting_joinrecord到pro.ods_t_meeting_joinrecord
+--插入：mongo2hive.meeting_t_meeting_joinrecord到pro.ods_t_meeting_joinrecord
 insert overwrite table pro.ods_t_meeting_joinrecord PARTITION(dt='${hivevar:preday}')   
 select 
 trim(regexp_replace(id,'\\n|\\r','')) as id,
@@ -613,7 +613,7 @@ trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(visitIp,'\\n|\\r','')) as visitIp,
 trim(regexp_replace(appid,'\\n|\\r','')) as appid,
 trim(regexp_replace(sid,'\\n|\\r','')) as sid
-from mongo2hive.health_t_meeting_joinrecord;
+from mongo2hive.meeting_t_meeting_joinrecord;
 
 
 
@@ -719,7 +719,7 @@ from mongo2hive.module_t_faq_business_detail;
 
 
 
---插入：mongo2hive.health_t_meeting_info到pro.ods_t_meeting_info
+--插入：mongo2hive.meeting_t_meeting_info到pro.ods_t_meeting_info
 insert overwrite table pro.ods_t_meeting_info PARTITION(dt='${hivevar:preday}')   
 select 
 trim(regexp_replace(id,'\\n|\\r','')) as id,
@@ -747,11 +747,11 @@ trim(regexp_replace(planDesc,'\\n|\\r','')) as planDesc,
 trim(regexp_replace(imgCover,'\\n|\\r','')) as imgCover,
 trim(regexp_replace(realBeginTime,'\\n|\\r','')) as realBeginTime,
 trim(regexp_replace(realEndTime,'\\n|\\r','')) as realEndTime
-from mongo2hive.health_t_meeting_info;
+from mongo2hive.meeting_t_meeting_info;
 
 
 
---插入：mongo2hive.health_t_meeting_detail到pro.ods_t_meeting_detail
+--插入：mongo2hive.meeting_t_meeting_detail到pro.ods_t_meeting_detail
 insert overwrite table pro.ods_t_meeting_detail PARTITION(dt='${hivevar:preday}')   
 select 
 trim(regexp_replace(id,'\\n|\\r','')) as id,
@@ -763,7 +763,7 @@ trim(regexp_replace(inviteTime,'\\n|\\r','')) as inviteTime,
 trim(regexp_replace(joinTime,'\\n|\\r','')) as joinTime,
 trim(regexp_replace(exitTime,'\\n|\\r','')) as exitTime,
 trim(regexp_replace(joinWay,'\\n|\\r','')) as joinWay
-from mongo2hive.health_t_meeting_detail;
+from mongo2hive.meeting_t_meeting_detail;
 
 
 
@@ -796,7 +796,7 @@ from mongo2hive.health_t_phone_conference_record;
 
 
 
---插入：mongo2hive.health_t_meeting_record到pro.ods_t_meeting_record
+--插入：mongo2hive.meeting_t_meeting_record到pro.ods_t_meeting_record
 insert overwrite table pro.ods_t_meeting_record PARTITION(dt='${hivevar:preday}')   
 select 
 trim(regexp_replace(id,'\\n|\\r','')) as id,
@@ -809,7 +809,7 @@ trim(regexp_replace(gid,'\\n|\\r','')) as gid,
 trim(regexp_replace(endTime,'\\n|\\r','')) as endTime,
 trim(regexp_replace(ender,'\\n|\\r','')) as ender,
 trim(regexp_replace(recordUrl,'\\n|\\r','')) as recordUrl
-from mongo2hive.health_t_meeting_record;
+from mongo2hive.meeting_t_meeting_record;
 
 
 

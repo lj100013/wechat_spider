@@ -86,7 +86,7 @@ from mongo2hive.module_t_ad_material_point;
 
 
 
---插入：mongo2hive.health_t_meeting_h5_watched_log到pro.ods_t_meeting_h5_watched_log
+--插入：mongo2hive.meeting_t_meeting_h5_watched_log到pro.ods_t_meeting_h5_watched_log
 insert overwrite table pro.ods_t_meeting_h5_watched_log PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
@@ -99,7 +99,7 @@ trim(regexp_replace(count1,'\\n|\\r','')) as count1,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(wxName,'\\n|\\r','')) as wxName,
 trim(regexp_replace(userId,'\\n|\\r','')) as userId
-from mongo2hive.health_t_meeting_h5_watched_log;
+from mongo2hive.meeting_t_meeting_h5_watched_log;
 
 
 
@@ -292,7 +292,7 @@ trim(regexp_replace(data,'\\n|\\r','')) as data
 from mongo2hive.circleetl_circle_operation_info;
 
 
---插入：mongo2hive.health_t_meeting_share_record到pro.ods_t_meeting_share_record
+--插入：mongo2hive.meeting_t_meeting_share_record到pro.ods_t_meeting_share_record
 insert overwrite table pro.ods_t_meeting_share_record PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
@@ -302,11 +302,11 @@ trim(regexp_replace(userId,'\\n|\\r','')) as userId,
 trim(regexp_replace(wxId,'\\n|\\r','')) as wxId,
 trim(regexp_replace(wxName,'\\n|\\r','')) as wxName,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
-from mongo2hive.health_t_meeting_share_record;
+from mongo2hive.meeting_t_meeting_share_record;
 
 
 
---插入：mongo2hive.health_t_meeting_pushflow到pro.ods_t_meeting_pushflow
+--插入：mongo2hive.meeting_t_meeting_pushflow到pro.ods_t_meeting_pushflow
 insert overwrite table pro.ods_t_meeting_pushflow PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
@@ -327,12 +327,12 @@ trim(regexp_replace(transCode,'\\n|\\r','')) as transCode,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
 trim(regexp_replace(expireTime,'\\n|\\r','')) as expireTime
-from mongo2hive.health_t_meeting_pushflow;
+from mongo2hive.meeting_t_meeting_pushflow;
 
 
 
 
---插入：mongo2hive.health_t_meeting_pushflow_record到pro.ods_t_meeting_pushflow_record
+--插入：mongo2hive.meeting_t_meeting_pushflow_record到pro.ods_t_meeting_pushflow_record
 insert overwrite table pro.ods_t_meeting_pushflow_record PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
@@ -343,7 +343,7 @@ trim(regexp_replace(deviceType,'\\n|\\r','')) as deviceType,
 trim(regexp_replace(appName,'\\n|\\r','')) as appName,
 trim(regexp_replace(appVersion,'\\n|\\r','')) as appVersion,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
-from mongo2hive.health_t_meeting_pushflow_record;
+from mongo2hive.meeting_t_meeting_pushflow_record;
 
 
 
@@ -361,7 +361,7 @@ from mongo2hive.module_t_faq_user_view_record;
 
 
 
---插入：mongo2hive.health_t_meeting_wxuser到pro.ods_t_meeting_wxuser
+--插入：mongo2hive.meeting_t_meeting_wxuser到pro.ods_t_meeting_wxuser
 insert overwrite table pro.ods_t_meeting_wxuser PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
@@ -369,7 +369,7 @@ trim(regexp_replace(wxId,'\\n|\\r','')) as wxId,
 trim(regexp_replace(wxName,'\\n|\\r','')) as wxName,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime
-from mongo2hive.health_t_meeting_wxuser;
+from mongo2hive.meeting_t_meeting_wxuser;
 
 
 
@@ -721,7 +721,7 @@ createtime from mongo2hive.module_t_business_ad_survey;
 
 
 
---插入：mongo2hive.health_t_meeting_upload_record到pro.ods_t_meeting_upload_record
+--插入：mongo2hive.meeting_t_meeting_upload_record到pro.ods_t_meeting_upload_record
 insert overwrite table pro.ods_t_meeting_upload_record PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
@@ -736,7 +736,7 @@ trim(regexp_replace(recordEndTime,'\\n|\\r','')) as recordEndTime,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(persistentId,'\\n|\\r','')) as persistentId,
 trim(regexp_replace(persistentStu,'\\n|\\r','')) as persistentStu
-from mongo2hive.health_t_meeting_upload_record;
+from mongo2hive.meeting_t_meeting_upload_record;
 
 
 
@@ -781,7 +781,7 @@ from mongo2hive.esy_equipment_manage_t_equipment_info;
 
 
 
---插入：mongo2hive.health_t_meeting_apply_compere到pro.ods_t_meeting_apply_compere
+--插入：mongo2hive.meeting_t_meeting_apply_compere到pro.ods_t_meeting_apply_compere
 insert overwrite table pro.ods_t_meeting_apply_compere PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
@@ -791,7 +791,7 @@ trim(regexp_replace(applyStatus,'\\n|\\r','')) as applyStatus,
 trim(regexp_replace(verifyUserId,'\\n|\\r','')) as verifyUserId,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(verifyTime,'\\n|\\r','')) as verifyTime
-from mongo2hive.health_t_meeting_apply_compere;
+from mongo2hive.meeting_t_meeting_apply_compere;
 
 
 
@@ -865,7 +865,7 @@ from  mongo2hive.micro_school_t_learn_log;
 
 
 
---插入：mongo2hive.health_t_meeting_dpi_grade到pro.ods_t_meeting_dpi_grade
+--插入：mongo2hive.meeting_t_meeting_dpi_grade到pro.ods_t_meeting_dpi_grade
 insert overwrite table pro.ods_t_meeting_dpi_grade PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
@@ -879,7 +879,7 @@ trim(regexp_replace(videoHDP,'\\n|\\r','')) as videoHDP,
 trim(regexp_replace(sid,'\\n|\\r','')) as sid,
 trim(regexp_replace(appId,'\\n|\\r','')) as appId,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
-from mongo2hive.health_t_meeting_dpi_grade;
+from mongo2hive.meeting_t_meeting_dpi_grade;
 
 
 
