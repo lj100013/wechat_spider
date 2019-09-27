@@ -156,7 +156,7 @@ from mongo2hive.module_t_faq_question_activity;
 
 
 
---插入：mongo2hive.health_t_pushflow_record到pro.ods_t_pushflow_record
+--插入：mongo2hive.meeting_t_pushflow_record到pro.ods_t_pushflow_record
 insert overwrite table pro.ods_t_pushflow_record PARTITION(dt='${hivevar:preday}')
 select
 trim(regexp_replace(id,'\\n|\\r','')) as id,
@@ -167,7 +167,7 @@ trim(regexp_replace(callbackTime,'\\n|\\r','')) as callbackTime,
 trim(regexp_replace(pushflowPublishUrl,'\\n|\\r','')) as pushflowPublishUrl,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(streamKey,'\\n|\\r','')) as streamKey
-from mongo2hive.health_t_pushflow_record;
+from mongo2hive.meeting_t_pushflow_record;
 
 
 
