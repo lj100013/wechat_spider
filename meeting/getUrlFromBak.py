@@ -43,7 +43,7 @@ conn = pyodbc.connect(cnxnstr, autocommit=True)
 cursor = conn.cursor()
 
 
-urlbakHql="select * from ods.ods_meeting_url_r where cast(createtime as bigint)>=1569315600000 and getday(createtime)='2019-09-24'"
+urlbakHql="select * from ods.ods_meeting_url_r where cast(createtime as bigint)>=1569499200000 and getday(createtime)='2019-09-26'"
 cursor.execute(urlbakHql)
 res=cursor.fetchall()
 
