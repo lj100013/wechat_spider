@@ -29,7 +29,7 @@ def query_column():
     columns = ['其他','创新','医保','医院','招采','法规','研报','药企','药品','药店']
     name_id = {}
     for name in columns:
-        for x in col.find({"name":name},{"_id":1}):
+        for x in col.find({"name":name,"isdel":0},{"_id":1}):
             id = str(x['_id'])
             name_id[name] = id
     client.close()
