@@ -205,7 +205,8 @@ trim(regexp_replace(grade,'\\n|\\r','')) as grade,
 trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
 trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
 trim(regexp_replace(safeLabel,'\\n|\\r','')) as safeLabel,
-trim(regexp_replace(gradeSuggest,'\\n|\\r','')) as gradeSuggest
+trim(regexp_replace(gradeSuggest,'\\n|\\r','')) as gradeSuggest,
+trim(regexp_replace(tags,'\\n|\\r','')) as tags
 from mongo2hive.module_t_faq_question;
 
 
