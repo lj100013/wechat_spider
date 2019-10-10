@@ -5,6 +5,7 @@ import time
 import pymongo
 from impala.dbapi import connect
 import configparser
+import pyodbc
 conf = configparser.ConfigParser()
 conf.read("/data/job_pro/utils/config.ini")
 IMPALA_HOST=conf.get('impaladb', 'host')
