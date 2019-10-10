@@ -8,6 +8,7 @@ import pymongo
 import time
 from impala.dbapi import connect
 import urllib3
+import configparser
 urllib3.disable_warnings()
 
 yesterday = int(time.time() - 87600) # 1533952277
@@ -15,12 +16,28 @@ timeArray = time.localtime(yesterday)
 dt = time.strftime("%Y-%m-%d", timeArray)
 str_time = yesterday * 1000
 time2 = 1420041600000
-myclient = pymongo.MongoClient(host='120.79.73.179', port=27017,username='etl_user',password='readsgaP3')
+
+conf = configparser.ConfigParser()
+# conf.read(r"D:\\job_script\\utils\\config.ini")
+conf.read("/data/job_pro/utils/config.ini")
+HOST=conf.get('impaladb', 'host')
+PORT=int(conf.get('impaladb', 'port'))
+
+mongo_host = config.get('mongo', 'host')
+mongo_port = config.getint('mongo', 'port')
+mongo_user = config.get('mongo', 'user')
+mongo_password = config.get('mongo', 'password')
+mongo_authentication = config.get('mongo', 'authentication')
+
+myclient = pymongo.MongoClient(host=mongo_host, port=mongo_port,username=mongo_user,password=mongo_password)
 mydb = myclient["module"]
 mycol = mydb["t_faq_question"]
 
 ids = []
-conn = connect(host='192.168.3.158', port=21050)
+
+# cnxnstr = "DSN=Sample Cloudera Impala DSN;HOST=%s;PORT=%s;UID=hive;AuthMech=3;PWD=hive;UseSasl=0" % (HOST,PORT)
+cnxnstr = "Driver={/opt/cloudera/impalaodbc/lib/64/libclouderaimpalaodbc64.so};HOST=%s;PORT=%s;UID=hive;AuthMech=3;PWD=hive;UseSasl=0" % (HOST,PORT)
+conn = pyodbc.connect(cnxnstr, autocommit=True,timeout=240)
 cur = conn.cursor()
 # 使用 cursor() 方法创建一个游标对象 cursor
 try:
