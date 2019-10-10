@@ -9,6 +9,7 @@ import time
 from impala.dbapi import connect
 import urllib3
 import configparser
+import pyodbc
 urllib3.disable_warnings()
 
 yesterday = int(time.time() - 87600) # 1533952277
