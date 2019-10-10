@@ -23,11 +23,11 @@ conf.read("/data/job_pro/utils/config.ini")
 HOST=conf.get('impaladb', 'host')
 PORT=int(conf.get('impaladb', 'port'))
 
-mongo_host = config.get('mongo', 'host')
-mongo_port = config.getint('mongo', 'port')
-mongo_user = config.get('mongo', 'user')
-mongo_password = config.get('mongo', 'password')
-mongo_authentication = config.get('mongo', 'authentication')
+mongo_host = conf.get('mongo', 'host')
+mongo_port = conf.getint('mongo', 'port')
+mongo_user = conf.get('mongo', 'user')
+mongo_password = conf.get('mongo', 'password')
+mongo_authentication = conf.get('mongo', 'authentication')
 
 myclient = pymongo.MongoClient(host=mongo_host, port=mongo_port,username=mongo_user,password=mongo_password)
 mydb = myclient["module"]
