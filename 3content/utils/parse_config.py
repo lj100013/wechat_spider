@@ -5,10 +5,17 @@ config = configparser.ConfigParser()
 # config.read(r"F:\bigdata_project\utils\config.ini")
 # words_lib_path = "./utils/words_lib"
 # stop_words_path = './utils/stop_words.txt'
+# logistic_path = "./utils/logistic.pickle"
+# transform_path="./utils/transformer.pickle"
+# vector_path='./utils/vectorizer.pickle'
 
 config.read("/data/job_pro/utils/config.ini")
 words_lib_path = "/data/job_pro/dataX/3content/utils/words_lib"
 stop_words_path = '/data/job_pro/dataX/3content/utils/stop_words.txt'
+logistic_path = "/data/job_pro/dataX/3content/utils/logistic.pickle"
+transform_path="/data/job_pro/dataX/3content/utils/transformer.pickle"
+vector_path='/data/job_pro/dataX/3content/utils/vectorizer.pickle'
+
 #mysql config
 mysql_host = config.get('weixin', 'host')
 mysql_port = config.getint('weixin', 'port')

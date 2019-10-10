@@ -15,12 +15,9 @@ with open(stop_words_path, 'r', encoding='utf-8') as f1:
         stop_words.append(stop_word.strip())
 
 
-lr_model = pickle.load(open('/data/job_pro/dataX/3content/utils/logistic.pickle','rb'))
-loaded_vec = CountVectorizer(decode_error="replace", vocabulary=pickle.load(open("/data/job_pro/dataX/3content/utils/vectorizer.pickle", "rb")))
-tfidftransformer = pickle.load(open("/data/job_pro/dataX/3content/utils/transformer.pickle", "rb"))
-# lr_model = joblib.load(open('/data/job_pro/dataX/3content/utils/logistic.pkl','rb'))
-# loaded_vec = CountVectorizer(decode_error="replace", vocabulary=pickle.load(open("/data/job_pro/dataX/3content/utils/vectorizer.pickle", "rb")))
-# tfidftransformer = pickle.load(open("/data/job_pro/dataX/3content/utils/transformer.pickle", "rb"))
+lr_model = pickle.load(open(logistic_path,'rb'))
+loaded_vec = CountVectorizer(decode_error="replace", vocabulary=pickle.load(open(vector_path, "rb")))
+tfidftransformer = pickle.load(open(transform_path, "rb"))
 
 def query_column():
     client = MongoClient('mongodb://{}:{}@{}:{}/'.format(mongo_user,mongo_password,mongo_host,mongo_port))
@@ -29,7 +26,7 @@ def query_column():
     columns = ['其他','创新','医保','医院','招采','法规','研报','药企','药品','药店']
     name_id = {}
     for name in columns:
-        for x in col.find({"name":name,"isdel":0},{"_id":1}):
+        for x in col.find({"name":name,"isdel":0,"type":1},{"_id":1}):
             id = str(x['_id'])
             name_id[name] = id
     client.close()
