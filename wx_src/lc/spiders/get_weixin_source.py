@@ -92,8 +92,9 @@ for x in mycol.find({"createTime": {"$gt": str_time}, "content.type": 3, "delete
                 esc_content = pymysql.escape_string(esc_content)
                 print("insert " + source)
 
-                # conn = connect(host='192.168.3.158', port=21050)
-                # cur = conn.cursor()
+                cnxnstr = "Driver={/opt/cloudera/impalaodbc/lib/64/libclouderaimpalaodbc64.so};HOST=%s;PORT=%s;UID=hive;AuthMech=3;PWD=hive;UseSasl=0" % (HOST,PORT)
+                conn = pyodbc.connect(cnxnstr, autocommit=True,timeout=240)
+                cur = conn.cursor()
                 # 使用 cursor() 方法创建一个游标对象 cursor
                 try:
                     #print("insert data id:" + str(str_id))
