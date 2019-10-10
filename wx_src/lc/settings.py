@@ -13,7 +13,7 @@
 BOT_NAME = 'lc'
 SPIDER_MODULES = ['lc.spiders']
 NEWSPIDER_MODULE = 'lc.spiders'
-COMMANDS_MODULE = 'lc.commands'
+# COMMANDS_MODULE = 'lc.commands'
 
 LOG_LEVEL = 'WARNING'
 
