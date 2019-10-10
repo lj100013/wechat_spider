@@ -13,7 +13,7 @@ cursor = db.cursor()
 
 #查询栏目名称和id的映射关系
 column_id = query_column()
-
+print(column_id)
 sql = "SELECT post_name,source,dept,post_title,post_content,post_date FROM wp_posts  where yyr = 'Y' and post_flag_yyr = '' order by post_date;"
 # sql = "SELECT post_name,source,dept,post_title,post_content,post_date FROM wp_posts  where post_name = '855495ae2943e272f360fc13f9dc6edb' "
 j = 0
