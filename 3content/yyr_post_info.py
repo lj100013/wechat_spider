@@ -62,7 +62,7 @@ try:
                 faq_id=rtext['data']['id']
                 if len(faq_id)>5 :
                     print(faq_id)
-                    usql="update wp_posts set post_flag_yyr=1 ,faq_id='%s' where post_name='%s'" %(faq_id,post_name)
+                    usql="update wp_posts set post_flag_yyr=1 ,yyr_info_id='%s' where post_name='%s'" %(faq_id,post_name)
                     db.ping(reconnect=True)
                     cursor.execute(usql)
                     db.commit()
