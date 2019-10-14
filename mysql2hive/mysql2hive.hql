@@ -326,16 +326,6 @@ trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
 from mysql2hive.circle_school_t_course_range;
 
 
---插入:mysql2hive.health_p_image_data到pro.ods_p_image_data
-insert overwrite table pro.ods_p_image_data PARTITION(dt='${hivevar:preday}') 
-select 
-trim(regexp_replace(id,'\\n|\\r','')) as id,
-trim(regexp_replace(relation_id,'\\n|\\r','')) as relation_id,
-trim(regexp_replace(user_id,'\\n|\\r','')) as user_id,
-trim(regexp_replace(image_url,'\\n|\\r','')) as image_url,
-trim(regexp_replace(image_type,'\\n|\\r','')) as image_type,
-trim(regexp_replace(time_long,'\\n|\\r','')) as time_long
-from mysql2hive.health_p_image_data;
 
 
 --插入:mysql2hive.medicine_literature_user_treatise到pro.ods_user_treatise
