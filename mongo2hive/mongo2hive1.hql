@@ -568,30 +568,7 @@ from mongo2hive.micro_school_t_course_entry;
 
 
 
---插入：mongo2hive.meeting_t_meeting到pro.ods_t_meeting
-insert overwrite table pro.ods_t_meeting PARTITION(dt='${hivevar:preday}')   
-select 
-trim(regexp_replace(id,'\\n|\\r','')) as id,
-trim(regexp_replace(company,'\\n|\\r','')) as company,
-trim(regexp_replace(companyId,'\\n|\\r','')) as companyId,
-trim(regexp_replace(subject,'\\n|\\r','')) as subject,
-trim(regexp_replace(startDate,'\\n|\\r','')) as startDate,
-trim(regexp_replace(startTime,'\\n|\\r','')) as startTime,
-trim(regexp_replace(endTime,'\\n|\\r','')) as endTime,
-trim(regexp_replace(attendeesCount,'\\n|\\r','')) as attendeesCount,
-trim(regexp_replace(price,'\\n|\\r','')) as price,
-trim(regexp_replace(organizerToken,'\\n|\\r','')) as organizerToken,
-trim(regexp_replace(panelistToken,'\\n|\\r','')) as panelistToken,
-trim(regexp_replace(attendeeToken,'\\n|\\r','')) as attendeeToken,
-trim(regexp_replace(organizerJoinUrl,'\\n|\\r','')) as organizerJoinUrl,
-trim(regexp_replace(panelistJoinUrl,'\\n|\\r','')) as panelistJoinUrl,
-trim(regexp_replace(attendeeJoinUrl,'\\n|\\r','')) as attendeeJoinUrl,
-trim(regexp_replace(liveId,'\\n|\\r','')) as liveId,
-trim(regexp_replace(number,'\\n|\\r','')) as number,
-trim(regexp_replace(isStop,'\\n|\\r','')) as isStop,
-trim(regexp_replace(updateTime,'\\n|\\r','')) as updateTime,
-trim(regexp_replace(createUserId,'\\n|\\r','')) as createUserId
-from mongo2hive.meeting_t_meeting;
+
 
 
 --插入：mongo2hive.meeting_t_meeting_joinrecord到pro.ods_t_meeting_joinrecord
