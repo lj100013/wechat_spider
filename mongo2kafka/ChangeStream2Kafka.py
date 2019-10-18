@@ -44,7 +44,7 @@ def getTopic(database):
     cur.execute(sql)
     result = cur.fetchall()
     if len(result)>0:
-        data = result[0][0]
+        data = result[0][0].strip()
     else:
         data=None
     conn_mysql.close()
@@ -111,7 +111,7 @@ def getBlackList(database):
     if len(result)>0:
         data=[]
         for coll in result:
-            data.append(str(coll).replace(',','').replace('(','').replace(')',''))
+            data.append(''.join(coll).strip())
     else:
         data=None
     conn_mysql.close()
