@@ -248,7 +248,7 @@ class Spider(object):
                                     content = fix_iframe(content,iframes)
                                     wechat_data = {}
                                     wechat_data['title'] = title
-                                    wechat_data['author'] = wxname
+                                    wechat_data['author'] = name
                                     wechat_data['key_word'] = dept
                                     wechat_data['wxname'] = wechat_data['author']
                                     create_date = formate_date(dates[i])
