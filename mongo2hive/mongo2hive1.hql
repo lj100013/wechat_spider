@@ -612,16 +612,16 @@ from mongo2hive.micro_school_t_comment;
 
 
 --插入：mongo2hive.micro_school_t_courseware到pro.ods_t_courseware
-insert overwrite table pro.ods_t_courseware PARTITION(dt='${hivevar:preday}')   
-select 
-trim(regexp_replace(id,'\\n|\\r','')) as id,
-trim(regexp_replace(courseId,'\\n|\\r','')) as courseId,
-trim(regexp_replace(type,'\\n|\\r','')) as type,
-trim(regexp_replace(url,'\\n|\\r','')) as url,
-trim(regexp_replace(name,'\\n|\\r','')) as name,
-trim(regexp_replace(pageNumber,'\\n|\\r','')) as pageNumber,
-trim(regexp_replace(deleted,'\\n|\\r','')) as deleted
-from mongo2hive.micro_school_t_courseware;
+--insert overwrite table pro.ods_t_courseware PARTITION(dt='${hivevar:preday}')   
+--select 
+--trim(regexp_replace(id,'\\n|\\r','')) as id,
+--trim(regexp_replace(courseId,'\\n|\\r','')) as courseId,
+--trim(regexp_replace(type,'\\n|\\r','')) as type,
+--trim(regexp_replace(url,'\\n|\\r','')) as url,
+--trim(regexp_replace(name,'\\n|\\r','')) as name,
+--trim(regexp_replace(pageNumber,'\\n|\\r','')) as pageNumber,
+--trim(regexp_replace(deleted,'\\n|\\r','')) as deleted
+--from mongo2hive.micro_school_t_courseware;
 
 
 
@@ -866,15 +866,15 @@ from mongo2hive.module_t_credit_record;
 
 
 --插入：mongo2hive.circledaq_circle_operation_log到pro.ods_circle_operation_log
-insert overwrite table pro.ods_circle_operation_log PARTITION(dt='${hivevar:preday}')   
-select 
-trim(regexp_replace(id,'\\n|\\r','')) as id,
-trim(regexp_replace(type,'\\n|\\r','')) as type,
-trim(regexp_replace(userId,'\\n|\\r','')) as userId,
-trim(regexp_replace(circleId,'\\n|\\r','')) as circleId,
-trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
-trim(regexp_replace(`date`,'\\n|\\r','')) as `date`
-from mongo2hive.circledaq_circle_operation_log;
+--insert overwrite table pro.ods_circle_operation_log PARTITION(dt='${hivevar:preday}')   
+--select 
+--trim(regexp_replace(id,'\\n|\\r','')) as id,
+--trim(regexp_replace(type,'\\n|\\r','')) as type,
+--trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+--trim(regexp_replace(circleId,'\\n|\\r','')) as circleId,
+--trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+--trim(regexp_replace(`date`,'\\n|\\r','')) as `date`
+--from mongo2hive.circledaq_circle_operation_log;
 
 
 --插入：mongo2hive.online_marketing_t_redPaper_record到pro.ods_t_redPaper_record
@@ -915,19 +915,19 @@ from mongo2hive.health_t_survey_answer;
 
 
 --插入：mongo2hive.online_marketing_t_survey_record到pro.ods_t_survey_record
-insert overwrite table pro.ods_t_survey_record PARTITION(dt='${hivevar:preday}')   
-select 
-trim(regexp_replace(id,'\\n|\\r','')) as id,
-trim(regexp_replace(promotionId,'\\n|\\r','')) as promotionId,
-trim(regexp_replace(surveyId,'\\n|\\r','')) as surveyId,
-trim(regexp_replace(userId,'\\n|\\r','')) as userId,
-trim(regexp_replace(answerId,'\\n|\\r','')) as answerId,
-trim(regexp_replace(`desc`,'\\n|\\r','')) as `desc`,
-trim(regexp_replace(unionId,'\\n|\\r','')) as unionId,
-trim(regexp_replace(version,'\\n|\\r','')) as version,
-trim(regexp_replace(title,'\\n|\\r','')) as title,
-trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
-from mongo2hive.online_marketing_t_survey_record;
+--insert overwrite table pro.ods_t_survey_record PARTITION(dt='${hivevar:preday}')   
+--select 
+--trim(regexp_replace(id,'\\n|\\r','')) as id,
+--trim(regexp_replace(promotionId,'\\n|\\r','')) as promotionId,
+--trim(regexp_replace(surveyId,'\\n|\\r','')) as surveyId,
+--trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+--trim(regexp_replace(answerId,'\\n|\\r','')) as answerId,
+--trim(regexp_replace(`desc`,'\\n|\\r','')) as `desc`,
+--trim(regexp_replace(unionId,'\\n|\\r','')) as unionId,
+--trim(regexp_replace(version,'\\n|\\r','')) as version,
+--trim(regexp_replace(title,'\\n|\\r','')) as title,
+--trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
+--from mongo2hive.online_marketing_t_survey_record;
 
 
 --插入：mongo2hive.micro_school_t_learn_record到pro.ods_t_learn_record
@@ -1172,29 +1172,29 @@ from mongo2hive.activity_t_promotion_activity;
 
 
 --插入:mongo2hive.activity_t_invitation到pro.ods_t_invitation
-insert overwrite table pro.ods_t_invitation PARTITION(dt='${hivevar:preday}')
-select
-trim(regexp_replace(id,'\\n|\\r','')) as id,
-trim(regexp_replace(activityId,'\\n|\\r','')) as activityId,
-trim(regexp_replace(bizId,'\\n|\\r','')) as bizId,
-trim(regexp_replace(bizType,'\\n|\\r','')) as bizType,
-trim(regexp_replace(rewardWay,'\\n|\\r','')) as rewardWay,
-trim(regexp_replace(inviterId,'\\n|\\r','')) as inviterId,
-trim(regexp_replace(inviterName,'\\n|\\r','')) as inviterName,
-trim(regexp_replace(inviteeId,'\\n|\\r','')) as inviteeId,
-trim(regexp_replace(inviteeName,'\\n|\\r','')) as inviteeName,
-trim(regexp_replace(received,'\\n|\\r','')) as received,
-trim(regexp_replace(inviteTime,'\\n|\\r','')) as inviteTime,
-trim(regexp_replace(credit,'\\n|\\r','')) as credit,
-trim(regexp_replace(bizTitle,'\\n|\\r','')) as bizTitle,
-trim(regexp_replace(status,'\\n|\\r','')) as status,
-trim(regexp_replace(invalid,'\\n|\\r','')) as invalid,
-trim(regexp_replace(invalidTime,'\\n|\\r','')) as invalidTime,
-trim(regexp_replace(msgId,'\\n|\\r','')) as msgId,
-trim(regexp_replace(gid,'\\n|\\r','')) as gid,
-trim(regexp_replace(read,'\\n|\\r','')) as read,
-trim(regexp_replace(joinedCircles,'\\n|\\r','')) as joinedCircles,
-trim(regexp_replace(addCredit,'\\n|\\r','')) as addCredit,
-trim(regexp_replace(addCreditTime,'\\n|\\r','')) as addCreditTime,
-trim(regexp_replace(addCredited,'\\n|\\r','')) as addCredited
-from mongo2hive.activity_t_invitation;
+--insert overwrite table pro.ods_t_invitation PARTITION(dt='${hivevar:preday}')
+--select
+--trim(regexp_replace(id,'\\n|\\r','')) as id,
+--trim(regexp_replace(activityId,'\\n|\\r','')) as activityId,
+--trim(regexp_replace(bizId,'\\n|\\r','')) as bizId,
+--trim(regexp_replace(bizType,'\\n|\\r','')) as bizType,
+--trim(regexp_replace(rewardWay,'\\n|\\r','')) as rewardWay,
+--trim(regexp_replace(inviterId,'\\n|\\r','')) as inviterId,
+--trim(regexp_replace(inviterName,'\\n|\\r','')) as inviterName,
+--trim(regexp_replace(inviteeId,'\\n|\\r','')) as inviteeId,
+--trim(regexp_replace(inviteeName,'\\n|\\r','')) as inviteeName,
+--trim(regexp_replace(received,'\\n|\\r','')) as received,
+--trim(regexp_replace(inviteTime,'\\n|\\r','')) as inviteTime,
+--trim(regexp_replace(credit,'\\n|\\r','')) as credit,
+--trim(regexp_replace(bizTitle,'\\n|\\r','')) as bizTitle,
+--trim(regexp_replace(status,'\\n|\\r','')) as status,
+--trim(regexp_replace(invalid,'\\n|\\r','')) as invalid,
+--trim(regexp_replace(invalidTime,'\\n|\\r','')) as invalidTime,
+--trim(regexp_replace(msgId,'\\n|\\r','')) as msgId,
+--trim(regexp_replace(gid,'\\n|\\r','')) as gid,
+--trim(regexp_replace(read,'\\n|\\r','')) as read,
+--trim(regexp_replace(joinedCircles,'\\n|\\r','')) as joinedCircles,
+--trim(regexp_replace(addCredit,'\\n|\\r','')) as addCredit,
+--trim(regexp_replace(addCreditTime,'\\n|\\r','')) as addCreditTime,
+--trim(regexp_replace(addCredited,'\\n|\\r','')) as addCredited
+--from mongo2hive.activity_t_invitation;
