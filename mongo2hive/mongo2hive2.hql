@@ -213,16 +213,16 @@ from mongo2hive.health_t_no_check_reason;
 
 
 --插入：mongo2hive.chat_t_chat_online到pro.ods_t_chat_online
-insert overwrite table pro.ods_t_chat_online PARTITION(dt='${hivevar:preday}')
-select
-trim(regexp_replace(id,'\\n|\\r','')) as id,
-trim(regexp_replace(bizType,'\\n|\\r','')) as bizType,
-trim(regexp_replace(bizId,'\\n|\\r','')) as bizId,
-trim(regexp_replace(userId,'\\n|\\r','')) as userId,
-trim(regexp_replace(userPic,'\\n|\\r','')) as userPic,
-trim(regexp_replace(onlineTime,'\\n|\\r','')) as onlineTime,
-trim(regexp_replace(offlineTime,'\\n|\\r','')) as offlineTime
-from mongo2hive.chat_t_chat_online;
+--insert overwrite table pro.ods_t_chat_online PARTITION(dt='${hivevar:preday}')
+--select
+--trim(regexp_replace(id,'\\n|\\r','')) as id,
+--trim(regexp_replace(bizType,'\\n|\\r','')) as bizType,
+--trim(regexp_replace(bizId,'\\n|\\r','')) as bizId,
+--trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+--trim(regexp_replace(userPic,'\\n|\\r','')) as userPic,
+--trim(regexp_replace(onlineTime,'\\n|\\r','')) as onlineTime,
+--trim(regexp_replace(offlineTime,'\\n|\\r','')) as offlineTime
+--from mongo2hive.chat_t_chat_online;
 
 
 
@@ -278,18 +278,18 @@ from mongo2hive.module_t_faq_no_share_pop;
 
 
 --插入：mongo2hive.circleetl_circle_operation_info到pro.ods_circle_operation_info
-insert overwrite table pro.ods_circle_operation_info PARTITION(dt='${hivevar:preday}')
-select
-trim(regexp_replace(id,'\\n|\\r','')) as id,
-trim(regexp_replace(scene,'\\n|\\r','')) as scene,
-trim(regexp_replace(vid,'\\n|\\r','')) as vid,
-trim(regexp_replace(step,'\\n|\\r','')) as step,
-trim(regexp_replace(adddress,'\\n|\\r','')) as adddress,
-trim(regexp_replace(browerMessage,'\\n|\\r','')) as browerMessage,
-trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
-trim(regexp_replace(phoneNumber,'\\n|\\r','')) as phoneNumber,
-trim(regexp_replace(data,'\\n|\\r','')) as data
-from mongo2hive.circleetl_circle_operation_info;
+--insert overwrite table pro.ods_circle_operation_info PARTITION(dt='${hivevar:preday}')
+--select
+--trim(regexp_replace(id,'\\n|\\r','')) as id,
+--trim(regexp_replace(scene,'\\n|\\r','')) as scene,
+--trim(regexp_replace(vid,'\\n|\\r','')) as vid,
+--trim(regexp_replace(step,'\\n|\\r','')) as step,
+--trim(regexp_replace(adddress,'\\n|\\r','')) as adddress,
+--trim(regexp_replace(browerMessage,'\\n|\\r','')) as browerMessage,
+--trim(regexp_replace(createTime,'\\n|\\r','')) as createTime,
+--trim(regexp_replace(phoneNumber,'\\n|\\r','')) as phoneNumber,
+--trim(regexp_replace(data,'\\n|\\r','')) as data
+--from mongo2hive.circleetl_circle_operation_info;
 
 
 --插入：mongo2hive.meeting_t_meeting_share_record到pro.ods_t_meeting_share_record
@@ -349,15 +349,15 @@ from mongo2hive.meeting_t_meeting_pushflow_record;
 
 
 --插入：mongo2hive.module_t_faq_user_view_record到pro.ods_t_faq_user_view_record
-insert overwrite table pro.ods_t_faq_user_view_record PARTITION(dt='${hivevar:preday}')
-select
-trim(regexp_replace(id,'\\n|\\r','')) as id,
-trim(regexp_replace(dataType,'\\n|\\r','')) as dataType,
-trim(regexp_replace(dataId,'\\n|\\r','')) as dataId,
-trim(regexp_replace(viewType,'\\n|\\r','')) as viewType,
-trim(regexp_replace(userId,'\\n|\\r','')) as userId,
-trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
-from mongo2hive.module_t_faq_user_view_record;
+--insert overwrite table pro.ods_t_faq_user_view_record PARTITION(dt='${hivevar:preday}')
+--select
+--trim(regexp_replace(id,'\\n|\\r','')) as id,
+--trim(regexp_replace(dataType,'\\n|\\r','')) as dataType,
+--trim(regexp_replace(dataId,'\\n|\\r','')) as dataId,
+--trim(regexp_replace(viewType,'\\n|\\r','')) as viewType,
+--trim(regexp_replace(userId,'\\n|\\r','')) as userId,
+--trim(regexp_replace(createTime,'\\n|\\r','')) as createTime
+--from mongo2hive.module_t_faq_user_view_record;
 
 
 
