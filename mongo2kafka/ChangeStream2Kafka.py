@@ -44,7 +44,7 @@ def getTopic(database):
     cur.execute(sql)
     result = cur.fetchall()
     if len(result)>0:
-        data = result[0][0]
+        data = result[0][0].strip()
     else:
         data=None
     conn_mysql.close()
@@ -101,6 +101,22 @@ def key2lower(d):
         new[k.lower()] = v
     return new
 
+def getBlackList(database):
+    conn_mysql = pymysql.connect(MYSQL_HOSTS,MYSQL_USERNAME,MYSQL_PASSWORD,MYSQL_DB)
+    cur = conn_mysql.cursor()
+    sql="select collection from blacklist_collection where source='mongo' and db='%s'" % (database)
+    logger.info('getBlackList Sql: '+sql)
+    cur.execute(sql)
+    result = cur.fetchall()
+    if len(result)>0:
+        data=[]
+        for coll in result:
+            data.append(''.join(coll).strip())
+    else:
+        data=None
+    conn_mysql.close()
+    return data
+
 if __name__ == '__main__':
     database = sys.argv[1].split('.')[0]
     # database = 'module'
@@ -130,7 +146,12 @@ if __name__ == '__main__':
 
         logger.info(database+'------------->'+str(offset))
         mongo_db = mongo_con.get_database(database)
-        stream = mongo_db.watch(full_document = 'updateLookup',start_at_operation_time=bson.timestamp.Timestamp(int(offset),1))
+        # stream = mongo_db.watch(full_document = 'updateLookup',start_at_operation_time=bson.timestamp.Timestamp(int(offset),1))
+        ##筛选collection,去除黑名单中的表
+        blacklist=getBlackList(database)
+        stream = mongo_db.watch([{'$match': {'ns.coll': {'$nin':blacklist}}}],
+                                full_document = 'updateLookup',start_at_operation_time=bson.timestamp.Timestamp(int(offset),1))
+
 
         producer = KafkaProducer(bootstrap_servers = hosts_producer_arr)
         partition = producer.partitions_for(topic)
