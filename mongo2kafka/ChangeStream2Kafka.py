@@ -21,8 +21,8 @@ logger.addHandler(handler1)
 
 
 conf = configparser.ConfigParser()
-conf.read(r"D:\job_script\utils\config.ini")
-# conf.read("/data/job_pro/utils/config.ini")
+# conf.read(r"D:\job_script\utils\config.ini")
+conf.read("/data/job_pro/utils/config.ini")
 HOST = conf.get('mongo', 'host')
 PORT = int(conf.get('mongo', 'port'))
 USERNAME = conf.get('mongo', 'user')
@@ -118,8 +118,8 @@ def getBlackList(database):
     return data
 
 if __name__ == '__main__':
-    # database = sys.argv[1].split('.')[0]
-    database = 'module'
+    database = sys.argv[1].split('.')[0]
+    # database = 'module'
     try:
         mongo_con = pymongo.MongoClient(host=HOST,port=PORT,username=USERNAME,password=PASSWORD)
 
