@@ -35,10 +35,12 @@ try:
             p_data["authorName"] = source
             p_data['contentType'] = 6
             p_data['richText'] = post_content
-            if source == 'E药经理人':
-                column_name = "药企"
-            elif source =='县域卫生':
-                column_name = "医院"
+            # if source == 'E药经理人':
+            #     column_name = "药企"
+            # elif source =='县域卫生':
+            #     column_name = "医院"
+            if source in ['E药经理人','县域卫生']:
+                continue
             else:
                 column_name = column_classification(post_content)
                 if column_name in ["药企","医院"]:
