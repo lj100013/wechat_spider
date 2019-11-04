@@ -158,5 +158,6 @@ wx_id = {
 	"泰康人寿保险":"taikanglifeinsurance",
 	"中国保险报":"cbin-news",
 	"高医医保物价":"gh_73fd7269046b",
-	"平安健康保险":"PAJKBX"
+	"平安健康保险":"PAJKBX",
+	"县域卫生":"zgxyws88 "
 }

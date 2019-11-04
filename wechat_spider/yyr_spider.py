@@ -1,7 +1,7 @@
 import logging
 import threading
 import numpy as np
-from crawl_from_search import Spider
+from crawl_newest_one import Spider
 logging.basicConfig(level=logging.WARNING,
                     format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
                     datefmt='%a, %d %b %Y %H:%M:%S')
@@ -15,14 +15,15 @@ weixin_names = [("赛柏蓝","INFO","yyr","oIWsFtwICTz_e61YkBoqO0EBmNe0"),("健�
                 ("国药汇","INFO","yyr","oIWsFt_bnCYNbJuf1ob2DxOmYFYU"),("制药业","INFO","yyr","oIWsFt-4TgrBotOyUoGbtS4RHI0Y"),("三甲传真","INFO","yyr","oIWsFtx_83zYUcZ1j8CvTLL6IB78"),("医管通","INFO","yyr","oIWsFt_jCoVO7_JDUGEopdzDS-GQ"),("医学论坛网","INFO","yyr","oIWsFtxyCk9N09rwUnNGj7qxjlPI"),
                 ("中国医院院长","INFO","yyr","oIWsFt8GgkwE5sOfJnJ-yc0VFejY"),("医师报","INFO","ysq","oIWsFtzi0PibaU3PgrbPNdU3b0qE"),("医药代表","INFO","yyr","oIWsFt7KWd9UMTeWG2_XzK2ujee4"),("医蟹","INFO","yyr","oIWsFt6ceeUFHC_H3OQzhu4l59iA"),("联众医药网","INFO","yyr","oIWsFtyKH8hYKRuvk5F1w957GY1w"),
                 ("寿险微课堂","INFO","yyr","oIWsFt5yE_lJ_giDEwKL7OCpmJx8"),("医保微社区","INFO","yyr","oIWsFt_TC61pWWru5T22_9ghvhFY"),("寿险一点通","INFO","yyr","oIWsFt3hDMRNHHv1Sa4urD4DhGVM"),("重疾险百科","INFO","yyr","oIWsFt9hLKdJI8Dsy23Y8iZqlOEg"),("泰康人寿保险","INFO","yyr","oIWsFt6RbgO2u8cI_KweoE0JHUTU"),
-                ("中国保险报","INFO","yyr","oIWsFtzlugTbjcWuYgddGTG-0eaM"),("高医医保物价","INFO","yyr","oIWsFtwykJjsuzOeGcFSuZfa3qWs"),("平安健康保险","INFO","yyr","oIWsFtxgIwpnTF8RUnxZOfnvQj3k")]
+                ("中国保险报","INFO","yyr","oIWsFtzlugTbjcWuYgddGTG-0eaM"),("高医医保物价","INFO","yyr","oIWsFtwykJjsuzOeGcFSuZfa3qWs"),("平安健康保险","INFO","yyr","oIWsFtxgIwpnTF8RUnxZOfnvQj3k"),("中国医药报","INFO","yyr","oIWsFtxZvbhP_vGSWyDl5kvFXGTE"),("药明康德","INFO","yyr","oIWsFt8_gjduyEZ5LGGmM38Y6E2k"),
+                ("医学界", "QK", "yyr", "oIWsFtxoA8ylvPBmVUVQW_vaa4q8"),("动脉网","INFO","yyr","oIWsFt0kQ1EA-vmZ-KSCZ7OzN7ws"),("县域卫生","INFO","yyr","weizhi")]
 # ("中国医药报","INFO","yyr","oIWsFtxZvbhP_vGSWyDl5kvFXGTE"),("药明康德","INFO","yyr","oIWsFt8_gjduyEZ5LGGmM38Y6E2k"),("医学界", "QK", "yyr", "oIWsFtxoA8ylvPBmVUVQW_vaa4q8"),("动脉网","INFO","yyr","oIWsFt0kQ1EA-vmZ-KSCZ7OzN7ws"),
 
 
 num_threads = 4
 def start_crawl(spider,sub_weixin_name):
     for weixin_name in sub_weixin_name:
-        spider.pipeline2db(weixin_name,'day',retrytimes=3)
+        spider.pipeline2db(weixin_name,retrytimes=3)
 for sub_weixin_name in np.array_split(weixin_names,num_threads):
     spider = Spider()
     threading.Thread(target=start_crawl, args=(spider,sub_weixin_name,)).start()

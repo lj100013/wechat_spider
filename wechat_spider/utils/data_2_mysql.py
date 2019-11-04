@@ -8,16 +8,7 @@ import pymysql
 import configparser
 import logging
 from utils.wx_name import *
-conf = configparser.ConfigParser()
-# conf.read(r"F:\bigdata_project\utils\config.ini")
-conf.read("/data/job_pro/utils/config.ini")
-HOST=conf.get('weixin', 'host')
-PORT=int(conf.get('weixin', 'port'))
-USER=conf.get('weixin', 'username')
-PASSWORD=conf.get('weixin', 'password')
-DB=conf.get('weixin', 'database')
-CHARSET=conf.get('weixin', 'charset')
-
+from utils.parse_config import *
 '''
 ----------------  正在爬取 xxx  -------------------
 上传图片: xxx.jpg
@@ -32,7 +23,7 @@ post_date:xxx
 
 def process_item(item,appname):
     # 数据库连接
-    con = pymysql.connect(host=HOST, user=USER, passwd=PASSWORD, db=DB, charset=CHARSET, port=PORT)
+    con = pymysql.connect(host=mysql_host, user=mysql_user, passwd=mysql_password, db=mysql_db, charset=mysql_charset, port=mysql_port)
     # 数据库游标
     cue = con.cursor()
     # get term_id
@@ -64,7 +55,8 @@ def process_item(item,appname):
 </html>
                 注：本网所有转载内容系出于传递信息之目的，且明确注明来源或作者，不希望被转载的媒体或个人可与我们联系，我们将立即进行删除处理，所有内容及观点仅供参考，不构成任何诊疗建议，对所引用信息的准确性和完整性不作任何保证。
                 """.format(item["title"],item["author"],item["author"],wx_id[item["author"]])
-    item["content"] = str(item["content"]) + remark
+    if item['author'] not in ["E药经理人","县域卫生"]:
+        item["content"] = str(item["content"]) + remark
     try:
         cue.execute(
             "insert into wp_posts (post_author,post_date,post_date_gmt,post_content,post_title,post_status,post_name,guid,author,dept,source,ysq,yyr) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
@@ -85,7 +77,7 @@ def process_item(item,appname):
 # 数据库去重操作(传入guid)
 def is_exists(guid,appname):
     # 数据库连接
-    con = pymysql.connect(host=HOST, user=USER, passwd=PASSWORD, db=DB, charset=CHARSET, port=PORT)
+    con = pymysql.connect(host=mysql_host, user=mysql_user, passwd=mysql_password, db=mysql_db, charset=mysql_charset, port=mysql_port)
     # 数据库游标
     _end = con.cursor()
     try:

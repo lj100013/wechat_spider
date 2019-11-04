@@ -1,16 +1,11 @@
 #coding:utf-8
 import logging
 import base64
-import configparser
 import requests
 import json
 from urllib import request
+from utils.parse_config import *
 
-conf = configparser.ConfigParser()
-#conf.read(r"F:\bigdata_project\utils\config.ini")
-conf.read("/data/job_pro/utils/config.ini")
-img_base_url=conf.get('weixin', 'img_base_url')
-qiniu_service_url=conf.get('weixin', 'qiniu_service_url')
 
 def upload_pic(content,pic_url):
     link_list = pic_url.split("/")

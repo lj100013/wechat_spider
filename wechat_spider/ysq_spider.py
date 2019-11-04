@@ -1,7 +1,7 @@
 import logging
 from multiprocessing.dummy import Pool as ThreadPool
 from multhread_spider import pipeline2db
-from crawl_from_search import Spider
+from crawl_newest_one import Spider
 import threading
 import numpy as np
 
@@ -35,7 +35,7 @@ weixin_names = [("看医界","INFO","ysq","oIWsFt1nSRo2MUGrJxs6U_4K6tGg"),("医�
 num_threads = 6
 def start_crawl(spider,sub_weixin_name):
     for weixin_name in sub_weixin_name:
-        spider.pipeline2db(weixin_name,'day',retrytimes=3)
+        spider.pipeline2db(weixin_name,retrytimes=3)
 for sub_weixin_name in np.array_split(weixin_names,num_threads):
     spider = Spider()
     threading.Thread(target=start_crawl, args=(spider,sub_weixin_name,)).start()
