@@ -14,7 +14,7 @@ cursor = db.cursor()
 #查询栏目名称和id的映射关系
 column_id = query_column()
 print(column_id)
-sql = "SELECT post_name,source,dept,post_title,post_content,post_date FROM wp_posts  where yyr = 'Y' and post_flag_yyr = '' order by post_date;"
+sql = "SELECT post_name,source,dept,post_title,post_content,post_date FROM wp_posts  where yyr = 'Y' and post_flag_yyr = '' and author not in ('E药经理人','县域卫生') order by post_date ;"
 #sql = "SELECT post_name,source,dept,post_title,post_content,post_date FROM wp_posts where yyr = 'Y' and author not in ('中国医药报','药明康德','动脉网','医学界') order by post_date;"
 j = 0
 try:
@@ -39,12 +39,10 @@ try:
             #     column_name = "药企"
             # elif source =='县域卫生':
             #     column_name = "医院"
-            if source in ['E药经理人','县域卫生']:
-                continue
-            else:
-                column_name = column_classification(post_content)
-                if column_name in ["药企","医院"]:
-                    column_name = "其他"
+
+            column_name = column_classification(post_content)
+            if column_name in ["药企","医院"]:
+                column_name = "其他"
             p_data['columnId'] = column_id[column_name]
             p_data['title'] = post_title
             p_data['type'] = 1
