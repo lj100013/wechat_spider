@@ -13,6 +13,7 @@ class LLSpider(object):
     def __init__(self):
         self.options = Options()
         self.options.add_argument('--headless')  # 爬取时隐藏浏览器
+        self.options.add_argument('--no-sandbox')  # 禁用沙盒模式（linux下适用）
         self.driver = webdriver.Chrome(options=self.options)
         # self.driver = webdriver.Chrome()
         self.driver.implicitly_wait(30)
