@@ -42,8 +42,8 @@ class LLSpider(object):
         url = 'http://tew.yrt-tech.com/#/stats/query-sim-flow-agent'
         self.driver.get(url)
         time.sleep(1)
-        # dateList = self.get_dateList() # 跑历史数据
-        dateList = self.get_dateList(str(datetime.date.today()+ datetime.timedelta(-1)))
+        dateList = self.get_dateList() # 跑历史数据
+        # dateList = self.get_dateList(str(datetime.date.today()+ datetime.timedelta(-1)))
         for dt in dateList:
             self.driver.find_element_by_xpath('//input[@placeholder="选择日期时间" and @class="el-input__inner"]').clear()
             self.driver.find_element_by_xpath('//input[@placeholder="选择日期时间" and @class="el-input__inner"]').send_keys(
@@ -68,7 +68,7 @@ class LLSpider(object):
                     flow = self.convert(row[4])
                     date = "'" + row[5] + "'"
 
-                    sql = 'upsert into dm.dm_esy_iotflow values(%s,%s,%s,concat(cast(unix_timestamp() as string),"000"))' \
+                    sql = 'upsert into dw.dw_esy_iotflow values(%s,%s,%s,concat(cast(unix_timestamp() as string),"000"))' \
                           % (id, date, int(flow))
                     try:
                         self.impala_cur.execute(sql)
@@ -84,7 +84,7 @@ class LLSpider(object):
 
     def get_dateList(self, dt=None):
         dtList = []
-        sDate = datetime.datetime.strptime('2019-10-08', '%Y-%m-%d').date()
+        sDate = datetime.datetime.strptime('2019-11-15', '%Y-%m-%d').date()
         eDate = datetime.date.today()
         if dt is not None:
             dtList.append(dt)
