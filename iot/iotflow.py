@@ -42,8 +42,8 @@ class LLSpider(object):
         url = 'http://tew.yrt-tech.com/#/stats/query-sim-flow-agent'
         self.driver.get(url)
         time.sleep(1)
-        dateList = self.get_dateList() # 跑历史数据
-        # dateList = self.get_dateList(str(datetime.date.today()+ datetime.timedelta(-1)))
+        # dateList = self.get_dateList() # 跑历史数据
+        dateList = self.get_dateList(str(datetime.date.today()+ datetime.timedelta(-1)))
         for dt in dateList:
             self.driver.find_element_by_xpath('//input[@placeholder="选择日期时间" and @class="el-input__inner"]').clear()
             self.driver.find_element_by_xpath('//input[@placeholder="选择日期时间" and @class="el-input__inner"]').send_keys(
