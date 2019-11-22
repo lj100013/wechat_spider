@@ -8,6 +8,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 
+
 class LLSpider(object):
 
     def __init__(self):
@@ -43,42 +44,52 @@ class LLSpider(object):
         self.driver.get(url)
         time.sleep(1)
         # dateList = self.get_dateList() # 跑历史数据
-        dateList = self.get_dateList(str(datetime.date.today()+ datetime.timedelta(-1)))
+        dateList = self.get_dateList(str(datetime.date.today() + datetime.timedelta(-1)))
         for dt in dateList:
-            self.driver.find_element_by_xpath('//input[@placeholder="选择日期时间" and @class="el-input__inner"]').clear()
-            self.driver.find_element_by_xpath('//input[@placeholder="选择日期时间" and @class="el-input__inner"]').send_keys(
-                dt)
-            self.driver.find_element_by_xpath('//i[@class="el-icon-search"]/..').click()
-            data = self.driver.find_element_by_xpath('//span[@class="el-pagination__total"]')
-            total = ''.join(re.findall(r'\d+', data.text))
+            for i in range(00, 24):
+                self.driver.find_element_by_xpath('//input[@placeholder="选择日期"]').click()
+                tb = self.driver.find_element_by_xpath('//div[@class="el-date-picker__time-header"]')
+                tb.find_element_by_xpath('.//input[@placeholder="选择日期"]').clear()
+                tb.find_element_by_xpath('.//input[@placeholder="选择日期"]').send_keys(dt)
+                tb.find_element_by_xpath('//input[@placeholder="选择时间"]').send_keys(
+                    Keys.BACKSPACE + Keys.BACKSPACE + Keys.BACKSPACE)
+                tb.find_element_by_xpath('//input[@placeholder="选择时间"]').send_keys('%02d时' % i)
+                self.driver.find_element_by_xpath(
+                    '//button[@class="el-button el-picker-panel__link-btn el-button--default el-button--mini is-plain"]').click()
+                time.sleep(1)
+                self.driver.find_element_by_xpath('//i[@class="el-icon-search"]/..').click()
+                time.sleep(2)
+                data = self.driver.find_element_by_xpath('//span[@class="el-pagination__total"]')
+                total = ''.join(re.findall(r'\d+', data.text))
 
-            print('===== ' + dt + ' 共 ' + total + ' 条数据 =====')
-            pages = math.ceil(int(total) / 30)
-            for p in range(2, pages + 2):
-                time.sleep(3)
-                table = self.driver.find_element_by_xpath('//table[@class="el-table__body"]')
-                data = table.find_elements_by_xpath('.//tr')
-                for d in data:
-                    row = d.text.split('\n')
-                    print(row)
-                    id = "'"+str(row[1])+"'"
-                    # if id == '8986031947208115248':
-                    operator = row[2]
-                    statu = row[3]
-                    flow = self.convert(row[4])
-                    date = "'" + row[5] + "'"
+                print('===== ' + dt + ' %02d:00' % i + ' 共 ' + total + ' 条数据=====')
+                pages = math.ceil(int(total) / 30)
+                for p in range(2, pages + 2):
+                    time.sleep(2)
+                    table = self.driver.find_element_by_xpath('//table[@class="el-table__body"]')
+                    data = table.find_elements_by_xpath('.//tr')
+                    for d in data:
+                        row = d.text.split('\n')
+                        print(row)
+                        id = "'" + str(row[1]) + "'"
+                        # if id == '8986031947208115248':
+                        operator = row[2]
+                        statu = row[3]
+                        flow = self.convert(row[4])
+                        date = "'" + row[5] + "'"
 
-                    sql = 'upsert into dw.dw_esy_iotflow values(%s,%s,%s,concat(cast(unix_timestamp() as string),"000"))' \
-                          % (id, date, int(flow))
-                    try:
-                        self.impala_cur.execute(sql)
-                    except Exception as e:
+                        sql = 'upsert into dw.dw_esy_iotflow values(%s,%s,%s,concat(cast(unix_timestamp() as string),"000"))' \
+                              % (id, date, int(flow))
+                        try:
+                            ''  # self.impala_cur.execute(sql)
+                        except Exception as e:
                             print(e)
 
-                self.driver.find_element_by_xpath('//input[@min="1" and@class="el-input__inner"]') \
-                    .send_keys(Keys.BACKSPACE + Keys.BACKSPACE + Keys.BACKSPACE)
-                self.driver.find_element_by_xpath('//input[@min="1" and@class="el-input__inner"]').send_keys(str(p))
-                self.driver.find_element_by_xpath('//input[@min="1" and@class="el-input__inner"]').send_keys(Keys.ENTER)
+                    self.driver.find_element_by_xpath('//input[@min="1" and@class="el-input__inner"]') \
+                        .send_keys(Keys.BACKSPACE + Keys.BACKSPACE + Keys.BACKSPACE)
+                    self.driver.find_element_by_xpath('//input[@min="1" and@class="el-input__inner"]').send_keys(str(p))
+                    self.driver.find_element_by_xpath('//input[@min="1" and@class="el-input__inner"]').send_keys(
+                        Keys.ENTER)
         print('==== 数据爬取完毕 ====')
         self.driver.close()
 
