@@ -79,8 +79,8 @@ class LLSpider(object):
                         date = "'" + row[5][:-2] + "'"
                         hour = "'" + row[5][-2:] + "'"
 
-                        sql = 'upsert into dw.dw_esy_iotflow values(%s,%s,%s,concat(cast(unix_timestamp() as string),"000"),%s)' \
-                              % (id, date, int(flow), hour)
+                        sql = 'upsert into tmp.dw_esy_iotflow values(%s,%s,%s,%s,concat(cast(unix_timestamp() as string),"000"))' \
+                              % (id, date, hour, int(flow))
                         try:
                             self.impala_cur.execute(sql)
                         except Exception as e:
