@@ -79,7 +79,7 @@ class LLSpider(object):
                         date = "'" + row[5][:-2] + "'"
                         hour = "'" + row[5][-2:] + "'"
 
-                        sql = 'upsert into tmp.dw_esy_iotflow values(%s,%s,%s,%s,concat(cast(unix_timestamp() as string),"000"))' \
+                        sql = 'upsert into dw.dw_esy_iotflow values(%s,%s,%s,%s,concat(cast(unix_timestamp() as string),"000"))' \
                               % (id, date, hour, int(flow))
                         try:
                             self.impala_cur.execute(sql)
@@ -96,7 +96,7 @@ class LLSpider(object):
 
     def get_dateList(self, dt=None):
         dtList = []
-        sDate = datetime.datetime.strptime('2019-11-15', '%Y-%m-%d').date()
+        sDate = datetime.datetime.strptime('2019-10-08', '%Y-%m-%d').date()
         eDate = datetime.date.today()
         if dt is not None:
             dtList.append(dt)
