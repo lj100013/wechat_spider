@@ -2,16 +2,22 @@ import datetime
 import math
 import re
 import time
+import sys
 
 import pyodbc
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 
-
+"""
+:args:
+    - 'history'    :爬取历史数据
+    - 'yyyy-MM-dd' :爬取指定日期(多个日期用空格分开：2019-11-15 2019-11-20)
+    - None         :爬取昨天数据
+"""
 class LLSpider(object):
 
-    def __init__(self):
+    def __init__(self, args):
         self.options = Options()
         self.options.add_argument('--headless')  # 爬取时隐藏浏览器
         self.options.add_argument('--no-sandbox')  # 禁用沙盒模式（linux下适用）
@@ -20,6 +26,8 @@ class LLSpider(object):
         self.driver.implicitly_wait(30)
         self.verificationErrors = []
         self.accept_next_alert = True
+
+        self.args = args
 
         self.username = 'xuanguanjiankang'
         self.password = '666666'
@@ -38,13 +46,18 @@ class LLSpider(object):
         self.driver.find_element_by_xpath('//button').click()
 
     def get_data(self):
+        ini_dl = [dt for dt in list(self.args)]
         self.fake_login()
         time.sleep(1)
         url = 'http://tew.yrt-tech.com/#/stats/query-sim-flow-agent'
         self.driver.get(url)
         time.sleep(1)
-        # dateList = self.get_dateList() # 跑历史数据
-        dateList = self.get_dateList(str(datetime.date.today() + datetime.timedelta(-1)))
+        if len(ini_dl) == 0:
+            dateList = self.get_dateList([str(datetime.date.today() + datetime.timedelta(-1))])
+        elif ini_dl[0] == 'history':
+            dateList = self.get_dateList()  # 跑历史数据
+        else:
+            dateList = self.get_dateList(ini_dl)
         for dt in dateList:
             for i in range(00, 24):
                 self.driver.find_element_by_xpath('//input[@placeholder="选择日期"]').click()
@@ -99,7 +112,7 @@ class LLSpider(object):
         sDate = datetime.datetime.strptime('2019-10-08', '%Y-%m-%d').date()
         eDate = datetime.date.today()
         if dt is not None:
-            dtList.append(dt)
+            dtList += dt
         else:
             while str(sDate) <= str(eDate):
                 dtList.append(str(sDate))
@@ -129,5 +142,5 @@ class LLSpider(object):
 
 
 if __name__ == '__main__':
-    sp = LLSpider()
+    sp = LLSpider(sys.argv[1:])
     sp.get_data()
