@@ -62,6 +62,7 @@ class LLSpider(object):
             for i in range(00, 24):
                 self.driver.find_element_by_xpath('//input[@placeholder="选择日期"]').click()
                 tb = self.driver.find_element_by_xpath('//div[@class="el-date-picker__time-header"]')
+                time.sleep(1)
                 tb.find_element_by_xpath('.//input[@placeholder="选择日期"]').clear()
                 tb.find_element_by_xpath('.//input[@placeholder="选择日期"]').send_keys(dt)
                 tb.find_element_by_xpath('//input[@placeholder="选择时间"]').send_keys(
