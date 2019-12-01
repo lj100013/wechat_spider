@@ -173,6 +173,8 @@ if __name__ == '__main__':
                 msg_data = {}
                 full_doc = text['fullDocument'] #将fullDocument里面的ky转小写
                 doc = key2lower(full_doc)
+                if "_id" in doc and type(doc["_id"]) == dict and "$oid" in doc["_id"]:
+                    doc["_id"] = doc["_id"]["$oid"]
                 for k,v in text.items():
                     if k=='fullDocument':
                         msg_data['fullDocument']=doc
