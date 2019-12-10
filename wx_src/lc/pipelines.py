@@ -8,6 +8,7 @@ import datetime
 import hashlib
 import time
 import pymysql
+import pyodbc
 # from scrapy.conf import settings
 from impala.dbapi import connect
 import configparser
