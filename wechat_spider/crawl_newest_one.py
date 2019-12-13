@@ -100,6 +100,15 @@ class Spider(object):
             try:
                 retrytimes -= 1
                 response = requests.get(search_url,headers = self.search_headers,proxies = self.proxies)
+                cookies = response.headers['Set-Cookie'].split(";")
+                res_cookie = []
+                set_cookie = []
+                for cookie in cookies:
+                    set_cookie.append(cookie.split(','))
+                for sets in set_cookie:
+                    for set in sets:
+                        res_cookie.append(set)
+                cookie_jar = ';'.join(res_cookie)
                 content = etree.HTML(response.text)
                 name_st = content.xpath('//*[@id="sogou_vr_11002301_box_0"]/div/div[2]/p[1]/a/em/text()')
                 if len(name_st) > 0:
@@ -107,14 +116,7 @@ class Spider(object):
                     if name_crawl == name:
                         urls = content.xpath('//*[@uigs="account_article_0"]/@href')
                         dates = content.xpath('//span/script/text()')
-                        cookie_jar = ''
                         if len(urls) > 0:
-                            cookie = response.cookies
-                            for coo in iter(cookie):
-                                cooname = coo.name
-                                value = coo.value
-                                scoo = cooname + '=' + value + ';'
-                                cookie_jar += scoo
                             if 'SNUID=' in cookie_jar:
                                 for url in urls:
                                     detail_url = self._process_url(url, search_url, cookie_jar, response.text)

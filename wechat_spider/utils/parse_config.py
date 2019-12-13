@@ -1,7 +1,7 @@
 import configparser
 
 conf = configparser.ConfigParser()
-# conf.read(r"F:\bigdata_project\utils\config.ini")
+#conf.read(r"F:\bigdata_project\utils\config.ini")
 conf.read("/data/job_pro/utils/config.ini")
 mysql_host=conf.get('weixin', 'host')
 mysql_port=int(conf.get('weixin', 'port'))
