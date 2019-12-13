@@ -78,7 +78,7 @@ class Spider(object):
             #time.sleep(random.uniform(0,3))
             response = requests.get(url, headers=headers, proxies = self.proxies)
             content = response.text
-            pattern = r"'([\s\S]*?)'"
+            pattern = "\+=\s'([\s\S]*?)'"
             id_node = re.findall(pattern, content)
             uri = ''.join(id_node)
             url = uri.replace('@', '')
