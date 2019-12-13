@@ -110,7 +110,7 @@ class LLSpider(object):
 
     def get_dateList(self, dt=None):
         dtList = []
-        sDate = datetime.datetime.strptime('2019-10-08', '%Y-%m-%d').date()
+        sDate = datetime.datetime.strptime('2019-07-26', '%Y-%m-%d').date()
         eDate = datetime.date.today()
         if dt is not None:
             dtList += dt
