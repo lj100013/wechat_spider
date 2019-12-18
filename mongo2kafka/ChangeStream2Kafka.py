@@ -98,6 +98,12 @@ def key2lower(d):
     for k, v in d.items():
         if isinstance(v, dict):
             v = key2lower(v)
+        elif v is None:
+            v = ''
+        elif v == True:
+            v = 'true'
+        elif v == False:
+            v = 'false'
         new[k.lower()] = v
     return new
 
