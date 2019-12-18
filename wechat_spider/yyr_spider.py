@@ -19,11 +19,16 @@ weixin_names = [("赛柏蓝","INFO","yyr","oIWsFtwICTz_e61YkBoqO0EBmNe0"),("健�
                 ("医学界", "QK", "yyr", "oIWsFtxoA8ylvPBmVUVQW_vaa4q8"),("动脉网","INFO","yyr","oIWsFt0kQ1EA-vmZ-KSCZ7OzN7ws"),("县域卫生","INFO","yyr","weizhi")]
 # ("中国医药报","INFO","yyr","oIWsFtxZvbhP_vGSWyDl5kvFXGTE"),("药明康德","INFO","yyr","oIWsFt8_gjduyEZ5LGGmM38Y6E2k"),("医学界", "QK", "yyr", "oIWsFtxoA8ylvPBmVUVQW_vaa4q8"),("动脉网","INFO","yyr","oIWsFt0kQ1EA-vmZ-KSCZ7OzN7ws"),
 
-
+ThreadList = []
 num_threads = 4
 def start_crawl(spider,sub_weixin_name):
     for weixin_name in sub_weixin_name:
         spider.pipeline2db(weixin_name,retrytimes=3)
 for sub_weixin_name in np.array_split(weixin_names,num_threads):
     spider = Spider()
-    threading.Thread(target=start_crawl, args=(spider,sub_weixin_name,)).start()
+    t= threading.Thread(target=start_crawl, args=(spider,sub_weixin_name,))
+    ThreadList.append(t)
+for t in ThreadList:
+    t.start()
+for t in ThreadList:
+    t.join()

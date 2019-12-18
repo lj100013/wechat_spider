@@ -36,6 +36,12 @@ num_threads = 6
 def start_crawl(spider,sub_weixin_name):
     for weixin_name in sub_weixin_name:
         spider.pipeline2db(weixin_name,retrytimes=3)
+ThreadList = []
 for sub_weixin_name in np.array_split(weixin_names,num_threads):
     spider = Spider()
-    threading.Thread(target=start_crawl, args=(spider,sub_weixin_name,)).start()
+    t = threading.Thread(target=start_crawl, args=(spider,sub_weixin_name,))
+    ThreadList.append(t)
+for t in ThreadList:
+    t.start()
+for t in ThreadList:
+    t.join()
