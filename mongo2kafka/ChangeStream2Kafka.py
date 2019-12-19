@@ -98,7 +98,7 @@ def key2lower(d):
     for k, v in d.items():
         if isinstance(v, dict):
             v = key2lower(v)
-        elif len(v)>70960:
+        elif isinstance(v, str) and len(v)>70960:
             v=''
             logger.error('长度超限:'+k)
         elif v is None:
