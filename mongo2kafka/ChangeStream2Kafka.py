@@ -100,9 +100,9 @@ def key2lower(d):
             v = key2lower(v)
         elif v is None:
             v = ''
-        elif v == True:
+        elif v is True:
             v = 'true'
-        elif v == False:
+        elif v is False:
             v = 'false'
         new[k.lower()] = v
     return new
