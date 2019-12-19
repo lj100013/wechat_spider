@@ -98,6 +98,9 @@ def key2lower(d):
     for k, v in d.items():
         if isinstance(v, dict):
             v = key2lower(v)
+        elif len(v)>70960:
+            v=''
+            logger.error('长度超限:'+k)
         elif v is None:
             v = ''
         elif v is True:
@@ -170,8 +173,6 @@ if __name__ == '__main__':
         for change in stream:
             msg =bytes(dumps(change,ensure_ascii=False),encoding='utf8')
             jsondata = str(msg,'utf-8')
-            if len(msg)>80960:
-                logger.error('长度超限:'+jsondata)
             text = json.loads(jsondata)
             tb = text['ns']['db']+'.'+text['ns']['coll']
             i = abs(getHashCode(tb)) %numPartitions
