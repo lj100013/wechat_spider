@@ -30,7 +30,7 @@ def upload_pic(content,pic_url):
 def write2_qiniu(url, name):
     try:
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36'}
-        img = requests.get(url=url, headers = headers)
+        img = requests.get(url=url, headers = headers,timeout = 10)
         pic = base64.b64encode(img.content)
         qiniu_data = {"fileName": name, "contentBytes": pic.decode(encoding='utf-8')}
         textmod = json.dumps(qiniu_data).encode(encoding='utf-8')

@@ -14,7 +14,7 @@ def get_ip(retrytimes):
     while retrytimes >= 0:
         try:
             time.sleep(3)
-            res = requests.get(zhi_ma_apiUrl).text
+            res = requests.get(zhi_ma_apiUrl,timeout = 10).text
             json.loads(res)
             logging.warning("fail to get proxy ip:{}".format(res))
             return get_ip(retrytimes - 1)

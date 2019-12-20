@@ -76,7 +76,7 @@ class Spider(object):
             headers['Referer'] = search_url
             headers["Cookie"] = cookie_jar
             #time.sleep(random.uniform(0,3))
-            response = requests.get(url, headers=headers, proxies = self.proxies)
+            response = requests.get(url, headers=headers, proxies = self.proxies,timeout = 10)
             content = response.text
             pattern = "\+=\s'([\s\S]*?)'"
             id_node = re.findall(pattern, content)
@@ -99,7 +99,7 @@ class Spider(object):
         while retrytimes >= 0:
             try:
                 retrytimes -= 1
-                response = requests.get(search_url,headers = self.search_headers,proxies = self.proxies)
+                response = requests.get(search_url,headers = self.search_headers,proxies = self.proxies,timeout = 10)
                 cookies = response.headers['Set-Cookie'].split(";")
                 res_cookie = []
                 set_cookie = []
@@ -149,7 +149,7 @@ class Spider(object):
     def _get_aticle_source(self,detail_url,name,retrytimes):
         while retrytimes >= 0:
             try:
-                response = requests.get(detail_url, headers = self.article_list_headers,proxies = self.proxies)
+                response = requests.get(detail_url, headers = self.article_list_headers,proxies = self.proxies,timeout = 10)
                 response.encoding = 'utf-8'
                 content = response.text
                 page = etree.HTML(content)
