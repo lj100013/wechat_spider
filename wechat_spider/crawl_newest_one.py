@@ -149,41 +149,46 @@ class Spider(object):
     def _get_aticle_source(self,detail_url,name,retrytimes):
         while retrytimes >= 0:
             try:
-                response = requests.get(detail_url, headers = self.article_list_headers,proxies = self.proxies,timeout = 10)
-                response.encoding = 'utf-8'
-                content = response.text
-                page = etree.HTML(content)
-                content_nodes = page.xpath('//div[@class="rich_media_content "]')
-                authors = page.xpath('//a[@id="js_name"]/text()')
-                iframes = page.xpath('//iframe[@class="video_iframe"]/@data-src')
-                title = page.xpath('//h2[@class="rich_media_title"]/text()')
-                if len(title) > 0:
-                    title = title[0].strip('\n').strip()
-                if len(content_nodes) > 0 and len(authors) > 0:
-                    node = content_nodes[0]
-                    content = etree.tostring(node, method='html').decode("utf-8")
-                    c_list = content.split("</p>")
-                    if len(c_list) < 2:
-                        return [],[],[],[],[]
-                    str_content = c_list[0] + '</p>' + c_list[1] + '</p>' + '\n<!--more-->'
-                    str_left = '</p>'.join(c_list[2:])
-                    content = str_content + str_left
-                    img_urls = page.xpath('//img/@data-src')
-                    return content,authors,title,iframes,img_urls
+                if detail_url != []:
+                    response = requests.get(detail_url, headers = self.article_list_headers,proxies = self.proxies,timeout = 10)
+                    response.encoding = 'utf-8'
+                    content = response.text
+                    page = etree.HTML(content)
+                    content_nodes = page.xpath('//div[@class="rich_media_content "]')
+                    authors = page.xpath('//a[@id="js_name"]/text()')
+                    iframes = page.xpath('//iframe[@class="video_iframe"]/@data-src')
+                    title = page.xpath('//h2[@class="rich_media_title"]/text()')
+                    if len(title) > 0:
+                        title = title[0].strip('\n').strip()
+                    if len(content_nodes) > 0 and len(authors) > 0:
+                        node = content_nodes[0]
+                        content = etree.tostring(node, method='html').decode("utf-8")
+                        content = re.sub(r'<div class="rich_media_content " id="js_content" (style="visibility: hidden;")',
+                                         '<div class="rich_media_content " id="js_content" ', content)
+                        c_list = content.split("</p>")
+                        if len(c_list) < 2:
+                            return [],[],[],[],[]
+                        str_content = c_list[0] + '</p>' + c_list[1] + '</p>' + '\n<!--more-->'
+                        str_left = '</p>'.join(c_list[2:])
+                        content = str_content + str_left
+                        img_urls = page.xpath('//img/@data-src')
+                        return content,authors,title,iframes,img_urls
+                    else:
+                        logging.warning("content is empty")
+                        detail_url = page.xpath('//*[@id="js_share_source"]/@href')
+                        if len(detail_url) > 0:
+                            detail_url = detail_url[0]
+                            return self._get_aticle_source(detail_url, name, retrytimes - 1)
+                        self.proxies, self.host, self.port = self._get_proxies()
+                        return self._get_aticle_source(detail_url,name,retrytimes-1)
                 else:
-                    logging.warning("content is empty")
-                    detail_url = page.xpath('//*[@id="js_share_source"]/@href')
-                    if len(detail_url) > 0:
-                        detail_url = detail_url[0]
-                        return self._get_aticle_source(detail_url, name, retrytimes - 1)
-                    self.proxies, self.host, self.port = self._get_proxies()
-                    return self._get_aticle_source(detail_url,name,retrytimes-1)
+                    return [],[],[],[],[]
             except ProxyError:
                 logging.warning("proxyError,get new proxy ip!")
                 self.proxies, self.host, self.port = self._get_proxies()
                 return self._get_aticle_source(detail_url,name,retrytimes-1)
             except Exception as e:
-                traceback.print_exc()
+                # traceback.print_exc()
                 logging.warning("fail to get article content:{},{},{}".format(name,detail_url,e))
                 return self._get_aticle_source(detail_url, name, retrytimes - 1)
         return [],[],[],[],[]
@@ -237,11 +242,11 @@ class Spider(object):
                             create_date = formate_date(dates[0])
                             wechat_data['create_time'] = create_date
                             wechat_data['content'] = content
-                            wechat_data['gid'] = gid
-                            # print(wechat_data["title"],  wechat_data['author'])
+                            wechat_data['gid'] = gid                           # print(wechat_data["title"],  wechat_data['author'])
+                            # print(wechat_data)
                             process_item(wechat_data,appname)
             except Exception as e:
-                traceback.print_exc()
+                # traceback.print_exc()
                 logging.warning("发生错误:{}".format(e))
         else:
             logging.warning("fail to get detail article url!!")
